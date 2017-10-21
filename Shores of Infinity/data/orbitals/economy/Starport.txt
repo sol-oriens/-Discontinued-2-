@@ -1,0 +1,34 @@
+Module: Starport
+	Name: #ORB_STARPORT
+	Blurb: #ORB_STARPORT_BLURB
+	Description: #ORB_STARPORT_DESC
+	Icon: GuiOrbitalIcons::15
+	Strategic Icon: OrbitalIcons::15
+
+	Core: True
+	Standalone: True
+
+	Build Cost: 200
+	Maintenance: 100
+	Labor Cost: 15
+	Size: 12
+
+	Health: 5000
+	Armor: 1000
+
+	AddCargoStorage(100000)
+
+	Model: CommerceStation
+	Material: GenericPBR_CommerceStation
+
+	LimitOncePerSystem(StarportFlag)
+	SetSystemFlag(Starport)
+
+	AddFleetCommand(64)
+	AddFleetCommandEmpireAttribute(OutpostBoost, 64)
+	AllowFreeRaiding()
+	AddRaidRange(-10000000) //Negative range resolves to "in the current system"
+
+	AllowConstruction()
+	GiveTrade()
+	FriendlyPlanetMoney(To Self = 25, To Other = 25, Count Self = True, Max Money = 75)

@@ -1,0 +1,134 @@
+﻿CONS_MOON_BASE_DESC: <<
+	Construct a large amount of infrastructure on one of the planet's moons, making more area available for placing buildings and increasing the maximum population of the planet by 2.
+
+	Only one moon base may be constructed for every moon present in orbit of the planet.
+
+	Mechanoid races receive §100k additional income from each moon base they own.
+>>
+C_TERRAFORMING_DESC: <<
+	[color=#aaa][i]Modifying the climate or constructing the required support infrastructure to easily sustain large amounts of people or equipment within a certain area is usually a slow venture.
+
+	An industrial-scale project sponsored by the empire can accelerate the process considerably, for a price.[/i][/color]
+
+	Develops up to 15 randomly selected tiles.
+>>
+C_HABITATRING_DESC: <<
+	[color=#aaa][i]Constructing a large ring-shaped station encircling the planet provides more space for the construction of important infrastructure.[/i][/color]
+
+	Adds a 4x8 chunk of fully-developed Artificial tiles to the planet. Can only be built once per planet.
+>>
+C_HABITATRING: Orbital Habitation Ring
+C_TERRAFORMING: Infrastructural Development
+C_SUBSURFACE_HABITATS: Subsurface Habitation Complex
+C_SUBSURFACE_NO_FLOATING_CONTINENT: [i]Subsurface habitats cannot be built while a Floating Continent is present on the planet surface. Move the Floating Continent to a different planet before attempting to construct them.[/i]
+C_SUBSURFACE_HABITATS_DESC: <<
+	[color=#aaa][i]Constructing an underground complex kilometers underneath the planet's surface provides more space for the construction of important infrastructure.[/i][/color]
+
+	Adds a 10x2 chunk of undeveloped Artificial tiles to the planet. Can only be built once per planet. Unlocks the 'Expand Subsurface Complex' construction.
+
+	[bbloc=#C_SUBSURFACE_NO_FLOATING_CONTINENT/]
+>>
+C_EXPAND_SUBSURFACE: Expand Subsurface Complex
+C_EXPAND_SUBSURFACE_DESC: <<
+	[color=#aaa][i]Expanding our subsurface habitats grants us even more space for the construction of important infrastructure.[/i][/color]
+
+	Adds a 10x1 chunk of undeveloped Artificial tiles to the planet, attached to the Subsurface Habitation Complex. Subsequent subsurface habitat expansions will require increasingly large amounts of Ore and Labor to construct.
+
+	[bbloc=#C_SUBSURFACE_NO_FLOATING_CONTINENT/]
+>>
+C_EXPLORE_PLANET: Planet Exploration
+C_EXPLORE_PLANET_DESC: <<
+	[color=#aaa][i]Every new planet discovered is in itself a potential little universe of wonders.[/i][/color]
+
+	Sends an exploration team around the planet. May yield a random discovery.
+>>
+C_FLING_UNLOCK: Refined Beacon Architecture
+C_FLING_UNLOCK_DESC: <<
+	Use the data collected during the construction and use of this fling beacon to improve your beacon designs, allowing for smaller, cheaper fling beacons to be constructed.
+
+	Unlocks the Fling Beacon orbital.
+
+	[i][bbloc=#ORB_FLING_CORE_DESC/][/i]
+>>
+C_GATE_UNLOCK: Streamlined Wormhole Equations
+C_GATE_UNLOCK_DESC: <<
+	Use the data collected during the construction and use of this stargate to improve your gate designs, allowing for the easy construction of more customizable gates.
+
+	Unlocks the Gate subsystem for use on stations.
+
+	[i][bbloc=#S_GATE_MODULE_DESC/][/i]
+>>
+OUTPOST_ARMORING: Structural Enhancement
+OUTPOST_ARMORING_DESC: <<
+	Reinforce the orbital's frame and outer hull, allowing it to withstand more damage before critical failure.
+
+	Adds 10000 health and 5000 armor. May be modified by upgrades that improve orbital health. Subsequent structural enhancement requires increasingly large amounts of Ore to perform.
+>>
+OUTPOST_DEFENSE: Refit Launch Bays
+OUTPOST_DEFENSE_DESC: <<
+	Perform a substantial retrofit of the orbital's hangar deck and docking ports, allowing it to support more vessels coming in or out at any given time. The additional traffic also encourages the civilian sector to assist with constructing additional defense ships.
+
+	Adds 256 support capacity and 4 Defense generation. Subsequent hangar refits require increasingly large amounts of Ore to perform.
+>>
+OUTPOST_WEAPONS: Install Swarm Missiles
+OUTPOST_WEAPONS_DESC: <<
+	Install a swarm missile launcher on the orbital's exterior, improving its ability to hold off raiders or interrupt enemy trade.
+
+	Adds 10 missile tubes, each firing one missile per second for a damage of 50 per missile. May be modified by upgrades that improve stationary defense weapons. Subsequent missile launchers require increasingly large amounts of Ore to install.
+>>
+
+RESEARCH_LAB_CRYSTALLIZER: Hyperfield Crystallizer
+RESEARCH_LAB_CRYSTALLIZER_DESC: <<
+	[color=#aaa][i]This highly advanced device is able to artificially reproduce the FTL crystal formation process at an accelerated rate through a complex chain reaction.[/i][/color]
+
+	Unlocks the Hyperfield Crystallization Project.
+>>
+
+RESEARCH_LAB_HYPERCHARGER: Hypercharger
+RESEARCH_LAB_HYPERCHARGER_DESC: <<
+	[color=#aaa][i]A canon projecting a constant beam of energy extracted from a hypercore, able to tremendously boost engine thrust for a short duration. This effect is nicknamed "hypersail", though there is no physical sail per se.[/i][/color]
+
+	Unlocks the Hypercharge Project.
+>>
+
+RESEARCH_LAB_HYPERCHARGE: Hypercharge
+RESEARCH_LAB_HYPERCHARGE_DESC: <<
+	[color=#aaa][i]Load this lab's hypercharger with one hypercore charge.[/i][/color]
+
+	Grants one use of the Hypersail Beam ability.
+>>
+
+RESEARCH_LAB_HYPERCORE: Hyperfield Collision
+RESEARCH_LAB_HYPERCORE_DESC: <<
+	[color=#aaa][i]Projecting hyperfield particles at FTL speeds into a high powered particle collider produces a highly unstable form of energy stored in what is colloquially known as a hypercore.[/i][/color]
+
+	Generates 1 [img=ResourceIconsSmall::81*#26a980;22/] Hypercore.
+>>
+
+RESEARCH_LAB_FTL: Hyperfield Crystallization
+RESEARCH_LAB_FTL_DESC: <<
+	[color=#aaa][i]A method of creating limited quantities of FTL crystals at a high energy cost. Unfortunately, quantic instabilities make the process highly inaccurate and not likely to ever be industrialized.[/i][/color]
+
+	Generates up to 250 [img=$FTL;22/] FTL Energy.
+>>
+
+RESEARCH_LAB_FTL_HYPER: Hyperfield Megacrystallization
+RESEARCH_LAB_FTL_HYPER_DESC: <<
+	[color=#aaa][i]The hyperfield crystallization technique used in conjunction with the peculiar energy provided by a hypercore yields much better results, though still somewhat unreliable.[/i][/color]
+
+	Generates up to 1k [img=$FTL;22/] FTL Energy.
+>>
+
+STAGING_HUB_ASTEROID_MORPH: Core Mining
+STAGING_HUB_ASTEROID_MORPH_DESC: <<
+	[color=#aaa][i]It's no secret that asteroids usually are far richer in resources than planets. Unfortunately, the benefits of drilling deep enough to get access to their hidden treasures are as massive as the cost of setting a space-based infrastructure up to do so.[/i][/color]
+
+	The targeted Ore asteroid is transformed into an asteroid containing one or more resources available to build a mining base on.
+>>
+
+STARPORT_DOCKING_BAYS: Long Haul Docking Bays
+STARPORT_DOCKING_BAYS_DESC: <<
+	[color=#aaa][i]Standard civilian trade ships are not suited for very long distance travels and an extensive infrastructure is required to maintain supply lines across multiple systems. These much bigger and specialized docking bays allow long distance superhaulers to dock at the starport, a privilege usually exclusive to huge commerce stations.[/i][/color]
+
+	Allows global resource trade between any territories with Commerce Stations or Starports with Long Haul Docking Bays.
+>>

@@ -1,0 +1,27 @@
+Module: ResearchLab
+	Name: #ORB_RESEARCH_LAB
+	Blurb: #ORB_RESEARCH_LAB_BLURB
+	Description: #ORB_RESEARCH_LAB_DESC
+	Icon: GuiOrbitalIcons::12
+
+	Core: True
+	Standalone: True
+  Size: 10
+
+	Build Cost: 400
+  Maintenance: 100
+	Labor Cost: 25
+
+	Health: 5000
+	Armor: 1000
+
+  AddCargoStorage(1000)
+
+	Model: Research_Station
+	Material: GenericPBR_Research_Station
+
+	Strategic Icon: OrbitalIcons::12
+
+	AddResearchIncome(1)
+
+  AllowConstruction()

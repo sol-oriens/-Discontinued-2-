@@ -1,0 +1,15 @@
+Technology: MetropolisUpg
+	Name: #R_METROPOLIS_UPGRADE 
+	Description: #R_METROPOLIS_UPGRADE_DESC
+
+	Icon: Metropolis
+	Symbol: ResourceIcon::4
+	Color: #8c4ec9
+
+	Category: Special Upgrades
+	Class: BigUpgrade
+
+	Point Cost: 0
+	Time Cost: 180
+	SecondaryMoneyCost(500)
+	ModAttribute(MetropolisExtraPressureCap, Add, 2)

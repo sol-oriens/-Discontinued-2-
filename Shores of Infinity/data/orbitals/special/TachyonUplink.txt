@@ -1,0 +1,27 @@
+Module: TachyonUplink
+	Name: #ORB_TACHYON_UPLINK
+	Blurb: #ORB_TACHYON_UPLINK_BLURB
+	Description: #ORB_TACHYON_UPLINK_DESC
+	Icon: GuiOrbitalIcons::18
+	Strategic Icon: OrbitalIcons::18
+
+	Core: True
+	Standalone: True
+  Size: 12
+
+	Model: Beacon
+	Material: GenericPBR_Beacon
+
+	Build Cost: 1000
+  Maintenance: 500
+	Labor Cost: 50
+
+	Health: 5000
+	Armor: 1000
+
+	FTLMaintenance(0.5)
+
+	TiedSubsystemUnlock(TachyonSensor, UnlockTachyonSensor)
+	ModEmpireAttribute(TachyonUplink, Add, 1)
+	ABEM_orbitals::RequireSystemFlag(TachyonNebula)
+	LimitOncePerSystem(UplinkFlag)

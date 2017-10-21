@@ -1,0 +1,14 @@
+Ability: HyperBeam
+  Name: #ABL_HYPERBEAM
+  Description: #ABL_HYPERBEAM_DESC
+  Icon: techPropulsion*#26a980
+
+  Target: ship = Object
+  TargetFilterFlagship(ship, Allow Stations = False)
+  TargetFilterOwned(ship)
+  TargetFilterSameRegion(ship)
+  TargetFilterNotStatus(ship, Hypersail)
+
+  TriggerBeamEffect(ship, 10.0, #26a980, Tractor, Width = 1)
+  AddStatusTo(ship, Hypersail, 10.0)
+  RemoveStatusInstance(Hypercharge)

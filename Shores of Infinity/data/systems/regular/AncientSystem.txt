@@ -1,0 +1,12 @@
+System: AncientSystem
+	Inherit: BaseSystem
+	Frequency: 0.24
+
+	//RS - Scaling
+	MakeStar(Temperature = 1000:2500, Radius = 1250:2000)
+	ExpandSystem(3000:5000)
+
+	AddQuality(+100)
+
+	RepeatModified(1:2, $PLANET_FREQUENCY)
+		MakePlanet()

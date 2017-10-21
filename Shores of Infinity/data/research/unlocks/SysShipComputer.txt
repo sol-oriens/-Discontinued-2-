@@ -1,0 +1,17 @@
+Technology: SysShipComupter
+	Name: #R_SYS_SHIP_COMPUTER
+	Description: #R_SYS_SHIP_COMPUTER_DESC
+	Class: Unlock
+
+	Point Cost: 1000
+	Time Cost: 80
+
+	Icon: RSComputer
+	Color: #ffa4a0
+
+	UnlockSubsystem(ShipComputer)
+	SkipOnUnlockedSubsystem(ShipComputer)
+
+	SecondaryEnergyCost(1000)
+
+	ModAttribute(ProgenitorTechProgress, Add, 1.5)
