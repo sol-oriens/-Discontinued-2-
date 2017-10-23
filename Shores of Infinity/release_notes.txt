@@ -14,8 +14,6 @@ This new balance is also designed to make infrastructure building and careful ex
 *** Changes to Rising Stars Features ***
 ****************************************
 
-*** Support for non-WotH versions of Star Ruler 2 has been dropped. This is due to a number of additions based on the rewritten AI of WotH. This mod requires the WotH expansion.
-
 [*] Game Options
 
 - Added Automatically Claim Spatial Anomalies: When toggled on, spatial anomalies in your tradable area will automatically be claimed into your territory. Toggled off by default.

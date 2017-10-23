@@ -12,6 +12,15 @@ import saving;
 
 from constructions import ConstructionType, getConstructionTypeCount, getConstructionType;
 from ai.constructions import AIConstructions, ConstructionAIHook, ConstructionUse;
+from statuses import getStatusID;
+
+funcdef void PlanetAdded(PlanetAI@ ai);
+funcdef void PlanetRemoved(PlanetAI@ ai);
+
+interface IPlanetEvents {
+	void onPlanetAdded(PlanetAI@ ai);
+	void onPlanetRemoved(PlanetAI@ ai);
+};
 
 final class BuildingRequest {
 	int id = -1;
@@ -167,11 +176,8 @@ final class ConstructionRequest {
 				canceled = true;
 
 			}
-			else {
+			else
 				built = true;
-				if (type is ai.defs.MoonBase)
-					++plAI.moonBases;
-			}
 			return false;
 		}
 		return true;
@@ -181,10 +187,11 @@ final class ConstructionRequest {
 final class PlanetAI {
 	Planet@ obj;
 
+	ref@ bag;
+
 	int targetLevel = 0;
 	int requestedLevel = 0;
 	double prevTick = 0;
-	uint moonBases = 0;
 
 	array<ExportData@>@ resources;
 	ImportData@ claimedChain;
@@ -198,7 +205,6 @@ final class PlanetAI {
 		file << targetLevel;
 		file << requestedLevel;
 		file << prevTick;
-		file << moonBases;
 
 		uint cnt = 0;
 		if(resources !is null)
@@ -214,7 +220,6 @@ final class PlanetAI {
 		file >> targetLevel;
 		file >> requestedLevel;
 		file >> prevTick;
-		file >> moonBases;
 		uint cnt = 0;
 		file >> cnt;
 		@resources = array<ExportData@>();
@@ -487,12 +492,40 @@ class Planets : AIComponent, AIConstructions {
 	array<ConstructionRequest@> constructionRequests;
 	int nextBuildingRequestId = 0;
 
+	int moonBaseStatusId;
+
+	uint maxRequests = 1;
+
+	//Event callbacks
+	array<PlanetAdded@> onPlanetAdded;
+	array<PlanetRemoved@> onPlanetRemoved;
+
+	//Event delegate registration
+	void registerPlanetEvents(IPlanetEvents@ events) {
+			onPlanetAdded.insertLast(PlanetAdded(events.onPlanetAdded));
+			onPlanetRemoved.insertLast(PlanetRemoved(events.onPlanetRemoved));
+	}
+
+	//Event raising
+	void raisePlanetAdded(PlanetAI@ ai) {
+		for (uint i = 0, cnt = onPlanetAdded.length; i < cnt; ++i)
+			onPlanetAdded[i](ai);
+	}
+
+	void raisePlanetRemoved(PlanetAI@ ai) {
+		for (uint i = 0, cnt = onPlanetRemoved.length; i < cnt; ++i)
+			onPlanetRemoved[i](ai);
+	}
+
 	void create() {
 		@resources = cast<Resources>(ai.resources);
 		@budget = cast<Budget>(ai.budget);
 		@systems = cast<Systems>(ai.systems);
 
 		@scalableClass = getResourceClass("Scalable");
+
+		//Cache the MoonBase status id
+		moonBaseStatusId = getStatusID("MoonBase");
 
 		//Register specialized construction types
 		for(uint i = 0, cnt = getConstructionTypeCount(); i < cnt; ++i) {
@@ -531,6 +564,12 @@ class Planets : AIComponent, AIConstructions {
 			building[i].save(this, file);
 		}
 
+		cnt = constructionRequests.length;
+		file << cnt;
+		for(uint i = 0; i < cnt; ++i) {
+			constructionRequests[i].save(this, file);
+		}
+
 		cnt = ownedAsteroids.length;
 		file << cnt;
 		for(uint i = 0; i < cnt; ++i)
@@ -557,6 +596,13 @@ class Planets : AIComponent, AIConstructions {
 				req.load(this, file);
 				building.insertLast(req);
 			}
+		}
+
+		file >> cnt;
+		for(uint i = 0; i < cnt; ++i) {
+			auto@ req = ConstructionRequest();
+			req.load(this, file);
+			constructionRequests.insertLast(req);
 		}
 
 		file >> cnt;
@@ -711,16 +757,18 @@ class Planets : AIComponent, AIConstructions {
 				register(sys.asteroids[i]);
 		}
 
-		//Find out if any planet needs a moon base
-		for(uint i = 0, cnt = planets.length; i < cnt; ++i) {
+		//Check if any planet can benefits from a project
+		/*for(uint i = 0, cnt = planets.length; i < cnt; ++i) {
 			PlanetAI@ plAI = planets[i];
-			//Only one construction at a time (for now)
-			if (constructionRequests.length == 0) {
-				if (plAI.obj.moonCount > plAI.moonBases && shouldHaveMoonBase(plAI)) {
+			//Check if we already have something being built, we don't want to build too much
+			if (constructionRequests.length < maxRequests) {
+				//Check if we need a moon base
+				if (plAI.obj.moonCount > plAI.obj.getStatusStackCountAny(moonBaseStatusId) && shouldHaveMoonBase(plAI)) {
 					requestConstruction(plAI, plAI.obj, ai.defs.MoonBase, expire = 600);
 				}
+				//Check if the planet can be explored
 			}
-		}
+		}*/
 	}
 
 	void bump(Planet@ pl) {
@@ -749,6 +797,7 @@ class Planets : AIComponent, AIConstructions {
 			plAI.prevTick = gameTime;
 			planets.insertLast(plAI);
 			plAI.init(ai, this);
+			raisePlanetAdded(plAI);
 		}
 		return plAI;
 	}
@@ -777,6 +826,7 @@ class Planets : AIComponent, AIConstructions {
 		plAI.remove(ai, this);
 		planets.remove(plAI);
 		bumped.remove(plAI);
+		raisePlanetRemoved(plAI);
 	}
 
 	void requestLevel(PlanetAI@ plAI, int toLevel, ImportData@ before = null) {
@@ -842,14 +892,29 @@ class Planets : AIComponent, AIConstructions {
 		return false;
 	}
 
-	bool shouldHaveMoonBase(PlanetAI@ ai) {
-		int resId = ai.obj.primaryResourceType;
+	bool shouldHaveMoonBase(PlanetAI@ plAI) {
+		int resId = plAI.obj.primaryResourceType;
 		if (resId == -1)
 			return false;
-		const ResourceType@ type = getResource(resId);
-		//The planet has either a scalable or level 3 or 2 resource and is short on developed tiles, the system should have a moon base
-		if (type !is null && (type.cls is scalableClass || type.level == 3 || type.level == 2)   )//&& ai.obj.emptyDevelopedTiles < 6)
+		//If the planet is short on empty developed tiles, it should have a moon base
+		if (plAI.obj.emptyDevelopedTiles < 9){
+			ai.print("first condition returned true");
 			return true;
+		}
+		else
+		{
+			const ResourceType@ type = getResource(resId);
+			//Gas giants should have a moon base if there is none already built regardless of any other condition
+			if (type.ident == "RareGases" && plAI.obj.moonCount > plAI.obj.getStatusStackCountAny(moonBaseStatusId)){
+				ai.print("gas giant without moon base spotted");
+				return true;
+			}
+			if (plAI.obj.resourceLevel > 1 && plAI.obj.emptyDevelopedTiles < 9)
+				return true;
+			//The planet has either a scalable or level 3 or 2 resource and is short on empty developed tiles, it should have a moon base
+			/*if (type !is null && (type.cls is scalableClass || type.level == 3 || type.level == 2) plAI.obj.emptyDevelopedTiles < 9)
+				return true;*/
+		}
 		return false;
 	}
 
