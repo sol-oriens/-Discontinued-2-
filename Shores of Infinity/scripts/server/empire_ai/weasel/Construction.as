@@ -1147,10 +1147,10 @@ class Construction : AIComponent {
 		return f;
 	}
 
-	BuildOrbital@ buildOrbital(const OrbitalModule@ module, const vec3d& position, double priority = 1.0, bool force = false) {
+	BuildOrbital@ buildOrbital(const OrbitalModule@ module, const vec3d& position, double priority = 1.0, bool force = false, uint moneyType = BT_Infrastructure) {
 		//Potentially build a flagship
 		BuildOrbital f(module, position);
-		f.moneyType = BT_Military;
+		f.moneyType = moneyType;
 		f.priority = priority;
 		build(f, force=force);
 		return f;
@@ -1174,19 +1174,19 @@ class Construction : AIComponent {
 		return f;
 	}
 
-	BuildOrbital@ buildLocalOrbital(const OrbitalModule@ module, double priority = 1.0, bool force = false) {
+	BuildOrbital@ buildLocalOrbital(const OrbitalModule@ module, double priority = 1.0, bool force = false, uint moneyType = BT_Infrastructure) {
 		//Potentially build a flagship
 		BuildOrbital f(module, local=true);
-		f.moneyType = BT_Military;
+		f.moneyType = moneyType;
 		f.priority = priority;
 		build(f, force=force);
 		return f;
 	}
 
-	BuildOrbital@ buildLocalOrbital(const OrbitalModule@ module, Planet@ planet, double priority = 1.0, bool force = false) {
+	BuildOrbital@ buildLocalOrbital(const OrbitalModule@ module, Planet@ planet, double priority = 1.0, bool force = false, uint moneyType = BT_Infrastructure) {
 		//Potentially build a flagship
 		BuildOrbital f(module, planet);
-		f.moneyType = BT_Military;
+		f.moneyType = moneyType;
 		f.priority = priority;
 		build(f, force=force);
 		return f;

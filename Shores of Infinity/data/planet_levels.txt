@@ -3,7 +3,7 @@ Level: 0
 	Name: Fringe
 	Icon: PlanetIcon0
 	Population: 1
-	PopGrowth: 0.5
+	PopGrowth: 0.6
 	BasePressure: 0
 	BaseIncome: -80
 	BaseLoyalty: 2
@@ -16,7 +16,7 @@ Level: 1
 	Icon: PlanetIcon1
 	Required: 1 WaterType, 1 Food
 	Population: 3
-	PopGrowth: 0.8
+	PopGrowth: 1.0
 	RequiredPop: 2
 	BasePressure: 1
 	BaseIncome: 80
@@ -30,7 +30,7 @@ Level: 2
 	Name: Renowned
 	Icon: PlanetIcon2
 	Required: 1 WaterType, 2 Food, 1 Level1
-	PopGrowth: 1.0
+	PopGrowth: 1.2
 	Population: 8
 	RequiredPop: 6
 	BasePressure: 9
@@ -46,7 +46,7 @@ Level: 3
 	Name: Capital
 	Icon: PlanetIcon3
 	Required: 1 WaterType, 3 Food, 2 Level1, 1 Level2
-	PopGrowth: 1.1
+	PopGrowth: 1.4
 	Population: 16
 	RequiredPop: 8
 	BasePressure: 18
@@ -62,7 +62,7 @@ Level: 4
 	Name: Master
 	Icon: PlanetIcon4
 	Required: 1 WaterType, 4 Food, 4 Level1, 2 Level2
-	PopGrowth: 1.2
+	PopGrowth: 1.5
 	Population: 24
 	RequiredPop: 14
 	BasePressure: 36
@@ -77,7 +77,7 @@ Level: 5
 	Name: Unique
 	Icon: PlanetIcon5
 	Required: 1 WaterType, 5 Food, 6 Level1, 4 Level2
-	PopGrowth: 1.2
+	PopGrowth: 1.5
 	Population: 36
 	RequiredPop: 20
 	BasePressure: 54
@@ -92,7 +92,7 @@ Level: 6
 	Name: Mythical
 	Icon: PlanetIcon5
 	Required: 1 WaterType, 6 Food, 8 Level1, 6 Level2, 1 Level3
-	PopGrowth: 1.2
+	PopGrowth: 1.5
 	Population: 60
 	RequiredPop: 30
 	BasePressure: 82

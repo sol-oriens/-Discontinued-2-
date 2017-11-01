@@ -1,3 +1,24 @@
+ORB_TRADE_OUTPOST_BLURB: Allows trade through its system. Generates defense ships and protects planets in the system from being captured. Can store 1k units of cargo.
+ORB_TRADE_OUTPOST_DESC: <<|
+	A small outpost that allows your civilian ships to travel through the
+	system it is in.
+
+	Outposts generate up to [b]3 Defense[/b] worth of local defense ships,
+	depending on how many adjacent systems have outposts in them.
+
+	If all of the outpost's support command is used and it has a full
+	complement of defense ships, it will start adding its defense generation to
+	your empire's global pool.
+
+	Planets in systems that have contained an outpost for at least 2 minutes
+	will be [b]Protected[/b] from being captured until the outpost is destroyed.
+
+	[i]Can be built in systems you do not own planets in, expanding your
+	empire border. Only one outpost can be constructed per system.[/i]
+
+	Can store 1k units of cargo.
+>>
+
 ORB_TRADE_STATION_DESC: <<|
 	A large and bustling station of commerce allows global resource trade
 	between any territories with commerce stations or starports with long haul
@@ -19,18 +40,19 @@ ORB_FTL_STORAGE_FLUX_DESC: <<
 	Stores 600 FTL Energy.
 >>
 ORB_STARPORT: Starport
-ORB_STARPORT_BLURB: Allows trade through its system. Generates income per friendly planet.
+ORB_STARPORT_BLURB: Allows trade through its system. Generates income per friendly planet. Can store 2.5k units of cargo.
 ORB_STARPORT_DESC: <<
 	[color=#aaa][i]A docking station for civilian and military ships and a transit point for interstellar trade greatly facilitating planetary exporting. A market area also allows small scale commerce with friendly planets.[/i][/color]
 
 	Provides 25k income for each owned and friendly planet, to each friendly empire including yours, in the system, up to 75k.
 	Support ships assigned to a Starport independently move across the system to attack enemy fleets.
 	Can be upgraded to allow global resource trade.
+	Can store 2.5k units of cargo.
 
 	[i]Only one Starport may be constructed per system.[/i]
 >>
 ORB_STAGING_HUB: Staging Hub
-ORB_STAGING_HUB_BLURB: Allows trade through its system. Can import and sell resources and store cargo. Planets can be ordered to export their labor to this orbital.
+ORB_STAGING_HUB_BLURB: Allows trade through its system. Can import and sell resources and store cargo. Planets can be ordered to export their labor to this orbital. Can store 5k units of cargo.
 ORB_STAGING_HUB_DESC: <<|
 	[color=#aaa][i]This multipurpose station can act as a trading outpost as well as a remote base for mining operations or construction projects. It can also support a small fleet and stockpile resources to sell to private corporations.[/i][/color]
 
@@ -39,16 +61,18 @@ ORB_STAGING_HUB_DESC: <<|
 	Can import labor resources and gain labor per minute equivalent to 50% of the imported pressure.
 	Can import influence, energy, research and defense resources and generate 5k per imported pressure as special funds every minute.
 	Adds 15 Defense Reserve when in orbit around a planet.
+	Can store 5k units of cargo.
 
 	[i]Can be built in systems you do not own planets in, expanding your empire border.[/i]
 >>
 ORB_RESEARCH_LAB: Zero-G Lab
-ORB_RESEARCH_LAB_BLURB: Generates research points for the empire and gives access to special projects.
+ORB_RESEARCH_LAB_BLURB: Generates research points for the empire and gives access to special projects. Can store 1.5k units of cargo.
 ORB_RESEARCH_LAB_DESC: <<|
 	[color=#aaa][i]A space based research and development laboratory taking advantage of zero-gravity conditions for specific projects.[/i][/color]
 
 	Gives 1 research generation.
 	Allows access to special projects.
+	Can store 1.5k units of cargo.
 >>
 ORB_FTL_HARVESTER: Hyperfield Harvester
 ORB_FTL_HARVESTER_BLURB: Generates and stores FTL Energy.

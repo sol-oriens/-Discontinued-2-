@@ -1,15 +1,15 @@
 //Search for a match in multiple values without a ugly
 //if (foo == bar) || (foo == baz) || ..." list
 class Lookup {
-	int iValue;
+	private int _value;
 
 	Lookup(int value) {
-		iValue = value;
+		_value = value;
 	}
 
 	bool isIn(const int[]& values) {
 		for(uint i = 0, cnt = values.length; i < cnt; ++i) {
-			if (iValue == values[i])
+			if (_value == values[i])
 				return true;
 		}
 			return false;

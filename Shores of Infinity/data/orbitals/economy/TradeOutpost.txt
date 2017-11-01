@@ -16,7 +16,7 @@ Module: TradeOutpost
 	Health: 6000
 	Armor: 4000
 
-	AddCargoStorage(100000)
+	AddCargoStorage(1000)
 
 	Model: Outpost
 	Material: GenericPBR_Outpost

@@ -15,7 +15,7 @@ Module: ResearchLab
 	Health: 5000
 	Armor: 1000
 
-  AddCargoStorage(1000)
+  AddCargoStorage(1500)
 
 	Model: Research_Station
 	Material: GenericPBR_Research_Station

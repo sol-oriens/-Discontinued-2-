@@ -5,26 +5,26 @@ import systems;
 import system_pathing;
 
 //Event callbacks definitions
-funcdef void OwnedSystemAdded(SystemAI@ ai);
-funcdef void OwnedSystemRemoved(SystemAI@ ai);
-funcdef void BorderSystemAdded(SystemAI@ ai);
-funcdef void BorderSystemRemoved(SystemAI@ ai);
-funcdef void OutsideBorderSystemAdded(SystemAI@ ai);
-funcdef void OutsideBorderSystemRemoved(SystemAI@ ai);
+funcdef void OwnedSystemAdded(SystemAI& ai);
+funcdef void OwnedSystemRemoved(SystemAI& ai);
+funcdef void BorderSystemAdded(SystemAI& ai);
+funcdef void BorderSystemRemoved(SystemAI& ai);
+funcdef void OutsideBorderSystemAdded(SystemAI& ai);
+funcdef void OutsideBorderSystemRemoved(SystemAI& ai);
 
 interface IOwnedSystemEvents {
-	void onOwnedSystemAdded(SystemAI@ ai);
-	void onOwnedSystemRemoved(SystemAI@ ai);
+	void onOwnedSystemAdded(SystemAI& ai);
+	void onOwnedSystemRemoved(SystemAI& ai);
 };
 
 interface IBorderSystemEvents {
-	void onBorderSystemAdded(SystemAI@ ai);
-	void onBorderSystemRemoved(SystemAI@ ai);
+	void onBorderSystemAdded(SystemAI& ai);
+	void onBorderSystemRemoved(SystemAI& ai);
 };
 
 interface IOutsideBorderSystemEvents {
-	void onOutsideBorderSystemAdded(SystemAI@ ai);
-	void onOutsideBorderSystemRemoved(SystemAI@ ai);
+	void onOutsideBorderSystemAdded(SystemAI& ai);
+	void onOutsideBorderSystemRemoved(SystemAI& ai);
 };
 
 final class SystemAI {
@@ -190,13 +190,13 @@ final class SystemAI {
 				systems.owned.insertLast(this);
 				systems.hopsChanged = true;
 				hopDistance = 0;
-				systems.raiseOwnedSystemAdded(this);
+				systems.notifyOwnedSystemAdded(this);
 			}
 			else {
 				hopDistance = 1;
 				systems.owned.remove(this);
 				systems.hopsChanged = true;
-				systems.raiseOwnedSystemRemoved(this);
+				systems.notifyOwnedSystemRemoved(this);
 			}
 			owned = shouldOwned;
 		}
@@ -228,11 +228,11 @@ final class SystemAI {
 		if(border != shouldBorder) {
 			if(shouldBorder) {
 				systems.border.insertLast(this);
-				systems.raiseBorderSystemAdded(this);
+				systems.notifyBorderSystemAdded(this);
 			}
 			else {
 				systems.border.remove(this);
-				systems.raiseBorderSystemRemoved(this);
+				systems.notifyBorderSystemRemoved(this);
 			}
 			border = shouldBorder;
 		}
@@ -242,11 +242,11 @@ final class SystemAI {
 		if(outsideBorder != shouldOutsideBorder) {
 			if(shouldOutsideBorder) {
 				systems.outsideBorder.insertLast(this);
-				systems.raiseOutsideBorderSystemAdded(this);
+				systems.notifyOutsideBorderSystemAdded(this);
 			}
 			else {
 				systems.outsideBorder.remove(this);
-				systems.raiseOutsideBorderSystemRemoved(this);
+				systems.notifyOutsideBorderSystemRemoved(this);
 			}
 			outsideBorder = shouldOutsideBorder;
 		}
@@ -349,48 +349,48 @@ class Systems : AIComponent {
 	array<OutsideBorderSystemRemoved@> onOutsideBorderSystemRemoved;
 
 	//Event delegate registration
-	void registerOwnedSystemEvents(IOwnedSystemEvents@ events) {
+	void registerOwnedSystemEvents(IOwnedSystemEvents& events) {
 		onOwnedSystemAdded.insertLast(OwnedSystemAdded(events.onOwnedSystemAdded));
 		onOwnedSystemRemoved.insertLast(OwnedSystemRemoved(events.onOwnedSystemRemoved));
 	}
 
-	void registerBorderSystemEvents(IBorderSystemEvents@ events) {
+	void registerBorderSystemEvents(IBorderSystemEvents& events) {
 		onBorderSystemAdded.insertLast(BorderSystemAdded(events.onBorderSystemAdded));
 		onBorderSystemRemoved.insertLast(BorderSystemRemoved(events.onBorderSystemRemoved));
 	}
 
-	void registerOutsideBorderSystemEvents(IOutsideBorderSystemEvents@ events) {
+	void registerOutsideBorderSystemEvents(IOutsideBorderSystemEvents& events) {
 		onOutsideBorderSystemAdded.insertLast(OutsideBorderSystemAdded(events.onOutsideBorderSystemAdded));
 		onOutsideBorderSystemRemoved.insertLast(OutsideBorderSystemRemoved(events.onOutsideBorderSystemRemoved));
 	}
 
-	//Event raising
-	void raiseOwnedSystemAdded(SystemAI@ ai) {
+	//Event notifications
+	void notifyOwnedSystemAdded(SystemAI& ai) {
 		for (uint i = 0, cnt = onOwnedSystemAdded.length; i < cnt; ++i)
 			onOwnedSystemAdded[i](ai);
 	}
 
-	void raiseOwnedSystemRemoved(SystemAI@ ai) {
+	void notifyOwnedSystemRemoved(SystemAI& ai) {
 		for (uint i = 0, cnt = onOwnedSystemRemoved.length; i < cnt; ++i)
 			onOwnedSystemRemoved[i](ai);
 	}
 
-	void raiseBorderSystemAdded(SystemAI@ ai) {
+	void notifyBorderSystemAdded(SystemAI& ai) {
 		for (uint i = 0, cnt = onBorderSystemAdded.length; i < cnt; ++i)
 			onBorderSystemAdded[i](ai);
 	}
 
-	void raiseBorderSystemRemoved(SystemAI@ ai) {
+	void notifyBorderSystemRemoved(SystemAI& ai) {
 		for (uint i = 0, cnt = onBorderSystemRemoved.length; i < cnt; ++i)
 			onBorderSystemRemoved[i](ai);
 	}
 
-	void raiseOutsideBorderSystemAdded(SystemAI@ ai) {
+	void notifyOutsideBorderSystemAdded(SystemAI& ai) {
 		for (uint i = 0, cnt = onOutsideBorderSystemAdded.length; i < cnt; ++i)
 			onOutsideBorderSystemAdded[i](ai);
 	}
 
-	void raiseOutsideBorderSystemRemoved(SystemAI@ ai) {
+	void notifyOutsideBorderSystemRemoved(SystemAI& ai) {
 		for (uint i = 0, cnt = onOutsideBorderSystemRemoved.length; i < cnt; ++i)
 			onOutsideBorderSystemRemoved[i](ai);
 	}

@@ -7,19 +7,20 @@ import planets.PlanetSurface;
 
 import void relationRecordLost(AI& ai, Empire& emp, Object@ obj) from "empire_ai.weasel.Relations";
 
+from constructions import ConstructionType, getConstructionTypeCount, getConstructionType;
+from ai.constructions import AIConstructions, ConstructionAIHook, ConstructionUse;
+
+import ai.consider;
+
 import buildings;
 import saving;
 
-from constructions import ConstructionType, getConstructionTypeCount, getConstructionType;
-from ai.constructions import AIConstructions, ConstructionAIHook, ConstructionUse;
-from statuses import getStatusID;
-
-funcdef void PlanetAdded(PlanetAI@ ai);
-funcdef void PlanetRemoved(PlanetAI@ ai);
+funcdef void PlanetAdded(PlanetAI& ai);
+funcdef void PlanetRemoved(PlanetAI& ai);
 
 interface IPlanetEvents {
-	void onPlanetAdded(PlanetAI@ ai);
-	void onPlanetRemoved(PlanetAI@ ai);
+	void onPlanetAdded(PlanetAI& ai);
+	void onPlanetRemoved(PlanetAI& ai);
 };
 
 final class BuildingRequest {
@@ -123,6 +124,10 @@ final class ConstructionRequest {
 	ConstructionRequest() {
 	}
 
+	bool get_completed() const {
+		return getProgress() == -1.0;
+	}
+
 	void save(Planets& planets, SaveFile& file) {
 		planets.saveAI(file, plAI);
 		planets.budget.saveAlloc(file, alloc);
@@ -165,7 +170,7 @@ final class ConstructionRequest {
 	bool tick(AI& ai, Planets& planets, double time) {
 		if(expires < gameTime) {
 			if(planets.log)
-				ai.print(type.name+" build request expired", plAI.obj);
+				ai.print(type.name+" construction request expired", plAI.obj);
 			canceled = true;
 			return false;
 		}
@@ -475,8 +480,6 @@ final class AsteroidData {
 };
 
 class Planets : AIComponent, AIConstructions {
-	const ResourceClass@ scalableClass;
-
 	Resources@ resources;
 	Budget@ budget;
 	Systems@ systems;
@@ -488,31 +491,29 @@ class Planets : AIComponent, AIConstructions {
 	array<PlanetAI@> bumped;
 	uint planetIdx = 0;
 
+
 	array<BuildingRequest@> building;
-	array<ConstructionRequest@> constructionRequests;
 	int nextBuildingRequestId = 0;
-
-	int moonBaseStatusId;
-
-	uint maxRequests = 1;
+	array<ConstructionRequest@> constructionRequests;
+	int nextConstructionRequestId = 0;
 
 	//Event callbacks
 	array<PlanetAdded@> onPlanetAdded;
 	array<PlanetRemoved@> onPlanetRemoved;
 
 	//Event delegate registration
-	void registerPlanetEvents(IPlanetEvents@ events) {
+	void registerPlanetEvents(IPlanetEvents& events) {
 			onPlanetAdded.insertLast(PlanetAdded(events.onPlanetAdded));
 			onPlanetRemoved.insertLast(PlanetRemoved(events.onPlanetRemoved));
 	}
 
-	//Event raising
-	void raisePlanetAdded(PlanetAI@ ai) {
+	//Event notifications
+	void notifyPlanetAdded(PlanetAI& ai) {
 		for (uint i = 0, cnt = onPlanetAdded.length; i < cnt; ++i)
 			onPlanetAdded[i](ai);
 	}
 
-	void raisePlanetRemoved(PlanetAI@ ai) {
+	void notifyPlanetRemoved(PlanetAI& ai) {
 		for (uint i = 0, cnt = onPlanetRemoved.length; i < cnt; ++i)
 			onPlanetRemoved[i](ai);
 	}
@@ -521,11 +522,6 @@ class Planets : AIComponent, AIConstructions {
 		@resources = cast<Resources>(ai.resources);
 		@budget = cast<Budget>(ai.budget);
 		@systems = cast<Systems>(ai.systems);
-
-		@scalableClass = getResourceClass("Scalable");
-
-		//Cache the MoonBase status id
-		moonBaseStatusId = getStatusID("MoonBase");
 
 		//Register specialized construction types
 		for(uint i = 0, cnt = getConstructionTypeCount(); i < cnt; ++i) {
@@ -538,6 +534,14 @@ class Planets : AIComponent, AIConstructions {
 		}
 	}
 
+	Empire@ get_empire() {
+		return ai.empire;
+	}
+
+	Considerer@ get_consider() {
+		return cast<Considerer>(ai.consider);
+	}
+
 	void registerUse(ConstructionUse use, const ConstructionType& type) {
 		switch(use) {
 			case CU_MoonBase:
@@ -548,6 +552,7 @@ class Planets : AIComponent, AIConstructions {
 
 	void save(SaveFile& file) {
 		file << nextBuildingRequestId;
+		file << nextConstructionRequestId;
 
 		uint cnt = planets.length;
 		file << cnt;
@@ -567,6 +572,7 @@ class Planets : AIComponent, AIConstructions {
 		cnt = constructionRequests.length;
 		file << cnt;
 		for(uint i = 0; i < cnt; ++i) {
+			saveConstructionRequest(file, constructionRequests[i]);
 			constructionRequests[i].save(this, file);
 		}
 
@@ -578,6 +584,7 @@ class Planets : AIComponent, AIConstructions {
 
 	void load(SaveFile& file) {
 		file >> nextBuildingRequestId;
+		file >> nextConstructionRequestId;
 
 		uint cnt = 0;
 		file >> cnt;
@@ -600,9 +607,11 @@ class Planets : AIComponent, AIConstructions {
 
 		file >> cnt;
 		for(uint i = 0; i < cnt; ++i) {
-			auto@ req = ConstructionRequest();
-			req.load(this, file);
-			constructionRequests.insertLast(req);
+			auto@ req = loadConstructionRequest(file);
+			if (req !is null) {
+				req.load(this, file);
+				constructionRequests.insertLast(req);
+			}
 		}
 
 		file >> cnt;
@@ -638,17 +647,17 @@ class Planets : AIComponent, AIConstructions {
 		file << pl;
 	}
 
-	array<BuildingRequest@> loadIds;
+	array<BuildingRequest@> buildingLoadIds;
 	BuildingRequest@ loadBuildingRequest(int id) {
 		if(id == -1)
 			return null;
-		for(uint i = 0, cnt = loadIds.length; i < cnt; ++i) {
-			if(loadIds[i].id == id)
-				return loadIds[i];
+		for(uint i = 0, cnt = buildingLoadIds.length; i < cnt; ++i) {
+			if(buildingLoadIds[i].id == id)
+				return buildingLoadIds[i];
 		}
 		BuildingRequest data;
 		data.id = id;
-		loadIds.insertLast(data);
+		buildingLoadIds.insertLast(data);
 		return data;
 	}
 	BuildingRequest@ loadBuildingRequest(SaveFile& file) {
@@ -665,8 +674,36 @@ class Planets : AIComponent, AIConstructions {
 			id = data.id;
 		file << id;
 	}
+	array<ConstructionRequest@> constructionLoadIds;
+	ConstructionRequest@ loadConstructionRequest(int id) {
+		if(id == -1)
+			return null;
+		for(uint i = 0, cnt = constructionLoadIds.length; i < cnt; ++i) {
+			if(constructionLoadIds[i].id == id)
+				return constructionLoadIds[i];
+		}
+		ConstructionRequest data;
+		data.id = id;
+		constructionLoadIds.insertLast(data);
+		return data;
+	}
+	ConstructionRequest@ loadConstructionRequest(SaveFile& file) {
+		int id = -1;
+		file >> id;
+		if(id == -1)
+			return null;
+		else
+			return loadConstructionRequest(id);
+	}
+	void saveConstructionRequest(SaveFile& file, ConstructionRequest@ data) {
+		int id = -1;
+		if(data !is null)
+			id = data.id;
+		file << id;
+	}
 	void postLoad(AI& ai) {
-		loadIds.length = 0;
+		buildingLoadIds.length = 0;
+		constructionLoadIds.length= 0;
 	}
 
 	void start() {
@@ -756,19 +793,6 @@ class Planets : AIComponent, AIConstructions {
 			for(uint i = 0, cnt = sys.asteroids.length; i < cnt; ++i)
 				register(sys.asteroids[i]);
 		}
-
-		//Check if any planet can benefits from a project
-		/*for(uint i = 0, cnt = planets.length; i < cnt; ++i) {
-			PlanetAI@ plAI = planets[i];
-			//Check if we already have something being built, we don't want to build too much
-			if (constructionRequests.length < maxRequests) {
-				//Check if we need a moon base
-				if (plAI.obj.moonCount > plAI.obj.getStatusStackCountAny(moonBaseStatusId) && shouldHaveMoonBase(plAI)) {
-					requestConstruction(plAI, plAI.obj, ai.defs.MoonBase, expire = 600);
-				}
-				//Check if the planet can be explored
-			}
-		}*/
 	}
 
 	void bump(Planet@ pl) {
@@ -797,7 +821,7 @@ class Planets : AIComponent, AIConstructions {
 			plAI.prevTick = gameTime;
 			planets.insertLast(plAI);
 			plAI.init(ai, this);
-			raisePlanetAdded(plAI);
+			notifyPlanetAdded(plAI);
 		}
 		return plAI;
 	}
@@ -826,7 +850,7 @@ class Planets : AIComponent, AIConstructions {
 		plAI.remove(ai, this);
 		planets.remove(plAI);
 		bumped.remove(plAI);
-		raisePlanetRemoved(plAI);
+		notifyPlanetRemoved(plAI);
 	}
 
 	void requestLevel(PlanetAI@ plAI, int toLevel, ImportData@ before = null) {
@@ -868,7 +892,7 @@ class Planets : AIComponent, AIConstructions {
 			ai.print("Requested construction of type "+type.name, plAI.obj);
 
 		ConstructionRequest req(budget, buildAt, type, priority, moneyType);
-		req.id = nextBuildingRequestId++;
+		req.id = nextConstructionRequestId++;
 		req.expires = gameTime + expire;
 		@req.plAI = plAI;
 
@@ -888,32 +912,6 @@ class Planets : AIComponent, AIConstructions {
 		for(uint i = 0, cnt = constructionRequests.length; i < cnt; ++i) {
 			if(constructionRequests[i].type is type && constructionRequests[i].plAI.obj is planet)
 				return true;
-		}
-		return false;
-	}
-
-	bool shouldHaveMoonBase(PlanetAI@ plAI) {
-		int resId = plAI.obj.primaryResourceType;
-		if (resId == -1)
-			return false;
-		//If the planet is short on empty developed tiles, it should have a moon base
-		if (plAI.obj.emptyDevelopedTiles < 9){
-			ai.print("first condition returned true");
-			return true;
-		}
-		else
-		{
-			const ResourceType@ type = getResource(resId);
-			//Gas giants should have a moon base if there is none already built regardless of any other condition
-			if (type.ident == "RareGases" && plAI.obj.moonCount > plAI.obj.getStatusStackCountAny(moonBaseStatusId)){
-				ai.print("gas giant without moon base spotted");
-				return true;
-			}
-			if (plAI.obj.resourceLevel > 1 && plAI.obj.emptyDevelopedTiles < 9)
-				return true;
-			//The planet has either a scalable or level 3 or 2 resource and is short on empty developed tiles, it should have a moon base
-			/*if (type !is null && (type.cls is scalableClass || type.level == 3 || type.level == 2) plAI.obj.emptyDevelopedTiles < 9)
-				return true;*/
 		}
 		return false;
 	}
