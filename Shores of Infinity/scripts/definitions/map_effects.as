@@ -1311,7 +1311,7 @@ class MakeAdjacentAsteroid : MapHook {
 	Argument cargo_amount(AT_Range, "50:1250", doc="Amount of cargo for the asteroid to have.");
 	Argument resource(AT_Custom, EMPTY_DEFAULT, doc="Resource to put on the asteroid.");
 	Argument distribution_chance(AT_Decimal, "0.4", doc="For distributed resources, chance to add additional resource. Repeats until failure.");
-	Argument distance(AT_Integer, "1", doc="System hop distance within which to allow the resource.");
+	Argument farther(AT_Boolean, "False", doc="If true, the asteroid will spawn one system farther.");
 
 #section server
 	array<const ResourceType@> resPossib;
@@ -1336,14 +1336,30 @@ class MakeAdjacentAsteroid : MapHook {
 			return;
 
 		int at = randomi(0, data.adjacentData.length - 1);
-		SystemData adjacent = data.adjacentData[at];
-		for(uint i = 0, cnt = distance.integer - 1; i < cnt; ++i) {
+		SystemData@ adjacent = data.adjacentData[at];
+
+		if (farther.boolean) {
+			array<uint> tried;
+			array<SystemData@> visited;
+			visited.insertLast(data);
+			visited.insertLast(adjacent);
 			do {
 				at = randomi(0, adjacent.adjacentData.length - 1);
-				adjacent = adjacent.adjacentData[at];
-			}
-			while (adjacent is data && adjacent.adjacentData.length > 1);
+				if (tried.find(at) == -1)
+					tried.insertLast(at);
+				if (visited.find(adjacent.adjacentData[at]) == -1) {
+					//Make sure the chosen system is not actually at a lesser distance from the origin
+					if (adjacent.adjacentData[at].adjacentData.find(data) == -1) {
+						adjacent = adjacent.adjacentData[at];
+						visited.insertLast(adjacent);
+						break;
+					}
+				}
+			} //If at the galaxy's edge, it is possible to actually run out of options, so spawn the asteroid in the current system
+			while (tried.length < adjacent.adjacentData.length);
+			tried.resize(0);
 		}
+
 		SystemDesc@ other = getSystem(adjacent.sysIndex);
 		vec2d rpos = get2dPos(other, 0.8);
 		vec3d pos = other.position + vec3d(rpos.x, randomd(-50.0, 50.0), rpos.y);
