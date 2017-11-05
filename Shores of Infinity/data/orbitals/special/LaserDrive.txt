@@ -1,0 +1,25 @@
+Module: LaserDrive
+	Name: #ORB_LASER_DRIVE
+	Blurb: #ORB_LASER_DRIVE_BLURB
+	Description: #ORB_LASER_DRIVE_DESC
+	Icon: GuiOrbitalIcons::13
+	Strategic Icon: OrbitalIcons::13
+
+  Standalone: True
+  Core: True
+	Size: 10
+
+	Build Cost: 100
+	Maintenance: 10
+	Labor Cost: 10
+
+	Health: 3000
+	Armor: 500
+
+  Model: SolarEngine
+	Material: GenericPBR_SolarEngine
+
+  FacesOrbitCenter()
+
+  ShowRange(250000, #00ff00)
+  GrantAbility(LaserBeam)

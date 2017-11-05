@@ -21,7 +21,7 @@ This new balance is also designed to make infrastructure building and careful ex
 
 [*] Orbitals
 
-- Subspace Telescope Array has been renamed to Quantum Telescope Array, has no maintenance cost anymore and can no longer move. Its Telescope ability now has a range of 1 million units and it now costs an amount of Energy and FTL Energy linearly relative to the target distance.
+- Subspace Telescope Array has been renamed to Quantum Telescope Array, has no maintenance cost anymore and can no longer move. Its Telescope ability now has a range of 1M units and it now costs an amount of Energy and FTL Energy linearly relative to the target distance.
 
 [*] Planets
 
@@ -93,12 +93,14 @@ different methods preferable in different situations. Third: To tone down the ad
 
 [*] Orbitals
 
+- Activated and added support for orbital modules, an unfinished / unreleased vanilla feature for orbitals. Modules are add-ons that can be constructed on previously built orbitals. Some new orbitals make use of this feature and this will be extended further in a future release.
 - Commerce Stations now additionally cost 5 influence and provide income, for each friendly planet in the system excluding the owner's, equal to 100k per planet Level starting from 1 and up to 300k. Only one Commerce Station may now be built per system.
-- Added Starport. Provides 25k income for each owned and friendly planet in the system, up to 75k. Support ships assigned to a Starport independently move across the system to attack enemy fleets. Can be upgraded to allow global resource trade. Only one Starport may be constructed per system.
+- Added Starport. Provides 25k income for each owned and friendly planet in the system, up to 75k. Support ships assigned to a Starport independently move across the system to attack enemy fleets. Can be upgraded with a module to allow global resource trade. Only one Starport may be constructed per system.
 - Added Telescope Array, which has 40% Telescope power of the quantum version. Costs 200k to build, requires no ore but has a 40k maintenance cost. Primarily designed for early scouting, when interstellar travel is a problem, and border control. Its Telescope ability only costs Energy (and no FTL Energy).
+- Added Phased Array Laser Drive. Has the 'Laser Propulsion Beam' ability, a laser transmitting photon momentum to a reflector panel (dubbed lightsail) on a ship and providing thrust. Range of 250k units.
 - Added Staging Hub. Allows trade through its system. Can import and sell resources and store cargo. Planets can be ordered to export their labor to this orbital, which can only build asteroid bases. Also has a small support capacity and gives 15 Defense Reserve when in orbit around a planet. Designed to fill various support roles, notably
 for use as a remote mining base, as the new balance makes tractoring ore asteroids around a pain. Build and maintenance costs of 400k and 70k, respectively.
-- Added Zero-G Lab. Gives 1 research generation and allows access to special projects. Build and maintenance costs of 400k and 100k, respectively.
+- Added Zero-G Lab. Gives 1 research generation and allows access to special modules and projects. Build and maintenance costs of 400k and 100k, respectively.
 - Added Hyperfield Harvester. Generates 0.15 FTL Energy per second and stores 250 FTL Energy. Build and maintenance costs of 450k and 75k, respectively.
 - Added Tachyon Uplink. Unlocks the Tachyon Sensor subsystem. Requires 0.5 FTL maintenance. Can only be built in a Tachyon Nebula. Only one Tachyon Uplink may be constructed per system.
 - FTL Storage orbitals for Star Children with Flux FTL now generate 0.5 FTL Energy per second and store 600 FTL Energy to make up for the impossibility to build FTL Breeders. They also additionally cost 500 ore to build.
@@ -158,6 +160,8 @@ Specific sensor subsystems can be added to flagship	and station designs to furth
 - Added Sensor Dish. Increases sight range by a small amount. Adding more than one dish doesn't increase sight range more and only gives redundancy benefits.
 - Added Phasing Sensor. Increases sight range by a moderate amount, decreasing as the subsystem's size increases. Requires Power. Requires increasingly high amounts of Power and Control as the subsystem's size increases. Sinew halves the Control requirements.
 - Added Tachyon Sensor back. Increases sight range by a high amount, decreasing as the subsystem's size increases. Requires an active Tachyon Uplink orbital to function. Requires increasingly high amounts of Control as the subsystem's size increases. Sinew halves the Control requirements.
+- Added Phased Array Laser Drive. Allows station designs with the same functionalities as the orbital of the same name, with scaling.
+- Added Lightsail, a reflector panel allowing to use the momentum of photons as actual thrust. Does not need fuel, very low maintenance cost. Lightsails on the outside of the ship do not use up interior space. Thrust is not improved by research. Requires to be within range of an active laser propulsion beam to function a full efficiency, or a near a star to function at low efficiency.
 - Increased most weapon ranges by a factor of 2. Energy Bomb, Plasma Thrower, Pulse Bolt and Subspace Shredder ranges are unchanged. The Flak Battery range formula has been tweaked to keep a much more linear and slow progression relative to ship size.
 - Increased Fleet Computer raiding range bonus (and base raiding range) by a factor of 3.
 
@@ -185,3 +189,5 @@ Specific sensor subsystems can be added to flagship	and station designs to furth
 [*] Known issues
 
 - Regular planets (including homeworlds) will rarely have a gas giant atmosphere.
+- Stations with the Phased Array Laser Drive subsystem will not show the range of their Laser Propulsion Beam ability (this is not the case with the orbital of the same name). This is a technical limitation that will be addressed in a future release.
+- Modules available to build on orbitals build instantly. It is unknown if this is an originally intended behavior but there is no code to handle construction queues. This may or may not be changed in a future release.

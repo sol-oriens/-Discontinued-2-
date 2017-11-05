@@ -85,8 +85,11 @@ ABL_GUARDIAN_FINISH_DESC: <<
 
 	Other empires will be notified of the project's completion, and the Guardian Facility will resume normal operation.
 >>
-
-ABL_HYPERBEAM: Hypersail Beam
+ABL_LASERBEAM: Laser Propulsion Beam
+ABL_LASERBEAM_DESC: <<
+	A laser transmitting photon momentum to a reflector panel (dubbed lightsail) on a ship and providing thrust.
+>>
+ABL_HYPERBEAM: Hyperpropulsion Beam
 ABL_HYPERBEAM_DESC: <<
-	An beam focusing energy extracted from a hypercore to heat exchangers on the engines of a ship, resulting in a thermo-hyperspatial reaction and granting them an acceleration boost defying conventional physics. Energy consumption rate and overheating prevent the beam to be maintained for extended periods of time. Pilots must be aware of newtonian physics limitations once back into conventional thrust.
+	A beam focusing energy extracted from a hypercore to heat exchangers on the engines of a ship, resulting in a powerful thermal reaction granting them an acceleration boost defying conventional physics. Energy consumption rate and overheating prevent the beam to be maintained for extended periods of time. Pilots must be aware of newtonian physics limitations once back into conventional thrust.
 >>

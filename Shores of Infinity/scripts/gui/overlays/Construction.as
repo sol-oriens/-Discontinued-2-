@@ -877,13 +877,13 @@ class ConstructionDisplay : DisplayBox {
 				shipsButton.visible = false;
 				orbitalsButton.visible = false;
 			}
-			/*if(obj.isOrbital) {*/
-			/*	modulesButton.visible = true;*/
-			/*	btnCount += 1;*/
-			/*}*/
-			/*else {*/
+			if(obj.isOrbital) {
+				modulesButton.visible = true;
+				btnCount += 1;
+			}
+			else {
 				modulesButton.visible = false;
-			/*}*/
+			}
 			if(hasConstructions) {
 				constructionsButton.visible = true;
 				btnCount += 1;

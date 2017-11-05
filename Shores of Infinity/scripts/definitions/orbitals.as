@@ -100,8 +100,6 @@ tidy final class OrbitalModule {
 	uint totalRequirementCount = 0;
 
 	bool canBuildBy(Object@ obj, bool ignoreCost = true) const {
-		if(!isCore)
-			return false;
 		for(uint i = 0, cnt = hooks.length; i < cnt; ++i) {
 			if(!hooks[i].canBuildBy(obj, ignoreCost))
 				return false;
@@ -571,15 +569,15 @@ string getOrbitalModuleIdent(int id) {
 
 void loadOrbitalModules(const string& filename) {
 	ReadFile file(filename, true);
-	
+
 	string key, value;
 	OrbitalModule@ mod;
-	
+
 	uint index = 0;
 	while(file++) {
 		key = file.key;
 		value = file.value;
-		
+
 		if(file.fullLine) {
 			string line = file.line;
 			parseLine(line, mod, file);
@@ -713,7 +711,7 @@ void loadOrbitalModules(const string& filename) {
 			parseLine(line, mod, file);
 		}
 	}
-	
+
 	if(mod !is null)
 		addOrbitalModule(mod);
 }

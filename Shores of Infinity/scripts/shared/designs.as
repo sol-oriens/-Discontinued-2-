@@ -228,7 +228,6 @@ void getDesignMesh(Empire@ owner, const Design& design, MeshDesc& mesh) {
 	const ShipSkin@ skin;
 	if(owner !is null)
 		@ss = owner.shipset;
-
 	if(ss !is null) {
 		bool isCivilian = !design.hasTag(ST_Weapon) && !design.hasTag(ST_SupportCap);
 		if(isCivilian) {
@@ -239,6 +238,8 @@ void getDesignMesh(Empire@ owner, const Design& design, MeshDesc& mesh) {
 		}
 		if(design.hasTag(ST_Gate) && design.hasTag(ST_Station) && !design.hasTag(ST_GateHull))
 			@skin = ss.getSkin("Gate");
+		else if(design.hasTag(ST_Drive) && design.hasTag(ST_Station))
+			@skin = ss.getSkin("SolarEngine");
 	}
 
 	if(skin !is null) {
@@ -248,6 +249,10 @@ void getDesignMesh(Empire@ owner, const Design& design, MeshDesc& mesh) {
 	else if(design.hasTag(ST_Gate) && design.hasTag(ST_Station) && !design.hasTag(ST_GateHull)) {
 		@mesh.model = model::Warpgate;
 		@mesh.material = material::GenericPBR_Gate;
+	}
+	else if(design.hasTag(ST_Drive) && design.hasTag(ST_Station)) {
+		@mesh.model = model::SolarEngine;
+		@mesh.material = material::GenericPBR_SolarEngine;
 	}
 	else {
 		@mesh.model = design.hull.model;

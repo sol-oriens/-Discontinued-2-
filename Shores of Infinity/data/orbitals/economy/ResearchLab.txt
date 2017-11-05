@@ -4,8 +4,8 @@ Module: ResearchLab
 	Description: #ORB_RESEARCH_LAB_DESC
 	Icon: GuiOrbitalIcons::12
 
+	Standalone: False
 	Core: True
-	Standalone: True
   Size: 10
 
 	Build Cost: 400
@@ -24,4 +24,36 @@ Module: ResearchLab
 
 	AddResearchIncome(1)
 
-  AllowConstruction()
+	AllowConstruction()
+
+Module: Crystallizer
+	Name: #ORB_RESEARCH_LAB_CRYSTALLIZER
+	Description: #ORB_RESEARCH_LAB_CRYSTALLIZER_DESC
+	Icon: ResourceIconsSmall::47
+
+	Standalone: False
+	Core: False
+
+	Build Cost: 100
+	ConsumeCargo(Ore, 100))
+
+	AddStatus(ResearchLabCrystallizer)
+
+	RequireOnOrbital(ResearchLab)
+
+Module: Hypercharger
+	Name: #ORB_RESEARCH_LAB_HYPERCHARGER
+	Description: #ORB_RESEARCH_LAB_HYPERCHARGER_DESC
+	Icon: techPropulsion*#26a980
+
+	Standalone: False
+	Core: False
+
+	Build Cost: 750
+	ConsumeCargo(Ore, 1000))
+	ConsumeCargo(Hypercore, 2))
+
+	ShowRange(25000, #00ff00)
+	AddStatus(ResearchLabHypercharger)
+
+	RequireOnOrbital(ResearchLab)

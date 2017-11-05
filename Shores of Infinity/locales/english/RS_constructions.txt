@@ -77,20 +77,6 @@ OUTPOST_WEAPONS_DESC: <<
 	Adds 10 missile tubes, each firing one missile per second for a damage of 50 per missile. May be modified by upgrades that improve stationary defense weapons. Subsequent missile launchers require increasingly large amounts of Ore to install.
 >>
 
-RESEARCH_LAB_CRYSTALLIZER: Hyperfield Crystallizer
-RESEARCH_LAB_CRYSTALLIZER_DESC: <<
-	[color=#aaa][i]This highly advanced device is able to artificially reproduce the FTL crystal formation process at an accelerated rate through a complex chain reaction.[/i][/color]
-
-	Unlocks the Hyperfield Crystallization Project.
->>
-
-RESEARCH_LAB_HYPERCHARGER: Hypercharger
-RESEARCH_LAB_HYPERCHARGER_DESC: <<
-	[color=#aaa][i]A canon projecting a constant beam of energy extracted from a hypercore, able to tremendously boost engine thrust for a short duration. This effect is nicknamed "hypersail", though there is no physical sail per se.[/i][/color]
-
-	Unlocks the Hypercharge Project.
->>
-
 RESEARCH_LAB_HYPERCHARGE: Hypercharge
 RESEARCH_LAB_HYPERCHARGE_DESC: <<
 	[color=#aaa][i]Load this lab's hypercharger with one hypercore charge.[/i][/color]
@@ -124,11 +110,4 @@ STAGING_HUB_ASTEROID_MORPH_DESC: <<
 	[color=#aaa][i]It's no secret that asteroids usually are far richer in resources than planets. Unfortunately, the benefits of drilling deep enough to get access to their hidden treasures are as massive as the cost of setting a space-based infrastructure up to do so.[/i][/color]
 
 	The targeted Ore asteroid is transformed into an asteroid containing one or more resources available to build a mining base on.
->>
-
-STARPORT_DOCKING_BAYS: Long Haul Docking Bays
-STARPORT_DOCKING_BAYS_DESC: <<
-	[color=#aaa][i]Standard civilian trade ships are not suited for very long distance travels and an extensive infrastructure is required to maintain supply lines across multiple systems. These much bigger and specialized docking bays allow long distance superhaulers to dock at the starport, a privilege usually exclusive to huge commerce stations.[/i][/color]
-
-	Allows global resource trade between any territories with Commerce Stations or Starports with Long Haul Docking Bays.
 >>

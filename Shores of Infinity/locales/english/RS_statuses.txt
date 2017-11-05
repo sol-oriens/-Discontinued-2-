@@ -60,7 +60,11 @@ STATUS_HYPERCHARGE: Hypercharge
 STATUS_HYPERCHARGE_DESC: <<
 	A hypercharge granting one use of the Hypersail Beam ability.
 >>
-STATUS_HYPERSAIL: Hypersail
+STATUS_LASERSAIL: Lasersailing
+STATUS_LASERSAIL_DESC: <<
+	This ship is receiving a thrust boost from a laser source pushing photon momentum into its lightsails.
+>>
+STATUS_HYPERSAIL: Hypersailing
 STATUS_HYPERSAIL_DESC: <<
-	This ship is under the effect of a hypercharge beam boosting its engine thrust, an effect nicknamed "hypersail".
+	This ship is under the effect of a hypercharge beam boosting its engine thrust, an effect nicknamed 'hypersailing'.
 >>

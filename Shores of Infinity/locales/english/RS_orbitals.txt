@@ -51,8 +51,14 @@ ORB_STARPORT_DESC: <<
 
 	[i]Only one Starport may be constructed per system.[/i]
 >>
+ORB_STARPORT_DOCKING_BAYS: Long Haul Docking Bays
+ORB_STARPORT_DOCKING_BAYS_DESC: <<
+	[color=#aaa][i]Standard civilian trade ships are not suited for very long distance travels and an extensive infrastructure is required to maintain supply lines across multiple systems. These much bigger and specialized docking bays allow long distance superhaulers to dock at the starport, a privilege usually exclusive to huge commerce stations.[/i][/color]
+
+	Allows global resource trade between any territories with Commerce Stations or Starports with Long Haul Docking Bays.
+>>
 ORB_STAGING_HUB: Staging Hub
-ORB_STAGING_HUB_BLURB: Allows trade through its system. Can import and sell resources and store cargo. Planets can be ordered to export their labor to this orbital. Can store 5k units of cargo.
+ORB_STAGING_HUB_BLURB: Allows trade through its system. Can import and sell resources. Planets can be ordered to export their labor to this orbital. Can store 5k units of cargo.
 ORB_STAGING_HUB_DESC: <<|
 	[color=#aaa][i]This multipurpose station can act as a trading outpost as well as a remote base for mining operations or construction projects. It can also support a small fleet and stockpile resources to sell to private corporations.[/i][/color]
 
@@ -74,7 +80,20 @@ ORB_RESEARCH_LAB_DESC: <<|
 	Allows access to special projects.
 	Can store 1.5k units of cargo.
 >>
-ORB_FTL_HARVESTER: Hyperfield Harvester
+ORB_RESEARCH_LAB_CRYSTALLIZER: Hyperfield Crystallizer
+ORB_RESEARCH_LAB_CRYSTALLIZER_DESC: <<
+	[color=#aaa][i]This highly advanced device is able to artificially reproduce the FTL crystal formation process at an accelerated rate through a complex chain reaction.[/i][/color]
+
+	Unlocks the Hyperfield Crystallization Project.
+>>
+
+ORB_RESEARCH_LAB_HYPERCHARGER: Hypercharger
+ORB_RESEARCH_LAB_HYPERCHARGER_DESC: <<
+	[color=#aaa][i]A canon projecting a constant beam of energy extracted from a hypercore, able to tremendously boost engine thrust for a short duration. This effect is nicknamed "hypersail", though there is no physical sail per se.[/i][/color]
+
+	Unlocks the Hypercharge Project.
+>>
+ORB_FTL_HARVESTER: Hyperfield Actuator
 ORB_FTL_HARVESTER_BLURB: Generates and stores FTL Energy.
 ORB_FTL_HARVESTER_DESC: <<
 	[color=#aaa][i]A facility that can slowly tap into the hyperfield to extract its particles.[/i][/color]
@@ -100,6 +119,13 @@ ORB_QUANTUM_TELESCOPE_DESC: <<|
 	Has the 'Telescope' ability. Costs Energy and FTL Energy based on target distance to activate.
 
 	[i][bbloc=#ABL_TELESCOPE_ARRAY_DESC:1000000/][/i]
+>>
+ORB_LASER_DRIVE: Phased Array Laser Drive
+ORB_LASER_DRIVE_BLURB: Can propel ships equipped with a lightsail.
+ORB_LASER_DRIVE_DESC: <<
+	[color=#aaa][i]'Leaving the engine at home' is the master idea behind the concept of directed energy propulsion. A powerful laser delivers energy to a reflector panel equipped on a ship, which uses the momentum of photons as actual thrust.[/i][/color]
+
+	Has the 'Laser Propulsion Beam' ability.
 >>
 ORB_TACHYON_UPLINK: Tachyon Uplink Facility
 ORB_TACHYON_UPLINK_BLURB: Unlocks Tachyon Sensors.

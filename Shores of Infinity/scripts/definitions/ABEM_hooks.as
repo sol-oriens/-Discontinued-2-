@@ -104,6 +104,161 @@ class AddThrustBonus : GenericEffect, TriggerableGeneric {
 #section all
 };
 
+class SolarThrust : SubsystemEffect {
+	Document doc("Modify the ship's thrust based on how much light it is getting.");
+	Argument min_boost(AT_Decimal, doc="Minimum boost when on a cold star or far away from a star.");
+	Argument max_boost(AT_Decimal, doc="Maximum boost when on a hot star or close to a star.");
+	Argument step(AT_Decimal, "0.05", doc="Only apply changes in steps of this size.");
+	Argument temperature_max(AT_Decimal, "15000", doc="Solar temperature (modified by distance) that triggers the maximum boost.");
+
+#section server
+	void tick(SubsystemEvent& event, double time) const override {
+		SolarData@ dat;
+		event.data.retrieve(@dat);
+		if(dat is null) {
+			@dat = SolarData();
+			event.data.store(@dat);
+		}
+
+		dat.timer -= time;
+		if(dat.timer <= 0) {
+			Object@ obj = event.obj;
+			Region@ reg = obj.region;
+
+			dat.timer += 1.0;
+			if(obj.velocity.lengthSQ <= 1.0 && !obj.inCombat)
+				dat.timer += 10.0;
+
+			Ship@ ship = cast<Ship>(obj);
+			double powerFactor = event.workingPercent;
+			if(ship !is null) {
+				const Design@ dsg = ship.blueprint.design;
+				if(dsg !is null)
+					powerFactor *= dsg.total(SV_SolarPower);
+			}
+
+			double newBoost = 0.0;
+			if(reg !is null) {
+				double solarFactor = reg.starTemperature * (1.0 - (obj.position.distanceToSQ(reg.position) / sqr(reg.radius)));
+				newBoost = 100 * (min_boost.decimal + clamp(solarFactor / temperature_max.decimal, 0.0, max_boost.decimal));
+				newBoost *= powerFactor;
+			}
+
+			newBoost = round(newBoost / step.decimal) * step.decimal;
+			if(abs(dat.prevBoost - newBoost) >= step.decimal * 0.5) {
+				obj.modAccelerationBonus((newBoost - dat.prevBoost) / getMassFor(obj));
+				dat.prevBoost = newBoost;
+			}
+		}
+	}
+
+	void save(SubsystemEvent& event, SaveFile& file) const {
+		SolarData@ dat;
+		event.data.retrieve(@dat);
+
+		if(dat is null) {
+			double t = 0.0;
+			file << t << t;
+		}
+		else {
+			file << dat.timer;
+			file << dat.prevBoost;
+		}
+	}
+
+	void load(SubsystemEvent& event, SaveFile& file) const {
+		SolarData dat;
+		event.data.store(@dat);
+
+		file >> dat.timer;
+		file >> dat.prevBoost;
+	}
+#section all
+};
+
+class LaserThrust : SubsystemEffect {
+	Document doc("Modify the ship's thrust based on how much laser light it is getting.");
+	Argument min_boost(AT_Decimal, doc="Minimum boost when receiving no laser or far away from the laser source.");
+	Argument max_boost(AT_Decimal, doc="Maximum boost when close to a powerful laser.");
+	Argument step(AT_Decimal, "0.05", doc="Only apply changes in steps of this size.");
+
+	int laserSailStatusId = getStatusID("LaserSail");
+	uint uLaserSailStatusId = uint(laserSailStatusId);
+
+#section server
+	void tick(SubsystemEvent& event, double time) const override {
+		SolarData@ dat;
+		event.data.retrieve(@dat);
+		if(dat is null) {
+			@dat = SolarData();
+			event.data.store(@dat);
+		}
+
+		dat.timer -= time;
+		if(dat.timer <= 0) {
+			Object@ obj = event.obj;
+
+			dat.timer += 1.0;
+			if(obj.velocity.lengthSQ <= 1.0 && !obj.inCombat)
+				dat.timer += 10.0;
+
+			Ship@ ship = cast<Ship>(obj);
+			double powerFactor = event.workingPercent;
+			if(ship !is null) {
+				const Design@ dsg = ship.blueprint.design;
+				if(dsg !is null)
+					powerFactor *= dsg.total(SV_LaserPower);
+			}
+
+			double newBoost = 0.0;
+			double laserFactor = 0.0;
+
+			for(uint i = 0, cnt = obj.statusEffectCount; i < cnt; ++i) {
+				if (obj.statusEffectType[i] == uLaserSailStatusId) {
+					double variable = obj.variable[i];
+					if (variable != -1.0)
+						laserFactor = variable;
+					Object@ origin = obj.statusEffectOriginObject[i];
+					if (origin !is null)
+						laserFactor *= (1.0 - (obj.position.distanceToSQ(origin.position) / sqr(250000.0)));
+				}
+			}
+
+			newBoost = 100 * (min_boost.decimal + clamp(laserFactor, 0.0, max_boost.decimal));
+			newBoost *= powerFactor;
+
+			newBoost = round(newBoost / step.decimal) * step.decimal;
+			if(abs(dat.prevBoost - newBoost) >= step.decimal * 0.5) {
+				obj.modAccelerationBonus((newBoost - dat.prevBoost) / getMassFor(obj));
+				dat.prevBoost = newBoost;
+			}
+		}
+	}
+
+	void save(SubsystemEvent& event, SaveFile& file) const {
+		SolarData@ dat;
+		event.data.retrieve(@dat);
+
+		if(dat is null) {
+			double t = 0.0;
+			file << t << t;
+		}
+		else {
+			file << dat.timer;
+			file << dat.prevBoost;
+		}
+	}
+
+	void load(SubsystemEvent& event, SaveFile& file) const {
+		SolarData dat;
+		event.data.store(@dat);
+
+		file >> dat.timer;
+		file >> dat.prevBoost;
+	}
+#section all
+};
+
 class ReactorOverloadHook : StatusHook {
 	Document doc("Handles the power-boosted explosion of a ship. Do not try to use on anything that isn't a ship.");
 	Argument powerdamage(AT_Decimal, "5", doc="Number by which the ship's power output is multiplied when calculating damage.");
@@ -137,6 +292,29 @@ class TargetRequireCommand : TargetFilter {
 	}
 };
 
+class TargetFilterNotStatusCount : TargetFilter {
+	Document doc("Restricts target to objects with a particular status count or more.");
+	Argument targ(TT_Object);
+	Argument status("Status", AT_Status, doc="Status to require.");
+	Argument count("Count", AT_Integer, doc="Status count required to filter target.");
+
+	string getFailReason(Empire@ emp, uint index, const Target@ targ) const override {
+		return locale::NTRG_STATUS;
+	}
+
+	bool isValidTarget(Empire@ emp, uint index, const Target@ targ) const override {
+		if(index != uint(arguments[0].integer))
+			return true;
+		if(targ.obj is null)
+			return false;
+		if(!targ.obj.hasStatuses)
+			return false;
+		if(targ.obj.getStatusStackCountAny(status.integer) >= uint(count.integer))
+			return false;
+		return true;
+	}
+};
+
 class TargetFilterStatus : TargetFilter {
 	Document doc("Restricts target to objects with a particular status.");
 	Argument targ(TT_Object);
@@ -152,7 +330,7 @@ class TargetFilterStatus : TargetFilter {
 		statusName = getStatusType(status.integer).name;
 		return TargetFilter::instantiate();
 	}
-		
+
 
 	string getFailReason(Empire@ emp, uint index, const Target@ targ) const override {
 		return "Target must have the '" + statusName + "' status.";
@@ -200,8 +378,8 @@ class TargetFilterStatuses : TargetFilter {
 		}
 		return TargetFilter::instantiate();
 	}
-			
-	
+
+
 
 	string getFailReason(Empire@ emp, uint index, const Target@ targ) const override {
 		if(arguments[3].boolean) {
@@ -278,13 +456,13 @@ class MaxStacks : StatusHook {
 class CombinedExpiration : StatusHook {
 	Document doc("All stacks of the status expire simultaneously.");
 	Argument duration("Duration", AT_Decimal, "10.0", doc="How long the status persists after its last application before expiring.");
-	
+
 	#section server
 	void onAddStack(Object& obj, Status@ status, StatusInstance@ instance, any@ data) override {
 		double timer = 0;
 		data.store(timer);
 	}
-	
+
 	bool onTick(Object& obj, Status@ status, any@ data, double time) override {
 		double timer = 0;
 		data.retrieve(timer);
@@ -292,7 +470,7 @@ class CombinedExpiration : StatusHook {
 		data.store(timer);
 		return timer < arguments[0].decimal;
 	}
-	
+
 	void save(Status@ status, any@ data, SaveFile& file) override {
 		double timer = 0;
 		data.retrieve(timer);
@@ -302,7 +480,7 @@ class CombinedExpiration : StatusHook {
 
 	void load(Status@ status, any@ data, SaveFile& file) override {
 		double timer = 0;
-		
+
 		file >> timer;
 		data.store(timer);
 	}
@@ -346,7 +524,7 @@ class Boarders : StatusHook {
 			boarders = caster.blueprint.getEfficiencySum(SubsystemVariable(getSubsystemVariable(value.str)), ST_Boarders, true);
 		if(boarders <= 0)
 			boarders = defaultboarders.decimal;
-		
+
 		// Calculating defender strength.
 		double defenders = 0;
 		Ship@ ship = cast<Ship>(obj);
@@ -379,9 +557,9 @@ class Boarders : StatusHook {
 		defenders = info.defenders;
 		originalboarders = info.originalboarders;
 		originaldefenders = info.originaldefenders;
-		
+
 		ratio = boarders / defenders;
-		// Basically, if there are 100 boarders and 100 defenders, 1 of each are lost per second. 
+		// Basically, if there are 100 boarders and 100 defenders, 1 of each are lost per second.
 		// If there are 200 boarders, 0.5% of the boarders - incidentally, also 1 - are lost, but 2% of the defenders are lost.
 		// This means that boarding operations will last a maximum of 100 seconds, though it will usually last less as one side will have an advantage over the other.
 		// Hopefully, 100 seconds will give the boarded player enough time to respond, without allowing him to wait too long before acting. (And thus needlessly prolonging the battle.)
@@ -403,7 +581,7 @@ class Boarders : StatusHook {
 		data.store(@info);
 		return true;
 	}
-	
+
 	void save(Status@ status, any@ data, SaveFile& file) override {
 		BoardingData@ info;
 		data.retrieve(@info);
@@ -458,7 +636,7 @@ class TransferSupplyFromSubsystem : AbilityHook {
 			return target.Supply < target.MaxSupply;
 		}
 		return false;
-	}		
+	}
 
 #section server
 	void tick(Ability@ abl, any@ data, double time) const override {
@@ -466,26 +644,26 @@ class TransferSupplyFromSubsystem : AbilityHook {
 			return;
 		Target@ storeTarg = objTarg.fromTarget(abl.targets);
 		if(storeTarg is null)
-			return; 
+			return;
 
 		Object@ target = storeTarg.obj;
 		if(target is null)
-			return; 
+			return;
 
 		Ship@ targetShip = cast<Ship>(target);
 		if(targetShip is null || targetShip.Supply == targetShip.MaxSupply)
 			return;
 
 		Ship@ caster = cast<Ship>(abl.obj);
-		bool castedByShip = caster !is null; 
-		if(castedByShip && caster.Supply == 0) 
+		bool castedByShip = caster !is null;
+		if(castedByShip && caster.Supply == 0)
 			return;
 
-		float resupply = targetShip.MaxSupply - targetShip.Supply; 
-		float resupplyCap = 0; 
-		
-		
-		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) { 
+		float resupply = targetShip.MaxSupply - targetShip.Supply;
+		float resupplyCap = 0;
+
+
+		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) {
 			resupplyCap = value.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time;
 		}
 		else {
@@ -496,7 +674,7 @@ class TransferSupplyFromSubsystem : AbilityHook {
 
 		if(castedByShip && caster.Supply < resupply)
 			resupply = caster.Supply;
-		
+
 		if(castedByShip)
 			caster.consumeSupply(resupply);
 		targetShip.refundSupply(resupply);
@@ -527,7 +705,7 @@ class TransferShieldFromSubsystem : AbilityHook {
 			return target.Shield < target.MaxShield;
 		}
 		return false;
-	}		
+	}
 
 #section server
 	void tick(Ability@ abl, any@ data, double time) const override {
@@ -535,26 +713,26 @@ class TransferShieldFromSubsystem : AbilityHook {
 			return;
 		Target@ storeTarg = objTarg.fromTarget(abl.targets);
 		if(storeTarg is null)
-			return; 
+			return;
 
 		Object@ target = storeTarg.obj;
 		if(target is null)
-			return; 
+			return;
 
 		Ship@ targetShip = cast<Ship>(target);
 		if(targetShip is null || targetShip.Shield == targetShip.MaxShield)
 			return;
 
 		Ship@ caster = cast<Ship>(abl.obj);
-		bool castedByShip = caster !is null; 
-		if(castedByShip && caster.Supply == 0) 
+		bool castedByShip = caster !is null;
+		if(castedByShip && caster.Supply == 0)
 			return;
 
-		float resupply = targetShip.MaxShield - targetShip.Shield; 
-		float resupplyCap = 0; 
-		
-		
-		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) { 
+		float resupply = targetShip.MaxShield - targetShip.Shield;
+		float resupplyCap = 0;
+
+
+		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) {
 			resupplyCap = value.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time;
 		}
 		else {
@@ -565,7 +743,7 @@ class TransferShieldFromSubsystem : AbilityHook {
 
 		if(castedByShip && caster.Shield < resupply)
 			resupply = caster.Shield;
-		
+
 		if(castedByShip)
 			caster.Shield -= resupply;
 		targetShip.Shield += resupply;
@@ -598,10 +776,10 @@ class RechargeShields : GenericEffect {
 			maxShield = orb.maxShield;
 			rate /= orb.shieldMod;
 		}
-			
+
 		if(percent.decimal != 0)
 			rate += time * percent.decimal * maxShield;
-		
+
 		if(ship !is null)
 			ship.restoreShield(rate);
 		else if(orb !is null)
@@ -625,7 +803,7 @@ class RechargeShields : GenericEffect {
 
 class ApplyToShips : StatusHook {
 	Document doc("When this status is added to a system, it only applies to ships.");
-	
+
 	bool shouldApply(Empire@ emp, Region@ region, Object@ obj) const override {
 		return obj !is null && obj.isShip;
 	}
@@ -649,7 +827,7 @@ class ApplyToLeaderAI : StatusHook {
 
 class ApplyToStars : StatusHook {
 	Document doc("When this status is added to a system, it only applies to stars.");
-	
+
 	bool shouldApply(Empire@emp, Region@ region, Object@ obj) const override {
 		return obj !is null && obj.isStar;
 	}
@@ -660,11 +838,11 @@ class AddOwnedStatus : AbilityHook {
 	Argument objTarg(TT_Object);
 	Argument status(AT_Custom, doc="Type of status effect to create.");
 	Argument duration(AT_Decimal, "-1", doc="How long the status effect should last. If set to -1, the status effect acts as long as this effect hook does.");
-	
+
 	string getFailReason(const Ability@ abl, uint index, const Target@ targ) const override {
 		return "Target must be capable of having statuses.";
 	}
-	
+
 	bool isValidTarget(const Ability@ abl, uint index, const Target@ targ) const override {
 		if(index != uint(objTarg.integer))
 			return true;
@@ -672,7 +850,7 @@ class AddOwnedStatus : AbilityHook {
 			return false;
 		return targ.obj.hasStatuses;
 	}
-	
+
 #section server
 	void activate(Ability@ abl, any@ data, const Targets@ targs) const override {
 		Object@ targ = objTarg.fromConstTarget(targs).obj;
@@ -685,10 +863,66 @@ class AddOwnedStatus : AbilityHook {
 #section all
 };
 
+class StatusData {
+		string data;
+};
+
+class ApplyTargetOwnedStatusEffect : AbilityHook {
+	Document doc("The object tracked in the specified target gets a status effect belonging to the specific object (and empire) activating the ability while there.");
+	Argument objTarg(TT_Object);
+	Argument type(AT_Status, doc="Type of status effect to add.");
+
+#section server
+	void changeTarget(Ability@ abl, any@ data, uint index, Target@ oldTarget, Target@ newTarget) const {
+		if(index != uint(objTarg.integer))
+			return;
+
+		Object@ prev = oldTarget.obj;
+		Object@ next = newTarget.obj;
+
+		if(prev is next)
+			return;
+
+		if(prev !is null && prev.hasStatuses)
+			prev.removeStatusInstanceOfType(type.integer);
+		if(next !is null && next.hasStatuses) {
+			next.addStatus(type.integer, originEmpire = abl.obj.owner, originObject = abl.obj);
+		}
+	}
+#section all
+};
+
+class ApplyTargetVariableOwnedStatusEffect : AbilityHook {
+	Document doc("The object tracked in the specified target gets a status effect belonging to the specific object (and empire) activating the ability while there.");
+	Argument objTarg(TT_Object);
+	Argument type(AT_Status, doc="Type of status effect to add.");
+	Argument sysData(AT_SysVar, doc="Susbystem variable to store with the status");
+
+#section server
+	void changeTarget(Ability@ abl, any@ data, uint index, Target@ oldTarget, Target@ newTarget) const {
+		if(index != uint(objTarg.integer))
+			return;
+
+		Object@ prev = oldTarget.obj;
+		Object@ next = newTarget.obj;
+
+		if(prev is next)
+			return;
+
+		double sysVar = sysData.fromSys(abl.subsystem, abl.obj);
+
+		if(prev !is null && prev.hasStatuses)
+			prev.removeStatusInstanceOfType(type.integer);
+		if(next !is null && next.hasStatuses)
+			next.addStatus(type.integer, originEmpire = abl.obj.owner, originObject = abl.obj, variable = sysVar);
+	}
+#section all
+};
+
 class UserMustNotHaveStatus : AbilityHook {
 	Document doc("The object using this ability must not be under the effects of the specified status.");
 	Argument status(AT_Custom, doc="Type of status effect to avoid.");
-		
+
 #section server
 	bool canActivate(const Ability@ abl, const Targets@ targs, bool ignoreCost) const override {
 		if(abl.obj is null)
@@ -745,7 +979,7 @@ class IsDerelict : StatusHook {
 		obj.rotationSpeed = 0;
 		obj.clearOrders();
 	}
-	
+
 	void onDestroy(Object& obj, Status@ status, any@ data) override {
 		DerelictData@ info;
 		data.retrieve(@info);
@@ -794,7 +1028,7 @@ class IsDerelict : StatusHook {
 					info.shield += orb.maxShield / orb.shieldMod;
 				orb.modMaxShield(-orb.maxShield);
 			}
-		}				
+		}
 		if(decay.boolean) {
 			DamageEvent dmg;
 			dmg.damage = 1.0 * time;
@@ -808,7 +1042,7 @@ class IsDerelict : StatusHook {
 		obj.rotationSpeed = 0;
 		return true;
 	}
-	
+
 	void save(Status@ status, any@ data, SaveFile& file) override {
 		DerelictData@ info;
 		data.retrieve(@info);
@@ -837,7 +1071,7 @@ class IsDerelict : StatusHook {
 class DestroyTarget: AbilityHook {
 	Document doc("Destroys the target object.");
 	Argument objTarg(TT_Object);
-	
+
 #section server
 	void activate(Ability@ abl, any@ data, const Targets@ targs) const override {
 		Object@ obj = objTarg.fromConstTarget(targs).obj;
@@ -962,13 +1196,13 @@ class Interdict : StatusHook {
 class TeleportTargetToSelf : AbilityHook {
 	Document doc("Teleport the target to the casting object.");
 	Argument objTarg(TT_Object);
-	
+
 #section server
 	void activate(Ability@ abl, any@ data, const Targets@ targs) const override {
 		Object@ targ = objTarg.fromConstTarget(targs).obj;
 		if(targ is null)
 			return;
-		
+
 		vec3d point = abl.obj.position + vec3d(randomd(-100.0, 100.0), randomd(-100.0, 100.0), 0);
 		if(targ.hasOrbit && targ.inOrbit) {
  			targ.stopOrbit();
@@ -994,7 +1228,7 @@ class PlayParticlesAtObject : AbilityHook {
 		Object@ targ = objTarg.fromConstTarget(targs).obj;
 		if(targ is null)
 			return;
-		
+
 		double size = scale.decimal;
 		if(object_scale.boolean)
 			size *= targ.radius;
@@ -1006,7 +1240,7 @@ class PlayParticlesAtObject : AbilityHook {
 class TargetFilterNotRemnantOrPirate : TargetFilter {
 	Document doc("Target must not be a Remnant or pirate-controlled object.");
 	Argument targ(TT_Object);
-	
+
 	string getFailReason(Empire@ emp, uint index, const Target@ targ) const override {
 		return "Cannot target Remnants and pirates.";
 	}
@@ -1048,7 +1282,7 @@ class HealFromSubsystem : AbilityHook {
 		if(targ.obj.hasLeaderAI || targ.obj.isOrbital)
 			return true;
 		return false;
-	}		
+	}
 
 #section server
 	void tick(Ability@ abl, any@ data, double time) const override {
@@ -1056,18 +1290,18 @@ class HealFromSubsystem : AbilityHook {
 			return;
 		Target@ storeTarg = objTarg.fromTarget(abl.targets);
 		if(storeTarg is null)
-			return; 
+			return;
 
 		Object@ target = storeTarg.obj;
 		if(target is null)
-			return; 
-
-		Ship@ caster = cast<Ship>(abl.obj);
-		bool castedByShip = caster !is null; 
-		if(castedByShip && caster.Supply == 0) 
 			return;
 
-			
+		Ship@ caster = cast<Ship>(abl.obj);
+		bool castedByShip = caster !is null;
+		if(castedByShip && caster.Supply == 0)
+			return;
+
+
 		float repair = 0;
 		if(mode.integer == 0) {
 			if(target.isShip)
@@ -1079,10 +1313,10 @@ class HealFromSubsystem : AbilityHook {
 			repair = value.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time;
 		else
 			repair = preset.decimal * time;
-		float repairCap = 0; 
-		
-		
-		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) { 
+		float repairCap = 0;
+
+
+		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) {
 			repairCap = value.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time;
 		}
 		else {
@@ -1097,7 +1331,7 @@ class HealFromSubsystem : AbilityHook {
 		if(castedByShip && caster.Energy < (repair * powerCost.decimal))
 			repair = caster.Energy / powerCost.decimal;
 */
-		
+
 		if(castedByShip) {
 			caster.consumeSupply(repair * cost.decimal);
 // We don't have Power yet.
@@ -1141,7 +1375,7 @@ class ABEMDealStellarDamageOverTime : AbilityHook {
 			return;
 
 		const vec3d position = abl.obj.position;
-		
+
 		double amt = dmg_per_second.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time;
 		if(obj.isPlanet)
 			cast<Planet>(obj).dealPlanetDamage(amt);
@@ -1165,7 +1399,7 @@ class AddStellarShield : StatusHook {
 	Argument holeMult("Black Hole Multiplier", AT_Decimal, "10.0", doc="How much the added shielding is multiplied for black holes. Defaults to 10.0 - the difference between a typical star and a black hole.");
 	Argument defaultRegen("Default Regeneration", AT_Decimal, "1.0", doc="Used if the subsystem value specified for regeneration does not exist or is zero on the origin object. Measured in millions. Defaults to 1.0, or 1M shields per second.");
 	Argument startOn("Start On", AT_Boolean, "false", doc="Whether the shield should start at maximum capacity. Defaults to false (starts with no shields).");
-	
+
 #section server
 	void onCreate(Object& obj, Status@ status, any@ data) override {
 		// Calculating shield power.
@@ -1182,7 +1416,7 @@ class AddStellarShield : StatusHook {
 			bonus = defaultShield.decimal * 1000000; // 1M
 		if(star.temperature == 0)
 			bonus *= holeMult.decimal;
-		
+
 		star.MaxShield += bonus;
 		if(startOn.boolean)
 			star.Shield += bonus;
@@ -1191,7 +1425,7 @@ class AddStellarShield : StatusHook {
 		info.castedBySubsystem = castedBySubsystem;
 		data.store(@info);
 	}
-	
+
 	void onDestroy(Object& obj, Status@ status, any@ data) override {
 		Star@ star = cast<Star>(obj);
 		if(star is null)
@@ -1216,7 +1450,7 @@ class AddStellarShield : StatusHook {
 		data.retrieve(@info);
 		bonus = info.bonus;
 		castedBySubsystem = info.castedBySubsystem;
-		
+
 		if(castedBySubsystem) {
 			Ship@ caster = cast<Ship>(status.originObject);
 			if(caster is null)
@@ -1239,7 +1473,7 @@ class AddStellarShield : StatusHook {
 		data.store(@info);
 		return true;
 	}
-	
+
 	void save(Status@ status, any@ data, SaveFile& file) override {
 		ShieldData@ info;
 		data.retrieve(@info);
@@ -1263,7 +1497,7 @@ class AddShieldCapacity : StatusHook {
 	Argument value("Capacity Subsystem Value", AT_Custom, doc="The subsystem value to use when calculating the added shield capacity.");
 	Argument preset("Default Capacity", AT_Decimal, "500.0", doc="The default amount of shield capacity to add if the subsystem value cannot be found or is zero. Defaults to 500.0.");
 	Argument startOn("Start On", AT_Boolean, "true", doc="Whether to add additional shield HP equivalent to the added capacity. Defaults to true.");
-		
+
 #section server
 	void onCreate(Object& obj, Status@ status, any@ data) override {
 		// Calculating shield power.
@@ -1284,7 +1518,7 @@ class AddShieldCapacity : StatusHook {
 		if(bonus <= 0)
 			castedBySubsystem = false;
 			bonus = preset.decimal;
-		
+
 		if(obj.isShip) {
 			ship.modBonusShield(bonus);
 			if(startOn.boolean)
@@ -1300,7 +1534,7 @@ class AddShieldCapacity : StatusHook {
 		info.castedBySubsystem = castedBySubsystem;
 		data.store(@info);
 	}
-	
+
 	void onDestroy(Object& obj, Status@ status, any@ data) override {
 		double bonus = 0;
 		ShieldData@ info;
@@ -1317,7 +1551,7 @@ class AddShieldCapacity : StatusHook {
 			orb.modMaxShield(-bonus);
 		}
 	}
-	
+
 	void save(Status@ status, any@ data, SaveFile& file) override {
 		ShieldData@ info;
 		data.retrieve(@info);
@@ -1333,7 +1567,7 @@ class AddShieldCapacity : StatusHook {
 		file >> info.bonus;
 		file >> info.castedBySubsystem;
 	}
-#section all	
+#section all
 }
 
 class AddSizeScaledShield : StatusHook {
@@ -1341,7 +1575,7 @@ class AddSizeScaledShield : StatusHook {
 	Argument capacity("Capacity Multiplier", AT_Decimal, "500.0", doc="The amount of capacity to multiply the radius with. Defaults to 500.");
 	Argument regeneration("Regeneration Multiplier", AT_Decimal, "500.0", doc="The amount of regeneration to multiply the regeneration with. Defaults to 2.5.");
 	Argument startOn("Start On", AT_Boolean, "False", doc="Whether to add additional shield HP equivalent to the added capacity. Defaults to false.");
-		
+
 #section server
 	void onCreate(Object& obj, Status@ status, any@ data) override {
 		if(obj.isOrbital) {
@@ -1352,7 +1586,7 @@ class AddSizeScaledShield : StatusHook {
 			orb.modShieldRegen(regeneration.decimal * orb.radius);
 		}
 	}
-	
+
 	void onDestroy(Object& obj, Status@ status, any@ data) override {
 		if(obj.isOrbital) {
 			Orbital@ orb = cast<Orbital>(obj);
@@ -1360,7 +1594,7 @@ class AddSizeScaledShield : StatusHook {
 			orb.modShieldRegen(-regeneration.decimal * orb.radius);
 		}
 	}
-#section all	
+#section all
 }
 
 class HealShieldFromSubsystem : AbilityHook {
@@ -1389,7 +1623,7 @@ class HealShieldFromSubsystem : AbilityHook {
 		if(targ.obj.hasLeaderAI && (targ.obj.supportCount > 0 || targ.obj.isShip || targ.obj.isOrbital))
 			return true;
 		return false;
-	}		
+	}
 
 #section server
 	void tick(Ability@ abl, any@ data, double time) const override {
@@ -1397,18 +1631,18 @@ class HealShieldFromSubsystem : AbilityHook {
 			return;
 		Target@ storeTarg = objTarg.fromTarget(abl.targets);
 		if(storeTarg is null)
-			return; 
+			return;
 
 		Object@ target = storeTarg.obj;
 		if(target is null)
-			return; 
-
-		Ship@ caster = cast<Ship>(abl.obj);
-		bool castedByShip = caster !is null; 
-		if(castedByShip && caster.Supply == 0) 
 			return;
 
-			
+		Ship@ caster = cast<Ship>(abl.obj);
+		bool castedByShip = caster !is null;
+		if(castedByShip && caster.Supply == 0)
+			return;
+
+
 		float repair = 0;
 		if(mode.integer == 0) {
 			if(target.isShip)
@@ -1418,10 +1652,10 @@ class HealShieldFromSubsystem : AbilityHook {
 			repair = value.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time;
 		else
 			repair = preset.decimal * time;
-		float repairCap = 0; 
-		
-		
-		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) { 
+		float repairCap = 0;
+
+
+		if(castedByShip && value.fromSys(abl.subsystem, efficiencyObj=abl.obj) > 0) {
 			repairCap = value.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time;
 		}
 		else {
@@ -1436,7 +1670,7 @@ class HealShieldFromSubsystem : AbilityHook {
 		if(castedByShip && caster.Energy < (repair * powerCost.decimal))
 			repair = caster.Energy / powerCost.decimal;
 */
-		
+
 		if(castedByShip) {
 			caster.consumeSupply(repair * cost.decimal);
 // We don't have Power yet.
@@ -1468,7 +1702,7 @@ class HealShieldFromSubsystem : AbilityHook {
 					if(support !is null) {
 						if(mode.integer != 1)
 							support.Shield += repair / (count + 1 - shieldlessCount);
-						else 
+						else
 							support.Shield += repair;
 						if(support.Shield > support.MaxShield) {
 							support.Shield = support.MaxShield;
@@ -1492,7 +1726,7 @@ class ChangeOriginOnOwnerChange : StatusHook {
 	Document doc("When the object affected by this status changes owners, the status' origin empire is also changed.");
 	Argument refresh("Refresh Status", AT_Boolean, "True", doc="If true, the status will be removed and replaced with an identical copy of itself. If in doubt, set to true.");
 	Argument refreshduration("Refreshed Duration", AT_Decimal, "-1", doc="The duration of the status after it is refreshed. Does not apply if Refresh Status is set to false. Defaults to -1 (never expires).");
-	
+
 #section server
 	bool onOwnerChange(Object& obj, Status@ status, any@ data, Empire@ prevOwner, Empire@ newOwner) override {
 		if(newOwner !is null)

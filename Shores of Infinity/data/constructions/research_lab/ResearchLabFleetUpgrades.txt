@@ -5,12 +5,17 @@ Construction: ResearchLabHypercharge
 
 	Category: Enhancements
 
-  Time Cost: 30
+  Time Cost: 15
   ConsumeEnergy(250)
   ConsumeCargo(Hypercore, 1)
 
+	OnStart( AddStatus(Hypercharging) )
+	OnCancel( RemoveStatusInstance(Hypercharging) )
+
 	AddStatus(Hypercharge)
+	RemoveStatusInstance(Hypercharging)
 
   RequireOnOrbital(ResearchLab)
   RequireStatus(ResearchLabHypercharger)
-  RequireNotStatus(Hypercharge)
+	RequireNotStatus(Hypercharging)
+	RequireNotStatus(Hypercharge)

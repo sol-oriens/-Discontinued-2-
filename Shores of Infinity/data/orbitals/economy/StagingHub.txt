@@ -5,8 +5,8 @@ Module: StagingHub
 	Icon: GuiOrbitalIcons::15
 	Strategic Icon: OrbitalIcons::15
 
-	Core: True
 	Standalone: True
+	Core: True
 	Size: 12
 
 	Build Cost: 400

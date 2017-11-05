@@ -5,7 +5,7 @@ Construction: GenerateHypercore
   Category: Production
 	Description: #RESEARCH_LAB_HYPERCORE_DESC
 
-  Time Cost: 45
+  Time Cost: 30
   Build Cost: 100
   ConsumeEnergy(1000)
   ConsumeFTL(250)
@@ -21,7 +21,7 @@ Construction: GenerateFTL
 	Category: Production
 	Description: #RESEARCH_LAB_FTL_DESC
 
-  Time Cost: 12
+  Time Cost: 10
   ConsumeEnergy(750)
 
   AddStoredFTL(25:250, Obey Capacity = True)
@@ -36,7 +36,7 @@ Construction: GenerateFTLHyper
 	Category: Production
 	Description: #RESEARCH_LAB_FTL_HYPER_DESC
 
-  Time Cost: 12
+  Time Cost: 10
   ConsumeCargo(Hypercore, 1)
 
   AddStoredFTL(750:1000, Obey Capacity = True)
