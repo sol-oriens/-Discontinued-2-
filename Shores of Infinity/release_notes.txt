@@ -42,7 +42,7 @@ This new balance is also designed to make infrastructure building and careful ex
 
 [*] Artifacts
 
-- Renamed Arcology to Sky City.
+- Renamed Arcology to Floating City.
 
 [*] Artificial Intelligence
 
@@ -185,6 +185,7 @@ Specific sensor subsystems can be added to flagship	and station designs to furth
 
 - Reduced Ore Asteroid strategic icon size by a factor of 3 so their sheer number does not disturb strategic icon system display when zoomed out.
 - Fixed a vanilla bug where the dry dock construction menu would list different versions of a design under certain circumstances.
+- Fixed a vanilla bug where persistent beam effects were not restored upon loading a save file.
 
 [*] Known issues
 
