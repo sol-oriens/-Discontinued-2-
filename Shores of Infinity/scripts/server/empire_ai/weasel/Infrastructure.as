@@ -105,6 +105,12 @@ final class Order {
     @_construction = construction;
   }
 
+  bool get_isValid() const {
+    if (_construction !is null)
+      return true;
+    return false;
+  }
+
   bool get_isInProgress() const {
     return _construction.started;
   }
@@ -145,6 +151,12 @@ final class PlanetOrder {
 
   PlanetOrder(ConstructionRequest@ construction) {
     @_construction = construction;
+  }
+
+  bool get_isValid() const {
+    if (_construction !is null)
+      return true;
+    return false;
   }
 
   bool get_isInProgress() const {
@@ -259,7 +271,8 @@ final class SystemCheck {
 		for(uint i = 0; i < cnt; ++i) {
       Order@ order = Order();
 			order.load(infrastructure, file);
-      orders.insertLast(order);
+      if (order.isValid)
+        orders.insertLast(order);
 		}
     file >> _checkInTime;
     file >> _weight;
@@ -276,7 +289,11 @@ final class SystemCheck {
     if (isBuilding) {
       for (int i = 0, cnt = orders.length; i < cnt; ++i) {
         Order@ order = orders[i];
-        if (order.isComplete) {
+        if (!order.isValid) {
+          orders.remove(order);
+          @order = null;
+        }
+        else if (order.isComplete) {
           if (infrastructure.log)
             ai.print("order complete");
           orders.remove(order);
@@ -431,7 +448,8 @@ class PlanetCheck {
 		for(uint i = 0; i < cnt; ++i) {
       PlanetOrder@ order = PlanetOrder();
 			order.load(infrastructure, file);
-      orders.insertLast(order);
+      if (order.isValid)
+        orders.insertLast(order);
 		}
     file >> _checkInTime;
     file >> _weight;
@@ -442,7 +460,11 @@ class PlanetCheck {
     if (isBuilding) {
       for (int i = 0, cnt = orders.length; i < cnt; ++i) {
         PlanetOrder@ order = orders[i];
-        if (order.isComplete) {
+        if (!order.isValid) {
+          orders.remove(order);
+          @order = null;
+        }
+        else if (order.isComplete) {
           if (infrastructure.log)
             ai.print("planet order complete");
           orders.remove(order);
