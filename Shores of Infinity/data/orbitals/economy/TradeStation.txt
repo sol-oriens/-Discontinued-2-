@@ -32,4 +32,4 @@ Module: TradeStation
 	GiveTrade()
 	GlobalTradeNode()
 
-	FriendlyPlanetMoney(To Self = 100, To Other = 100, Count Self = True, Max Money = 300, Per Level = True)
+	FriendlyPlanetMoney(To Self = 100, To Other = 100, Count Self = False, Max Money = 300, Per Level = True)

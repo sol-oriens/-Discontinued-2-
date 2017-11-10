@@ -324,7 +324,7 @@ class MakePlanet : MapHook {
 
 	//RS - Scaling
 	Argument radius(AT_Range, "60:140", doc="Size of the planet, can be a random range.");
-	Argument orbit_spacing(AT_Range, "2800:3500", doc="Distance from the previous planet.");
+	Argument orbit_spacing(AT_Range, "2750:3250", doc="Distance from the previous planet.");
 
 	Argument grid_size(AT_Position2D, "(-1, -1)", doc="Size of the planet's surface grid. (-1,-1) to randomize based on radius.");
 	Argument conditions(AT_Boolean, "True", doc="Whether to let the planet randomly generate a condition.");
@@ -377,8 +377,8 @@ class MakePlanet : MapHook {
 
 		//RS - Gas Giants: make gas giants giant
 		if (resource !is null && resource.ident == "RareGases") {
-			radius = radius * 2.0 + 70;
-			spacing = randomd(5300, 5500);
+			radius = radius += 140;
+			spacing = randomd(5250, 5450);
 		}
 
 		system.radius += spacing;
@@ -1340,24 +1340,22 @@ class MakeAdjacentAsteroid : MapHook {
 
 		if (farther.boolean) {
 			array<uint> tried;
-			array<SystemData@> visited;
-			visited.insertLast(data);
-			visited.insertLast(adjacent);
 			do {
 				at = randomi(0, adjacent.adjacentData.length - 1);
-				if (tried.find(at) == -1)
+				if (tried.find(at) == -1) {
 					tried.insertLast(at);
-				if (visited.find(adjacent.adjacentData[at]) == -1) {
-					//Make sure the chosen system is not actually at a lesser distance from the origin
-					if (adjacent.adjacentData[at].adjacentData.find(data) == -1) {
-						adjacent = adjacent.adjacentData[at];
-						visited.insertLast(adjacent);
-						break;
+					auto@ potential = adjacent.adjacentData[at];
+					//Check that the chosen system isn't the origin
+					if (potential !is data) {
+						//Check that the chosen system is not actually at a lesser distance from the origin
+						if (potential.adjacentData.find(data) == -1) {
+							@adjacent = potential;
+							break;
+						}
 					}
 				}
 			} //If at the galaxy's edge, it is possible to actually run out of options, so spawn the asteroid in the current system
 			while (tried.length < adjacent.adjacentData.length);
-			tried.resize(0);
 		}
 
 		SystemDesc@ other = getSystem(adjacent.sysIndex);

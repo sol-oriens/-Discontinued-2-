@@ -87,9 +87,9 @@ ABL_GUARDIAN_FINISH_DESC: <<
 >>
 ABL_LASERBEAM: Laser Propulsion Beam
 ABL_LASERBEAM_DESC: <<
-	A laser transmitting photon momentum to a reflector panel (dubbed lightsail) on a ship and providing thrust.
+	A laser transmitting photon momentum to a reflector panel (dubbed lightsail) on a ship and providing thrust. Thrust decreases as distance with the laser source increases, so pilots must be mindful of their deceleration course.
 >>
 ABL_HYPERBEAM: Hyperpropulsion Beam
 ABL_HYPERBEAM_DESC: <<
-	A beam focusing energy extracted from a hypercore to heat exchangers on the engines of a ship, resulting in a powerful thermal reaction granting them an acceleration boost defying conventional physics. Energy consumption rate and overheating prevent the beam to be maintained for extended periods of time. Pilots must be aware of newtonian physics limitations once back into conventional thrust.
+	A beam focusing energy extracted from a hypercore to heat exchangers on the engines of a ship, resulting in a powerful thermal reaction granting them an acceleration boost defying conventional physics. Energy consumption rate and overheating prevent the beam to be maintained for extended periods of time. Pilots must be aware of physics limitations once back into conventional thrust.
 >>

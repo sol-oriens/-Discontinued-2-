@@ -4,7 +4,7 @@ System: ExpeditionSystem
 
 	//RS - Scaling
 	MakeStar(Temperature = 4000:12000, Radius = 650:850)
-	ExpandSystem(100:2000)
+	ExpandSystem(1850:2850)
 
 	AddQuality(200)
 

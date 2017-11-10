@@ -14,7 +14,7 @@ System: BaseGasGiants
 System: BaseInnerRim
 
 System: BaseOuterRim
-	ExpandSystem(2000)
+	ExpandSystem(1000)
 	ExpandSystemMinimum()
 
 System: BaseAsteroids

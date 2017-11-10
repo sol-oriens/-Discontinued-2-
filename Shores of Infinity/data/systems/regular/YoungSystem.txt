@@ -4,7 +4,7 @@ System: YoungSystem
 
 	//RS - Scaling
 	MakeStar(Temperature = 6000:29800, Radius = 850:1650, NormalTempRange = true)
-	ExpandSystem(2650:4000)
+	ExpandSystem(2150:3150)
 
 	AddQuality(-100)
 

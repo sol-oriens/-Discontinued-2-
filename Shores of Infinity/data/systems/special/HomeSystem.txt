@@ -5,7 +5,7 @@ System: HomeSystem
 		BonusHealth(20000000000)
 
 		//RS - Scaling
-		ExpandSystem(1000:3000)
+		ExpandSystem(1850:2850)
 
 	RepeatHomeworlds()
 
@@ -43,6 +43,12 @@ System: HomeSystem
 	MakeAnomaly()
 	MakeArtifact(Type = Comet)
 
+	GuaranteeAdjacentResource(RandomType:Food:Common, Distance = 2)
+	GuaranteeAdjacentResource(RandomLevel:1:Common, Distance = 2)
+	GuaranteeAdjacentResource(RandomLevel:2:Common, Distance = 2)
+	GuaranteeAdjacentResource(RandomType:Food:Common, Distance = 3)
+	GuaranteeAdjacentResource(Water, Distance = 3)
+
 	MakeAdjacentAsteroid(Resource = Pekelm)
 	MakeAdjacentAsteroid(Resource = Explosives)
 	MakeAdjacentAsteroid(Resource = AsteroidFTLPermanent, Farther = True)
@@ -51,10 +57,4 @@ System: HomeSystem
 	AddAdjacentArtifacts(2)
 	MakeAdjacentCreepCamp(SmallCamp, Place Far = True)
 
-	GuaranteeAdjacentResource(RandomType:Food:Common, Distance = 2)
-	GuaranteeAdjacentResource(RandomLevel:1:Common, Distance = 2)
-	GuaranteeAdjacentResource(RandomLevel:2:Common, Distance = 2)
-	GuaranteeAdjacentResource(RandomType:Food:Common, Distance = 3)
-	GuaranteeAdjacentResource(Water, Distance = 3)
-
-	ExpandSystem(2000)
+	ExpandSystem(1000)

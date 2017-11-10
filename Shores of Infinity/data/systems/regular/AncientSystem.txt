@@ -4,7 +4,7 @@ System: AncientSystem
 
 	//RS - Scaling
 	MakeStar(Temperature = 1000:2500, Radius = 1250:2000)
-	ExpandSystem(3000:5000)
+	ExpandSystem(3500:4500)
 
 	AddQuality(+100)
 

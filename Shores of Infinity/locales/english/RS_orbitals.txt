@@ -23,8 +23,8 @@ ORB_TRADE_STATION_DESC: <<|
 	A large and bustling station of commerce allows global resource trade
 	between any territories with commerce stations or starports with long haul
 	docking bays. Additional trade with foreign empires also provides
-	income, for each planet in the system belonging to another empire you are
-	at peace with to each friendly empire including yours, equal to 100k per
+	income for each planet in the system belonging to another empire you are
+	at peace with, to each friendly empire including yours, equal to 100k per
 	planet Level starting from 1 and up to 300k.
 
 	In addition, on each commerce station you can purchase a quantity of
@@ -44,7 +44,7 @@ ORB_STARPORT_BLURB: Allows trade through its system. Generates income per friend
 ORB_STARPORT_DESC: <<
 	[color=#aaa][i]A docking station for civilian and military ships and a transit point for interstellar trade greatly facilitating planetary exporting. A market area also allows small scale commerce with friendly planets.[/i][/color]
 
-	Provides 25k income for each owned and friendly planet, to each friendly empire including yours, in the system, up to 75k.
+	Provides 30k income for each owned and friendly planet in the system belonging to another empire you are at peace with or yours, up to 120k.
 	Support ships assigned to a Starport independently move across the system to attack enemy fleets.
 	Can be upgraded to allow global resource trade.
 	Can store 2.5k units of cargo.

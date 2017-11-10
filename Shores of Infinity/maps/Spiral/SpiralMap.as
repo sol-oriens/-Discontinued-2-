@@ -61,8 +61,8 @@ class SpiralMap : Map {
 		double systemSpacing = modSpacing(getSetting(M_SystemSpacing, DEFAULT_SPACING));
 
 		//RS - Scaling: increased height spacing
-		const double coreHeightVariation = flatten ? 0.0 : 3000.0;
-		const double heightVariation = flatten ? 0.0 : 1000.0;
+		const double coreHeightVariation = flatten ? 0.0 : 2000.0;
+		const double heightVariation = flatten ? 0.0 : 800.0;
 
 		//RS - Scaling: apply a facor to system spacing to make room for the supermassive blackhole
 		double tempSpacing = systemSpacing;
