@@ -10,14 +10,14 @@ Subsystem: Lightsail
 
 	Size := HexSize * Hexes
 	Thrust := 0.0
-	TurnThrust := 0.1 //This is to counteract a vanilla 'bug' (but the case doesn't exist in vanilla) where a ship which is given thrust without any turn thrust can actually turn quite fast
+	TurnThrust := 0.0
 
 	PhotonRecycling := 1
-	SolarPower := 1 * PhotonRecycling * Size
+	SolarPower := 1 * (PhotonRecycling * Size * 20) / (Size + 10)
 	SolarThrust := 100 * SolarPower //This is a replica of the hook formula with maximum values for design stats and is not used for actual acceleration
-	LaserPower := 1 * PhotonRecycling * Size
-	LaserThrust := 100 * LaserPower * 1.5 //This is a replica of the hook formula with maximum values for design stats and is not used for actual acceleration
-	ExternalThrust := SolarThrust + LaserThrust
+	LaserPower := 1 * (PhotonRecycling * Size * 20) / (Size + 10)
+	LaserThrust := 100 * LaserPower * 5 //This is a replica of the hook formula with maximum values for design stats and is not used for actual acceleration
+	ExternalThrust := max(SolarThrust, LaserThrust)
 
 	SolarThrustMinBoost := 0.0
 	SolarThrustMaxBoost := 1.0

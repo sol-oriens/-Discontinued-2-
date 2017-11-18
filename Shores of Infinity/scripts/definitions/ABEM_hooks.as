@@ -139,7 +139,7 @@ class SolarThrust : SubsystemEffect {
 
 			double newBoost = 0.0;
 			if(reg !is null) {
-				double solarFactor = reg.starTemperature * (1.0 - (obj.position.distanceToSQ(reg.position) / sqr(reg.radius)));
+				double solarFactor = reg.starTemperature * (1.0 - (obj.position.distanceTo(reg.position) / reg.radius));
 				newBoost = 100 * (min_boost.decimal + clamp(solarFactor / temperature_max.decimal, 0.0, max_boost.decimal));
 				newBoost *= powerFactor;
 			}
@@ -220,7 +220,7 @@ class LaserThrust : SubsystemEffect {
 						laserFactor = variable;
 					Object@ origin = obj.statusEffectOriginObject[i];
 					if (origin !is null)
-						laserFactor *= (1.0 - (obj.position.distanceToSQ(origin.position) / sqr(250000.0)));
+						laserFactor *= (1.0 - (obj.position.distanceTo(origin.position) / 250000.0));
 				}
 			}
 
@@ -892,8 +892,8 @@ class ApplyTargetOwnedStatusEffect : AbilityHook {
 #section all
 };
 
-class ApplyTargetVariableOwnedStatusEffect : AbilityHook {
-	Document doc("The object tracked in the specified target gets a status effect belonging to the specific object (and empire) activating the ability while there.");
+class ApplyTargetOwnedVariableStatusEffect : AbilityHook {
+	Document doc("The object tracked in the specified target gets a status effect, storing the specified subsystem variable, belonging to the specific object (and empire) activating the ability while there.");
 	Argument objTarg(TT_Object);
 	Argument type(AT_Status, doc="Type of status effect to add.");
 	Argument sysData(AT_SysVar, doc="Susbystem variable to store with the status");

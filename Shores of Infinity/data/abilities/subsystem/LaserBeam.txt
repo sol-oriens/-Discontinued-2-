@@ -12,4 +12,4 @@ Ability: LaserBeam
 
   IsToggleTarget(ship, Check Range = True, Range Margin = 1.0, Channels = False)
   PersistentBeamEffect(ship, #ff0400, Tractor, Width = 0.3)
-  ABEM_hooks::ApplyTargetVariableOwnedStatusEffect(ship, LaserSail, Sys.LaserDrivePower:1.5)
+  ABEM_hooks::ApplyTargetOwnedVariableStatusEffect(ship, LaserSail, Sys.LaserDrivePower:1.5)

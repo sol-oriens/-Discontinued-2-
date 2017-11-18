@@ -15,7 +15,7 @@ Subsystem: LaserDrive
 	Hex.Resistance := 0.2
 	Hex.HP := 18 * HexSize
 
-	LaserDrivePower := min(sqrt(0.05 * Size), 5.0)
+	LaserDrivePower := (Size * 5) / (Size + 100)
 
 	Requires:
 		Command = 1

@@ -458,10 +458,11 @@ S_SECURITY_STATION_DESC: <<
 >>
 S_LASER_DRIVE: Phased Array Laser Drive
 S_LASER_DRIVE_DESC: <<
-	An array of laser emitters condensed through a giant lens firing a single coherent beam. Although it could be used as a last resort weapon, it is tuned to be used by reflector panels of lightsails.
+	An array of laser emitters condensed through a giant lens firing a single coherent beam, tuned to be used by reflector panels of lightsails. A more powerful beam provides increased thrust, but requires an ever bigger size.
 
-	[img=MenuIcons::3;20]Transmits thrust to ships esquipped with a [template=subsys_ref;Lightsail/].[/img]
-	[img=MenuIcons::3;20]Thrust is increased with subsystem size.[/img]
+	[img=MenuIcons::3;20]Transmits thrust to ships equipped with a [template=subsys_ref;Lightsail/].[/img]
+	[img=MenuIcons::3;20]Thrust is increased as the subsystem's size increases with diminishing returns.[/img]
+	[img=MenuIcons::3;20]Laser Power represents a factor of potential acceleration, 1 being the maximum output of the hottest stars and 1.5 being the output of the beam of a Phased Laser Array orbital. The maximum Laser Power is 5.[/img]
 >>
 
 // *********************************************************
@@ -544,7 +545,9 @@ S_LIGHTSAIL_DESC: <<
 	[img=Minus]Thrust is not improved by research.[/img]
 	[img=Minus]Requires to be within range of an active laser propulsion beam to function a full efficiency, or a near a star to function at low efficiency.[/img]
 	[img=MenuIcons::3;20]Laser Propulsion Beam is an ability of Phased Laser Array Drive orbitals.[/img]
-	[img=MenuIcons::3;20]Increased thrust as the subsystem's size increases[/img]
+	[img=MenuIcons::3;20]Thrust increases with diminishing returns as the subsystem's size increases.[/img]
+	[img=MenuIcons::3;20]Diminishing returns combined with linear mass increase also means diminishing returns on acceleration as the ship size increases.[/img]
+	[img=MenuIcons::3;20]Only one external source can be used at a time (including solar).[/img]
 	[img=MenuIcons::3;20]Can be combined with other propulsion systems.[/img]
 >>
 S_SENSOR_DISH: Sensor Dish
