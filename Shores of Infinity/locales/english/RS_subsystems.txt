@@ -559,7 +559,7 @@ S_SENSOR_DISH_DESC: <<
 >>
 S_SENSOR_PHASING: Phasing Sensors
 S_SENSOR_PHASING_DESC: <<
-	Regular technology can only extend the maximum range of identification of sensors so far. By literally putting molecular "skip drives" on emitted particles, it is possible to cheat and send them much farther with millions of micro-jumps. Having more than one sensor on the same design allows to focus higher amounts of energy on specific regions and to cover more space overall.
+	Regular technology can only extend the maximum range of identification of sensors so far. By literally putting molecular 'skip drives' on emitted particles, it is possible to cheat and send them much farther with millions of micro-jumps. Having more than one sensor on the same design allows to focus higher amounts of energy on specific regions and to cover more space overall.
 
 	[img=Plus]Increases sight range by a moderate amount, decreasing as the subsystem's size increases.[/img]
 	[img=Plus]Sensors on the outside of the ship do not use up interior space.[/img]

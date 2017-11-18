@@ -36,13 +36,13 @@ Module: Starport
 Module: StarportDockingBays
 	Name: #ORB_STARPORT_DOCKING_BAYS
 	Description: #ORB_STARPORT_DOCKING_BAYS_DESC
-	Icon: ResourceIconsSmall::47
+	Icon: ActionBarIcons::2
 
 	Standalone: False
 	Core: False
 
-	Build Cost: 200
-	ConsumeCargo(Ore, 1500)
+	Build Cost: 300
+	Maintenance: 100
 	ConsumeInfluence(5)
 
 	GlobalTradeNode()

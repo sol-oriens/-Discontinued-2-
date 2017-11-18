@@ -85,7 +85,7 @@ ABL_GUARDIAN_FINISH_DESC: <<
 
 	Other empires will be notified of the project's completion, and the Guardian Facility will resume normal operation.
 >>
-ABL_LASERBEAM: Laser Propulsion Beam
+ABL_LASERBEAM: Toggle Laser Propulsion Beam
 ABL_LASERBEAM_DESC: <<
 	A laser transmitting photon momentum to a reflector panel (dubbed lightsail) on a ship and providing thrust. Thrust decreases as distance with the laser source increases, so pilots must be mindful of their deceleration course.
 >>
