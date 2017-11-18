@@ -15,7 +15,7 @@ Subsystem: VoidRay
 	BeamDPS := 3 * Size
 	Duration := 6
 	Cooldown := 6 * (1.0 + Size/512)
-	Range := Size * 2 + 900
+	Range := Size * 4 + 1800
 	Tracking := 0.5
 	SupplyCost := Size * 0.75
 	FireArc := 0.25 * pi
