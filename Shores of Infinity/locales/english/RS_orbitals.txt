@@ -36,6 +36,19 @@ ORB_TRADE_STATION_DESC: <<|
 	resources from planets in your distinct territories. Only one commerce
 	station can be constructed per system.[/i]
 >>
+ORB_SHIPYARD_BLURB: Can build flagships and support ships. Planets can be ordered to export their labor to this shipyard. Can store 25k units of cargo.
+ORB_SHIPYARD_DESC: <<|
+	A massive orbital shipyard capable of constructing fleets in space.
+
+	Construction of ships on a shipyard has a 20% cheaper build cost.
+
+	Has 6 innate Labor generation per minute. Planets can export their own
+	labor to shipyards within trade range at a 75% reduced rate.
+
+	Gains Labor from Metallurgy factory research at a 75% reduced rate.
+
+	Can store 25k units of cargo.
+>>
 ORB_FTL_STORAGE_FLUX_DESC: <<
 	Stores 600 FTL Energy.
 >>
@@ -47,6 +60,7 @@ ORB_STARPORT_DESC: <<
 	Provides 30k income for each owned and friendly planet in the system belonging to another empire you are at peace with or yours, up to 120k.
 	Support ships assigned to a Starport independently move across the system to attack enemy fleets.
 	Can be upgraded to allow global resource trade.
+
 	Can store 2.5k units of cargo.
 
 	[i]Only one Starport may be constructed per system.[/i]
@@ -67,6 +81,7 @@ ORB_STAGING_HUB_DESC: <<|
 	Can import labor resources and gain labor per minute equivalent to 50% of the imported pressure.
 	Can import influence, energy, research and defense resources and generate 5k per imported pressure as special funds every minute.
 	Adds 15 Defense Reserve when in orbit around a planet.
+
 	Can store 5k units of cargo.
 
 	[i]Can be built in systems you do not own planets in, expanding your empire border.[/i]
@@ -78,6 +93,7 @@ ORB_RESEARCH_LAB_DESC: <<|
 
 	Gives 1 research generation.
 	Allows access to special projects.
+	
 	Can store 1.5k units of cargo.
 >>
 ORB_RESEARCH_LAB_CRYSTALLIZER: Hyperfield Crystallizer
