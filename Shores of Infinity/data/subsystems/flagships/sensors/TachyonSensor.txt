@@ -9,8 +9,8 @@ Subsystem: TachyonSensor
 	Hull: Flagship, Station
 
 	Size := HexSize * Hexes
-	SensorPower := Size * 500
-	SensorRange := 1000 + HexSize * 500 + SensorPower
+	SensorPower := (Size * 25000) / (Size + 0.25)
+	SensorRange := 100 + HexSize * 50 + SensorPower
 	SensorPriority := 200
 	Hex.Mass := HexSize / 2
 	Hex.Resistance := 0.1

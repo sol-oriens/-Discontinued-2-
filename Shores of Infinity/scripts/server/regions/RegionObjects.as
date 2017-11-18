@@ -55,10 +55,10 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 	ArtifactBucket artifactBucket;
 	AnomalyBucket anomalyBucket;
 	StarBucket starBucket;
-	
+
 	double PeriodicUpdate = 0.0;
 	double PeriodicTime = 0.0;
-	
+
 	double regionDPS = 0.0;
 	double starDPS = 0.0;
 
@@ -82,7 +82,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 	double tradeTimer = 0.0;
 	array<Civilian@> tradeStations;
 	uint HaveStationsMask = 0;
-	
+
 	Macronebula@ macronebula = null;
 	bool isNebulaSystem = false;
 
@@ -98,7 +98,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 #section server
 	void load(SaveFile& msg) {
 		PeriodicUpdate = randomd();
-	
+
 		uint cnt = 0;
 		msg >> cnt;
 		starList.length = cnt;
@@ -224,7 +224,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 			for(uint i = 0; i < tCount; ++i)
 				@tradeStations[i] = cast<Civilian>(msg.readObject());
 		}
-		
+
 		if(msg >= SV_0103) {
 			msg >> regionDPS;
 			if(msg >= SV_0123)
@@ -325,7 +325,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 		msg << tCount;
 		for(uint i = 0; i < tCount; ++i)
 			msg << tradeStations[i];
-		
+
 		msg << regionDPS;
 		msg << starDPS;
 	}
@@ -347,13 +347,13 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 			StarRadius = starList[0].radius;
 		else
 			StarRadius = 0;
-			
+
 		if(region.getSystemFlagAny(NEBULA_FLAG)) {
 			isNebulaSystem = true;
 			region.initMacronebula();
 		}
 	}
-	
+
 	bool get_isNebula(Object& obj) {
 		Region@ region = cast<Region>(obj);
 		bool verification = region.getSystemFlagAny(NEBULA_FLAG);
@@ -361,14 +361,14 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 			isNebulaSystem = verification;
 		return isNebulaSystem;
 	}
-	
+
 	Macronebula@ get_macronebula(Object& obj) {
 		return macronebula;
 	}
-	
+
 	void initMacronebula(Object& obj) {
 		Region@ region = cast<Region>(obj);
-		
+
 		if(macronebula is null) {
 			ObjectDesc desc = ObjectDesc();
 			desc.type = OT_Macronebula;
@@ -378,7 +378,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 			@macronebula = cast<Macronebula>(makeObject(desc));
 			macronebula.addNebula(region);
 		}
-			
+
 		for(uint i = 0, cnt = system.adjacent.length; i < cnt; ++i) {
 			Region@ other = getSystem(system.adjacent[i]).object;
 			if(other.getSystemFlagAny(NEBULA_FLAG) && !macronebula.containsNebula(other)) {
@@ -389,14 +389,14 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 			}
 		}
 	}
-	
+
 	void setMacronebula(Object& obj, Macronebula& nebula) {
 		Region@ region = cast<Region>(obj);
 		@macronebula = nebula;
 		macronebula.addNebula(region);
 		initMacronebula(obj);
 	}
-	
+
 #section all
 	void addShipDebris(vec3d position, uint count = 1) {
 		if(plane !is null)
@@ -520,7 +520,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 			@system = getSystem(cast<Region>(region));
 			return;
 		}
-	
+
 		if(plane !is null && !planeParented) {
 			planeParented = true;
 			plane.hintParentObject(region, false);
@@ -553,7 +553,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 				starDPS -= time;
 			}
 #section all
-			
+
 			PeriodicTime = PeriodicUpdate = randomd(0.9,1.1);
 		}
 		else {
@@ -700,22 +700,22 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 		for(uint i = 0, cnt = starList.length; i < cnt; ++i)
 			starList[i].dealStarDamage(amount);
 	}
-	
+
 	void processDamage(Object& reg, double time) {
 		DamageEvent dmg;
-		
+
 		if(regionDPS <= 0.0)
 			return;
-	
+
 		double baseDamage = regionDPS * time / 100.0;
-		
+
 		for(uint i = 0, cnt = time * 15.0; i < cnt; ++i) {
 			auto@ obj = trace(line3dd(reg.position, reg.position + random3d(reg.radius * 1.5)));
 			if(obj is null)
 				continue;
-			
+
 			double deal = randomd(0.5,1.5) * baseDamage;
-			
+
 			if(obj.isStar) {
 				cast<Star>(obj).dealStarDamage(deal);
 			}
@@ -727,31 +727,31 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 				@dmg.target = obj;
 				dmg.spillable = false;
 				dmg.damage = deal;
-				
+
 				vec3d off = obj.position - reg.position;
 				vec2d dir = vec2d(off.x, off.z).normalized();
 				obj.damage(dmg, -1.0, dir);
 			}
 		}
-		
+
 		uint objCount = objectList.length;
 		if(objCount > 0) {
 			uint traces = max(min(uint(time * 85.0), objCount * 10), 1);
-		
+
 			for(uint i = 0; i < traces; ++i) {
 				auto@ obj = objectList[randomi(0,objCount-1)];
 				if(obj is null)
 					continue;
-					
+
 				line3dd line = line3dd(reg.position, obj.position + random3d(5.0));
 				line.end = line.start + line.direction * (reg.radius * 1.5);
-					
+
 				@obj = trace(line);
 				if(obj is null)
 					continue;
-				
+
 				double deal = randomd(0.5,1.5) * baseDamage;
-				
+
 				if(obj.isStar) {
 					cast<Star>(obj).dealStarDamage(deal);
 				}
@@ -763,14 +763,14 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 					@dmg.target = obj;
 					dmg.spillable = false;
 					dmg.damage = deal;
-					
+
 					vec3d off = obj.position - reg.position;
 					vec2d dir = vec2d(off.x, off.z).normalized();
 					obj.damage(dmg, -1.0, dir);
 				}
 			}
 		}
-		
+
 		regionDPS *= pow(0.95, time);
 		regionDPS -= time;
 	}
@@ -954,7 +954,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 						other.notifyWarEvent(region, WET_ContestedSystem);
 				}
 			}
-			
+
 			// Inverted form of the above - this should trigger if the system was contested, but has stopped being contested.
 			if(CMask & other.mask == 0 && reg.ContestedMask & other.mask != 0) {
 				other.ContestedSystems -= 1;
@@ -1147,7 +1147,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 			createShip(pl, design, owner, pl, false, free);
 		}
 	}
-	
+
 	void refreshSupportsFor(Object& dest, bool keepGhosts) {
 		auto@ owner = dest.owner;
 		if(!owner.valid)
@@ -1213,7 +1213,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 				@best = station;
 			}
 		}
-		
+
 		request.gotoTradeStation(best);
 	}
 
@@ -1267,7 +1267,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 				Object@ destination = pl.getNativeResourceDestination(owner, 0);
 				if(destination is null)
 					continue;
-				
+
 				@civ = createCivilian(pl.position, owner, type=CiT_Freighter,
 						radius = randomCivilianFreighterSize());
 				if(civ.radius >= CIV_SIZE_CARAVAN)
@@ -1730,7 +1730,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 				if(prevOwner !is null && prevOwner.valid) {
 					planetCounts[prevOwner.index] -= 1;
 				}
-				
+
 				if(newOwner !is null && newOwner.valid) {
 					planetCounts[newOwner.index] += 1;
 					cast<Planet>(obj).setLoyaltyBonus(empLoyaltyBonus[obj.owner.index]);
@@ -1759,7 +1759,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 				calculateTradeAccess(region);
 				} break;
 		}
-		
+
 		//Apply statuses
 		applyStatuses(region, obj, isOwnerChange=true);
 
@@ -2162,11 +2162,11 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 		else
 			plane.setPrimaryEmpire(primaryVision[playerEmpire.index]);
 	}
-	
+
 	void calculateTradeAccess(Object& obj) {
 #section server
 		Region@ region = cast<Region>(obj);
-		
+
 		uint mask = 0;
 		for(uint i = 0, cnt = planetList.length; i < cnt; ++i) {
 			Planet@ pl = planetList[i];
@@ -2182,7 +2182,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 		region.TradeMask = mask;
 #section all
 	}
-	
+
 	void grantMemory(Empire@ emp) {
 		for(uint i = 0, cnt = planetList.length; i < cnt; ++i)
 			planetList[i].giveHistoricMemory(emp);
@@ -2279,7 +2279,7 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 				donateMask |= emp.mask;
 			}
 		}
-		
+
 		for(uint i = 0, cnt = objectCounts.length; i < cnt; ++i) {
 			Empire@ emp = getEmpire(i);
 			if(emp.visionMask & mask != 0)
@@ -2294,8 +2294,12 @@ tidy class RegionObjects : Component_RegionObjects, Savable {
 
 			if(system.donateVision) {
 				if(config::LEGACY_EXPLORATION_MODE == 0) {
-					region.DonateVisionMask = donateMask;
-					for(uint i = 0, cnt = planetList.length; i < cnt; ++i) 
+					if (gameTime == 0)
+						//Donate full vision at game start for starting systems
+						region.DonateVisionMask = mask;
+					else
+						region.DonateVisionMask = donateMask;
+					for(uint i = 0, cnt = planetList.length; i < cnt; ++i)
 						planetList[i].memoryMask |= mask;
 				}
 				else

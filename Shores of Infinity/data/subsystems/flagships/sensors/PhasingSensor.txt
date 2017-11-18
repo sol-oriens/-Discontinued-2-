@@ -9,8 +9,8 @@ Subsystem: PhasingSensor
 	Hull: Flagship, Station
 
 	Size := HexSize * Hexes
-	SensorPower := sqrt(Size) * 500
-	SensorRange := 1000 + HexSize * 100 + SensorPower
+	SensorPower := (Size * 2500) / (Size + 0.5)
+	SensorRange := 100 + HexSize * 50 + SensorPower
 	SensorPriority := 100
 	Hex.Mass := HexSize / 2
 	Hex.Resistance := 0.1
@@ -19,7 +19,7 @@ Subsystem: PhasingSensor
 	Ship.ExternalHexes := Ship.ExternalHexes + ExteriorHexes
 
 	Control := (1 + round(pow(Size * 2 / ShipSize, 3) * 100)) / (Sum.HasSinew + 1)
-	PowerUse := 5 + Size * 6.5 * (0.08 / (HexSize / ShipSize))
+	PowerUse := 3 + Size * 6.5 * (0.08 / (HexSize / ShipSize))
 
 	Modifier: SensorFactor(factor)
 		SensorRange := SensorRange * factor

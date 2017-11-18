@@ -45,7 +45,7 @@ class GamePage : GameSettingsPage {
 			tforming.DefaultValue = false;
 			tforming.set(false);
 		}
-//		Toggle(locale::NG_LEGACY_EXPLORATION, "LEGACY_EXPLORATION_MODE", halfWidth=true, tooltip=locale::NGTT_LEGACY_EXPLORATION);
+		Toggle(locale::NG_LEGACY_EXPLORATION, "LEGACY_EXPLORATION_MODE", halfWidth=true, tooltip=locale::NGTT_LEGACY_EXPLORATION);
 
 		emptyline();
 		Title(locale::NG_VICTORY_OPTIONS);
