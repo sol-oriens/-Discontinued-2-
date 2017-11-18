@@ -189,6 +189,7 @@ Specific sensor subsystems can be added to flagship	and station designs to furth
 - Reduced Ore Asteroid strategic icon size by a factor of 3 so their sheer number does not disturb strategic icon system display when zoomed out.
 - Fixed a vanilla bug where the dry dock construction menu would list different versions of a design under certain circumstances.
 - Fixed a vanilla bug where persistent beam effects were not restored upon loading a save file.
+- Fixed an vanilla issue with strategic icon positions not always updating correctly due to the engine needlessly squaring already huge rescaled distances, resulting in a memory overflow.
 
 [*] Known issues
 
