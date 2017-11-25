@@ -192,8 +192,6 @@ final class ConstructionRequest {
 final class PlanetAI {
 	Planet@ obj;
 
-	ref@ bag;
-
 	int targetLevel = 0;
 	int requestedLevel = 0;
 	double prevTick = 0;

@@ -10,6 +10,8 @@ make expansion more system-centric and less of a colony-spam.
 Resources and economy have been rebalanced to support these changes in a way that gameplay progression still feels dynamic and rewarding. Some existing buildings and orbitals have been modified, and new ones have been added, to boost economy where needed (including budget). New synergies allow to take advantage of the environment or of the presence of other infrastructure.
 This new balance is also designed to make infrastructure building and careful expansion a (hopefully) viable alternative to fast expansion and allow smaller, well developed empires to compete with larger empires with empty systems and planets.
 
+*** The game AI has been improved. It is a work in progress and most of the current improvements are a basis for future features but some of them already have a visible impact.
+
 *** Sensors from ABEM have been reimplemented with a completely different approach. All flagship and station hulls now have integrated basic sensors. Sight range is moderate, slightly scaled with size and can be upgraded through research.
 Specific sensor subsystems can be added to flagship	and station designs to further enhance sight range but their design is now focused on handling high costs.
 Planets and orbitals also have sight range which can also be upgraded through research.
@@ -52,11 +54,14 @@ Players always have full vision on their starting systems.
 [*] Artificial Intelligence
 
 - AIs are now able to build and prioritize outposts to protect their territory or expand beyond systems without planets or resources (including nebulae). Evangelical lifestyles will build star temples instead.
+- AIs now expand outside their territory when they are out of other options.
 - AIs now build moon bases on planets when needed (excepted, of course, Star Children).
-- AIs will now slow down their colonization effort when necessary in order to maintain a budget buffer for other expenditures.
-- AIs can now choose to prioritize one particular area with their budget under certain circumstances.
-- AIs can now borrow money from their next budget for important construction projects.
-- Fixed a vanilla bug where orbital types present in systems tracked by the AI were not loaded from a previously saved game.
+- AIs now slow down or even temporarily stop their colonization effort when necessary in order to maintain a budget buffer for other expenditures.
+- Colonization prioritization has been revised and all randomness in the decision process has been removed to be replaced by a deterministic weighting.
+- AIs now abandon certain planets if their estimated next budget becomes negative.
+- AIs can now choose to focus on one particular area with their budget spending under certain circumstances.
+- AIs can now borrow money from their next budget for construction projects critical to their development.
+- Fixed a vanilla bug where orbital types present in systems tracked by the AIs were not loaded from a previously saved game.
 
 [*] Attitudes
 
@@ -88,7 +93,7 @@ different methods preferable in different situations. Third: To tone down the ad
 
 - Added Quick Start: when toggled on, empires will be able to expand to other systems almost immediately instead of having to build a basic economy first. This reverts the now slower game start to more or less vanilla speed. This option is off by default.
 - Added Supermassive Black Holes: when toggled on, black holes at the center of galaxies are supermassive and thus much bigger. Much. BIGGER. (And make an equally bigger boom.)
-- Reduced the minimum and maximum values of the System Size slider to prevent systems that are too small or too large colliding each other. Added a tooltip warning to deactivate the Supermassive Black Holes option when reducing size (the size of this system is enforced and doesn't play well with reduced size).
+- Reduced the minimum and maximum values of the System Size slider to prevent systems that are too small or too large colliding each other. Added a tooltip warning to deactivate the Supermassive Black Holes option when reducing size (the size of this system is enforced and doesn't play well with reduced sizes).
 - Disable Starting Fleets is now on by default.
 - Default asteroid and orbital labor cost step increased to 100% (up from 50%).
 - Reactivated Legacy Exploration Mode from ABEM (default: off) as sensors are back.
@@ -108,7 +113,7 @@ different methods preferable in different situations. Third: To tone down the ad
 - Added Staging Hub. Allows trade through its system. Can import and sell resources and store cargo. Planets can be ordered to export their labor to this orbital, which can only build asteroid bases. Also has a small support capacity and gives 15 Defense Reserve when in orbit around a planet. Designed to fill various support roles, notably
 for use as a remote mining base, as the new balance makes tractoring ore asteroids around a pain. Build and maintenance costs of 400k and 70k, respectively.
 - Added Zero-G Lab. Gives 1 Research generation and allows access to special modules and projects. Build and maintenance costs of 400k and 100k, respectively.
-- Added Hyperfield Harvester. Generates 0.15 FTL Energy per second and stores 250 FTL Energy. Build and maintenance costs of 450k and 75k, respectively.
+- Added Hyperfield Actuator. Generates 0.15 FTL Energy per second and stores 250 FTL Energy. Build and maintenance costs of 450k and 75k, respectively.
 - Added Tachyon Uplink. Unlocks the Tachyon Sensor subsystem. Requires 0.5 FTL maintenance. Can only be built in a Tachyon Nebula. Only one Tachyon Uplink may be constructed per system.
 - FTL Storage orbitals for Star Children with Flux FTL now generate 0.5 FTL Energy per second and store 600 FTL Energy to make up for the impossibility to build FTL Breeders. They also additionally cost 500 ore to build.
 - All orbitals now have a base sensor range of 10.000 units which can be upgraded through research.
@@ -118,13 +123,13 @@ for use as a remote mining base, as the new balance makes tractoring ore asteroi
 - Added gas giants, using previously unused vanilla low resolution textures. Gas giants can be colonized (more or less) and feature a new scalable resource designed to balance the increased scale of the game by providing increased propulsion speed and various pressure boosts. They are commonly found in all kinds of
 systems, but they are more difficult to level up due to their mostly useless biome: imperial buildings cannot be built on it and civilian tile development is extremely slow. They however typically have a large number of moons where bases can be constructed. Gas giants completely bypass resource scarcity and planet
 frequency options on purpose.
-- Fixed a vanilla bug with asteroid fields orbiting Local Asteroid Field Planets not being rendered in certain circumstances.
-- Local Asteroid Field planets now have more and bigger asteroids orbiting closer to them (this is a purely cosmetic change).
 - Destroyed planets now yield more asteroid with less ore.
 - Planets now have a base sensor range of 20.000 units which can be upgraded through research.
 - Slightly reduced pressure capacity of planets per level.
 - Reduced population growth by approximately 20%.
 - Added a new Project exclusive to planets, Planet Exploration. Sends an exploration team around the planet. May yield a random discovery. This feature is similar to how anomalies work, with smaller bonuses, but available a (limited) number of times per planet. Homeworlds have a special set of (more beneficial) anomalies.
+- Fixed a vanilla bug with asteroid fields orbiting Local Asteroid Field Planets not being rendered in certain circumstances.
+- Local Asteroid Field planets now have more and bigger asteroids orbiting closer to them (this is a purely cosmetic change).
 
 [*] Research
 

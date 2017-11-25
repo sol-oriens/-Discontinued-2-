@@ -392,8 +392,8 @@ final class AI : AIController, Savable {
 		@budget = add(createBudget());
 		@planets = add(createPlanets());
 		@resources = add(createResources());
-		@colonization = add(createColonization());
 		@systems = add(createSystems());
+		@colonization = add(createColonization());
 		@fleets = add(createFleets());
 		@scouting = add(createScouting());
 		@development = add(createDevelopment());

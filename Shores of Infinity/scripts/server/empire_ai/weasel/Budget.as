@@ -136,6 +136,25 @@ final class BudgetPart {
 };
 
 final class Budget : AIComponent {
+	//Budget thresholds
+	private int _criticalThreshold = 350;
+	private int _lowThreshold = 400;
+	private int _mediumThreshold = 500;
+	private int _highThreshold = 1000;
+	private int _veryHighThreshold = 2000;
+
+	//Focus flags
+	private bool _askedFocus = false;
+	private bool _focusing = false;
+	//Focused budget type
+	private uint _focus;
+
+	int get_criticalThreshold() const { return _criticalThreshold; }
+	int get_lowThreshold() const { return _lowThreshold; }
+	int get_mediumThreshold() const { return _mediumThreshold; }
+	int get_highThreshold() const { return _highThreshold; }
+	int get_veryHighThreshold() const { return _veryHighThreshold; }
+
 	array<BudgetPart@> parts;
 	int NextAllocId = 0;
 
@@ -149,13 +168,6 @@ final class Budget : AIComponent {
 	int FreeMaintenance = 0;
 
 	bool checkedMilitarySpending = false;
-
-	//Focus flags
-	private bool _focusing = false;
-	private bool _askedFocusing = false;
-	private bool _doneFocusing = false;
-	//Focused budget type
-	private uint _focus;
 
 	void create() {
 		parts.length = BT_COUNT;
@@ -174,6 +186,9 @@ final class Budget : AIComponent {
 		file << FreeMaintenance;
 		file << NextAllocId;
 		file << checkedMilitarySpending;
+		file << _askedFocus;
+		file << _focusing;
+		file << _focus;
 
 		for(uint i = 0, cnt = parts.length; i < cnt; ++i)
 			parts[i].save(this, file);
@@ -188,6 +203,9 @@ final class Budget : AIComponent {
 		file >> FreeMaintenance;
 		file >> NextAllocId;
 		file >> checkedMilitarySpending;
+		file >> _askedFocus;
+		file >> _focusing;
+		file >> _focus;
 
 		for(uint i = 0, cnt = parts.length; i < cnt; ++i)
 			parts[i].load(this, file);
@@ -259,20 +277,29 @@ final class Budget : AIComponent {
 		int canFree = FreeBudget;
 		int canFreeMaint = FreeMaintenance;
 
-		//Don't allow any spending not in our current focus
-		if (_focusing) {
-			if (type != _focus)
-				return false;
-		}
-
-		//Don't allow generic spending until we've checked if we need to spend on military this cycle
 		if (priority < 2.0) {
+			//Rules for normal priority requests
+			//Don't allow any spending not in our current focus
+			if (_focusing) {
+				if (type != _focus)
+					return false;
+			}
+			if (type != BT_Colonization
+				&& (maint > 200 && ai.empire.EstNextBudget < mediumThreshold)
+				|| (maint > 100 && ai.empire.EstNextBudget < lowThreshold)
+				|| (maint > 0 && ai.empire.EstNextBudget < criticalThreshold))
+				//Don't allow any high maintenance cost if our estimated next budget is too low
+				return false;
+
+			//Don't allow generic spending until we've checked if we need to spend on military this cycle
 			if(type == BT_Development && !checkedMilitarySpending && Progress < 0.33)
 				canFree = 0;
 			if(type == BT_Colonization)
 				canFree += 160;
 		}
-		else if (money > FreeBudget && ai.empire.canBorrow(money - FreeBudget)) {
+		else {
+			//Rules for high priority requests
+			if (money > FreeBudget && ai.empire.canBorrow(money - FreeBudget))
 			//Allow borrowing from next budget for high priority requests
 			canFree = money;
 		}
@@ -330,21 +357,18 @@ final class Budget : AIComponent {
 
 		checkedMilitarySpending = false;
 
-		//Deal with prioritization
-		if (_doneFocusing) {
+		//Handle focus status
+		if (_focusing) {
 			_focusing = false;
-			_doneFocusing = false;
 			if (log)
 				ai.print("Budget: ending focus");
 		}
-		else if (_askedFocusing) {
+		else if (_askedFocus) {
 			_focusing = true;
-			_askedFocusing = false;
+			_askedFocus = false;
 			if (log)
 				ai.print("Budget: starting focus");
 		}
-		else if (_focusing)
-			_doneFocusing = true;
 
 		//Tell the budget parts to perform turns
 		for(uint i = 0, cnt = parts.length; i < cnt; ++i)
@@ -393,14 +417,25 @@ final class Budget : AIComponent {
 	}
 
 	bool canFocus() {
-		return !(_askedFocusing || _focusing);
+		return !(ai.empire.EstNextBudget <= criticalThreshold || _askedFocus || _focusing);
 	}
 
-	//Focus spendings on one particular budget part for the next turn
+	//Focus spendings on one particular budget part for one turn
+	//Only high priority requests will be considered for other parts
+	//Should be called at the start of a turn for best results
 	void focus(BudgetType type) {
-		if (!_askedFocusing && !_focusing) {
+		if (ai.empire.EstNextBudget > criticalThreshold && !_askedFocus && !_focusing) {
 			_focus = type;
-			_askedFocusing = true;
+			//If we are still at the start of a turn, focus immediately, else wait until next turn
+			//The second condition compensate for slight timing inaccuracies and execution delay
+			if (Progress < 0.33 || Progress > 0.995) {
+				_focusing = true;
+				_askedFocus = false;
+				if (log)
+					ai.print("Budget: starting focus");
+			}
+			else
+				_askedFocus = true;
 		}
 	}
 

@@ -31,8 +31,6 @@ final class SystemAI {
 	const SystemDesc@ desc;
 	Region@ obj;
 
-	ref@ bag;
-
 	double prevTick = 0.0;
 
 	array<Planet@> planets;
