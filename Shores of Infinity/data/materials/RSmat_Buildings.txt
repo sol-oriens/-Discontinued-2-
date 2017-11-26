@@ -1,0 +1,41 @@
+Material: RSBuilding
+	Culling: None
+	Alpha: True
+	DepthTest: NoDepthTest
+	Mipmap: False
+	Lighting: False
+
+
+
+	//Artificial Resources
+Material: lvl1r
+	Inherit: RSBuilding
+	Texture: data/images/buildings/Lvl1Research.png
+
+Material: lvl1b
+	Inherit: RSBuilding
+	Texture: data/images/buildings/Lvl1Budget.png
+
+Material: lvl1d
+	Inherit: RSBuilding
+	Texture: data/images/buildings/Lvl1Defense.png
+
+Material: lvl2r
+	Inherit: RSBuilding
+	Texture: data/images/buildings/Lvl2Research.png
+
+Material: lvl2b
+	Inherit: RSBuilding
+	Texture: data/images/buildings/Lvl2Budget.png
+
+Material: lvl2d
+	Inherit: RSBuilding
+	Texture: data/images/buildings/Lvl2Defense.png
+
+Material: StripTransmuter
+	Inherit: RSBuilding
+	Texture: data/images/buildings/ancient_strip_transmuter.png
+
+Material: PortalStabilizer
+	Inherit: RSBuilding
+	Texture: data/images/buildings/portal_stabilizer.png

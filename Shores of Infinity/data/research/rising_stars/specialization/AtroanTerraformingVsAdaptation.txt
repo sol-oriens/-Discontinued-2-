@@ -1,0 +1,115 @@
+Technology: AtroanTerraformSpec1
+	Name: #R_SPEC_ATROAN_TERRAFORM1
+	Description: #R_SPEC_ATROAN_TERRAFORM1_DESC:40%:20%
+	Time Cost: 60
+	Point Cost: 250
+	Class: Unlock
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Icon: SupplyIcon
+	Symbol: EnormousPlanet
+	Color: #84ff19
+	SecondaryMoneyCost(500)
+	ReplaceTechnologyNodes(AtroanAdaptationSpec1, SpecConnector)
+	ModAttribute(TerraformCostFactor, Add, -0.4)
+	ModAttribute(TerraformLaborFactor, Add, -0.2)
+
+Technology: AtroanAdaptationSpec1
+	Name: #R_SPEC_ATROAN_ADAPTATION1
+	Description: #R_SPEC_ATROAN_ADAPTATION1_DESC:20%:40%
+	Time Cost: 60
+	Point Cost: 250
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Class: Unlock
+	Icon: Depot
+	Symbol: SequesteredSociety
+	Color: #6c412f
+	ReplaceTechnologyNodes(AtroanTerraformSpec1, SpecConnector)
+	ModAttribute(ImperialBldConstructionRate, Add, 1)
+	ModAttribute(BuildingCostFactor, Add, -0.2)
+	ModAttribute(BuildingMaintFactor, Add, -0.4)
+
+	SecondaryMoneyCost(500)
+Technology: AtroanTerraformSpec2
+	Name: #R_SPEC_ATROAN_TERRAFORM2
+	Description: #R_SPEC_ATROAN_TERRAFORM2_DESC
+	Time Cost: 120
+	Point Cost: 500
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Symbol: EnormousPlanet
+	Icon: ResourceIcons::26*#aaaaaa
+	Color: #84ff19
+	Class: Unlock
+	SecondaryMoneyCost(1000)
+	ReplaceTechnologyNodes(AtroanAdaptationSpec2, SpecConnector)
+	UnlockTag(AtroanTerraform2)
+
+Technology: AtroanAdaptationSpec2
+	Name: #R_SPEC_ATROAN_ADAPTATION2
+	Description: #R_SPEC_ATROAN_ADAPTATION2_DESC:25%:15%
+	Time Cost: 120
+	Point Cost: 500
+	Class: Unlock
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Color: #6c412f
+	Symbol: SequesteredSociety
+	Icon: Industrious
+	SecondaryMoneyCost(1000)
+	ReplaceTechnologyNodes(AtroanTerraformSpec2, SpecConnector)
+	ModAttribute(AtroanAdaptation2, Add, 1)
+
+Technology: AtroanTerraformSpec3
+	Name: #R_SPEC_ATROAN_TERRAFORM3
+	Description: #R_SPEC_ATROAN_TERRAFORM3_DESC:60%:30%
+	Time Cost: 240
+	Point Cost: 1000
+	Class: Unlock
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Color: #84ff19
+	Symbol: EnormousPlanet
+	Icon: FtlIcon
+	SecondaryMoneyCost(2000)
+	ReplaceTechnologyNodes(AtroanAdaptationSpec3, SpecConnector)
+	ModAttribute(TerraformCostFactor, Add, -0.6)
+	ModAttribute(TerraformLaborFactor, Add, -0.3)
+
+Technology: AtroanAdaptationSpec3
+	Name: #R_SPEC_ATROAN_ADAPTATION3
+	Description: #R_SPEC_ATROAN_ADAPTATION3_DESC:20%
+	Time Cost: 240
+	Point Cost: 1000
+	Class: Unlock
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Color: #6c412f
+	Symbol: SequesteredSociety
+	Icon: ResourceIconsSmall::81
+	SecondaryMoneyCost(2000)
+	ReplaceTechnologyNodes(AtroanTerraformSpec3, SpecConnector)
+	ModAttribute(AtroanAdaptation3, Add, 1)
+
+Technology: AtroanTerraformSpec4
+	Name: #R_SPEC_ATROAN_TERRAFORM4
+	Description: #R_SPEC_ATROAN_TERRAFORM4_DESC
+	Time Cost: 300
+	Point Cost: 1500
+	Class: Unlock
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Color: #84ff19
+	Icon: ResourceIcons::29*#66ffff
+	Symbol: EnormousPlanet
+	SecondaryMoneyCost(3000)
+	ReplaceTechnologyNodes(AtroanAdaptationSpec4, SpecConnector)
+	UnlockTag(AtroanTerraform4)
+
+Technology: AtroanAdaptationSpec4
+	Name: #R_SPEC_ATROAN_ADAPTATION4
+	Description: #R_SPEC_ATROAN_ADAPTATION4_DESC
+	Time Cost: 300
+	Point Cost: 1500
+	Class: Unlock
+	Category: Racial/DLC Replacements (DO NOT PLACE)
+	Color: #6c412f
+	Symbol: SequesteredSociety
+	Icon: NetworkBuilding
+	SecondaryMoneyCost(3000)
+	ReplaceTechnologyNodes(AtroanTerraformSpec4, SpecConnector)
+	ModAttribute(Adaptation4, Add, 1)

@@ -1,0 +1,18 @@
+Building: DefenseFactory
+	Name: #B_DEFENSEFACTORY
+
+
+	Sprite: lvl1d
+	Base Cost: 300
+	Size: 2x2
+	Tile Cost: 50
+	Base Maintenance: 150
+	Tile Maintenance: 100
+	Build Time: 250
+	Category: Military
+	Description: #B_DEFENSEFACTORY_DESC
+	IfAttributeGTE(Adaptation4, 1, AddFleetEffectiveness(0.15))
+	ShowAttributeValue(Defense Fleet Effectiveness, Adaptation4, Multiplier = 15.0, Icon = AttributeIcons::3, Suffix = %, Hide Zero = True)
+	AddResource(Defense, 2)
+	AddFleetCommand(128)
+	RequireNotTrait(Ancient)

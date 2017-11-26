@@ -1,0 +1,48 @@
+Module: FTLStorage
+	Name: #ORB_FTL_STORAGE
+	Blurb: #ORB_FTL_STORAGE_DESC
+	Description: #ORB_FTL_STORAGE_DESC
+	Icon: GuiOrbitalIcons::19
+	Strategic Icon: OrbitalIcons::19
+
+	Build Cost: 300
+	Maintenance: 50
+	Labor Cost: 10
+	Size: 16
+
+	Health: 5000
+	Armor: 1000
+
+	Model: FTLStorage
+	Material: GenericPBR_FTLStorage
+
+	RequireTrait(StarChildren)
+
+	IfTagUnlocked(NylliAdaptation4, OnEnable(SpawnOrbital(AdaptedFTLStorage)))
+	IfTagUnlocked(NylliAdaptation4, OnEnable(Destroy(True)))
+	ABEM_races::RequireNotUnlockTag(NylliAdaptation4)
+	AddFTLStorage(300)
+
+Module: AdaptedFTLStorage
+	Name: #ORB_FTL_STORAGE_ADAPTED
+	Blurb: #ORB_FTL_STORAGE_DESC
+	Description: #ORB_FTL_STORAGE_ADAPTED_DESC
+	Icon: GuiOrbitalIcons::19
+	Strategic Icon: OrbitalIcons::19
+
+	Build Cost: 300
+	Maintenance: 50
+	Labor Cost: 10
+	Size: 16
+
+	Health: 5000
+	Armor: 1000
+
+	Model: FTLStorage
+	Material: GenericPBR_FTLStorage
+
+	RequireTrait(StarChildren)
+
+	AddResearchIncome(0.5)
+	RequireUnlockTag(NylliAdaptation4)
+	AddFTLStorage(300)
