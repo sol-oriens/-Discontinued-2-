@@ -19,3 +19,4 @@ Building: HealthComplex
 	ModPopulationGrowth(0.1)
 
   RequireNotTrait(Ancient)
+	RequireNotTrait(Mechanoid)

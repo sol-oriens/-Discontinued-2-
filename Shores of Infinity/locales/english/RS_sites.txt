@@ -174,6 +174,21 @@ SITE_CRYSTALLINE_FORMATION_ENERGIZE_FAIL: <<|
 	Unfortunately, the triggered reaction went completely out of control and made the structure into a bomb whose explosion vaporized everything across a large distance, including the crystalline formation itself and your unfortunate team.
 >>
 
+SITE_NAR_CONTAMINATED_CAVERN: <<|
+While exploring a deep underground cavern, your explorer team discovered the remains of a previous team gone missing. Once brought back to civilization for examination, it quickly became clear that they were somehow infected by a parasitic microorganism. Despite the drastic quarantine measures immediately applied, it is now too late: it is spreading at an alarming rate and already contaminated most of the planet.
+>>
+SITE_CONTAMINATED_CAVERN_GROWTH: <<|
+	Further analysis of the microorganism reveals that it is a parasitic nanomachine blending in organic life forms and mechanical entities alike. While it is damaging to cortex tissues and IA neural networks in the long term, it greatly enhances self-replication and production abilities.
+
+	[right][b][color=#ff0000]Lose $1 Max Population[/color][/b][/right]
+	[right][b][color=#72cbe0]Planet becomes Prolific.[/color][/b][/right]
+>>
+SITE_CONTAMINATED_CAVERN_ENERGY: <<|
+	This microorganism statically charges everything on the planet. While the charges are not high enough to disturb electronics, the amount of energy produced on a global scale could be harnessed with the right equipment.
+
+	[right][b][color=#42b4bd]+$1 Energy pressure.[/color][/b][/right]
+>>
+
 SITE_NAR_RESOURCE_DEPOSITS: <<|
 	There is an unusually strong concentration of natural resources here.
 >>

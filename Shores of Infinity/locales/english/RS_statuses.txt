@@ -52,10 +52,6 @@ STATUS_DAMAGED_DESC: <<
 	This vessel was accidentally damaged in a scientific experiment and will operate at significantly reduced effectiveness until it is repaired.
 >>
 STATUS_PROGENITOR_COMPUTER_BOOST_DESC: Heavy computation done by the Progenitor-designed control computer aboard the flagship is significantly increasing this fleet's efficiency and combat strength for the first 60 seconds of any combat.
-STATUS_EXPLORED_PLANET: Explored
-STATUS_EXPLORED_PLANET_DESC: <<
-	This planet has been fully explored.
->>
 STATUS_HYPERCHARGE: Hypercharge
 STATUS_HYPERCHARGE_DESC: <<
 	A hypercharge granting one use of the Hypersail Beam ability.
@@ -67,4 +63,13 @@ STATUS_LASERSAIL_DESC: <<
 STATUS_HYPERSAIL: Hypersailing
 STATUS_HYPERSAIL_DESC: <<
 	This ship is under the effect of a hypercharge beam boosting its engine thrust, an effect nicknamed 'hypersailing'.
+>>
+STATUS_PROLIFIC: Prolific
+STATUS_PROLIFIC_DESC: <<
+	This planet's population growth is increased by 20%.
+	This planet's Labor production is increased by 10%.
+>>
+STATUS_EXPLORED_PLANET: Explored
+STATUS_EXPLORED_PLANET_DESC: <<
+	This planet has been fully explored.
 >>
