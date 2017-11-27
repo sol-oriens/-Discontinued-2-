@@ -68,7 +68,7 @@ tidy final class TechnologyType {
 	string dlc;
 	string dlcReplace;
 	string category = "Vanilla";
-	
+
 	bool secret = false;
 	double secretFrequency = 1.0;
 	bool defaultUnlock = false;
@@ -306,9 +306,9 @@ tidy final class TechnologyNode : Serializable, Savable {
 		if(type.cls == Tech_Unlock)
 			emp.modAttribute(EA_ResearchUnlocksDone, AC_Add, 1.0);
 		if(type.cls == Tech_BigUpgrade)
-			emp.modAttribute(EA_ResearchBigUpgradesDone, AC_Add, 1.0); 
+			emp.modAttribute(EA_ResearchBigUpgradesDone, AC_Add, 1.0);
 	}
-	
+
 #section all
 
 	void stateChange(Empire@ emp) {
@@ -549,6 +549,8 @@ tidy final class TechnologyGridSpec {
 					auto@ otherType = getTechnology(n.type.dlcReplace);
 					if(otherType !is null)
 						@n.type = otherType;
+					else
+						@n.type = getTechnology("DLCConnector");
 				}
 			}
 
@@ -599,7 +601,7 @@ tidy final class TechAddModifier {
 				improvedSubsystems.insert(def.index);
 			}
 		}
-		
+
 		//Auto-update all designs related to the improved subsystems
 		//TODO: Shit's slow. Check index set overlap?
 		if(!isShadow) {
@@ -635,7 +637,7 @@ tidy final class TechAddModifier {
 				improvedSubsystems.insert(def.index);
 			}
 		}
-		
+
 		//Auto-update all designs related to the improved subsystems
 		//TODO: Shit's slow. Check index set overlap?
 		if(!isShadow) {
@@ -985,7 +987,7 @@ void loadResearch(const string& filename) {
 }
 
 void preInit() {
-	FileList list("data/research", "*.txt", true);
+	FileList list("data/research/rising_stars", "*.txt", true);
 	for(uint i = 0, cnt = list.length; i < cnt; ++i)
 		loadResearch(list.path[i]);
 }

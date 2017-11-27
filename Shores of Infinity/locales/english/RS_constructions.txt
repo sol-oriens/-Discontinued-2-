@@ -1,4 +1,10 @@
-﻿CONS_MOON_BASE_DESC: <<
+﻿MECH_BUILD_POPULATION: Construct $1B Population
+MECH_BUILD_POPULATION_DESC: <<
+	Construct $1B new mechanoid population on this planet.
+
+	As you construct more population, the labor cost of constructing will increase.
+>>
+CONS_MOON_BASE_DESC: <<
 	Construct a large amount of infrastructure on one of the planet's moons, making more area available for placing buildings and increasing the maximum population of the planet by 2.
 
 	Only one moon base may be constructed for every moon present in orbit of the planet.
@@ -58,6 +64,30 @@ C_GATE_UNLOCK_DESC: <<
 
 	[i][bbloc=#S_GATE_MODULE_DESC/][/i]
 >>
+C_HYPERDRIVE_UNLOCK: Hyperdrive Optimization
+C_HYPERDRIVE_UNLOCK_DESC: <<
+	Use the data collected during the construction and use of this ship's hyperdrive to improve your hyperdrive designs, allowing for easier construction of better hyperdrives.
+
+	Unlocks the Hyperdrive subsystem.
+
+	[i][bbloc=#S_HYPERDRIVE_DESC/][/i]
+>>
+C_JUMPDRIVE_UNLOCK: Simplified Jump Calculations
+C_JUMPDRIVE_UNLOCK_DESC: <<
+	Use the data collected during the construction and use of this ship's jumpdrive to improve your jumpdrive designs, allowing for easier construction of better jumpdrives.
+
+	Unlocks the Jumpdrive subsystem.
+
+	[i][bbloc=#S_JUMPDRIVE_DESC/][/i]
+>>
+C_SLIPSTREAM_UNLOCK: Efficient Subspace Penetration
+C_SLIPSTREAM_UNLOCK_DESC: <<
+	Use the data collected during the construction and use of this ship's slipstream generator to improve your generator designs, allowing for easier construction of better slipstream generators.
+
+	Unlocks the Slipstream Generator subsystem.
+
+	[i][bbloc=#S_SLIPSTREAM_GENERATOR_DESC/][/i]
+>>
 OUTPOST_ARMORING: Structural Enhancement
 OUTPOST_ARMORING_DESC: <<
 	Reinforce the orbital's frame and outer hull, allowing it to withstand more damage before critical failure.
@@ -110,4 +140,55 @@ STAGING_HUB_ASTEROID_MORPH_DESC: <<
 	[color=#aaa][i]It's no secret that asteroids usually are far richer in resources than planets. Unfortunately, the benefits of drilling deep enough to get access to their hidden treasures are as massive as the cost of setting a space-based infrastructure up to do so.[/i][/color]
 
 	The targeted Ore asteroid is transformed into an asteroid containing one or more resources available to build a mining base on.
+>>
+CONS_BOARDING_PARTY: Train Boarding Party
+CONS_BOARDING_PARTY_DESC: Train a new batch of troops to replace the target flagship's boarding parties.
+CONS_CORE_DEFENSE: High-Security Core
+CONS_CORE_ENERGY: Overcharged Core
+CONS_CORE_INFLUENCE: Communication Core
+CONS_CORE_LABOR: Manufacturing Core
+CONS_CORE_RESEARCH: Science Core
+CONS_CORE_MONEY: Allocator Core
+CONS_CORE_PROGRAM: <<
+	The Core will generate $1 equivalent to $2 pressure on top of its usual benefits. Removes any other Core Programming, Core Adaptation and Core Specialization effects.
+
+	Attempting to reprogram a previously programmed Core will increase the build and Labor costs of the new program by 33% as the existing configuration is discarded. Reprogramming a Core which has been Adapted or Specialized will add another 33% and 66%, respectively, for a maximum penalty of 133% for reprogramming a Specialized Core.
+>>
+CONS_CORE_ADAPT: Core Adaptation
+CONS_CORE_ADAPT_DESC: <<
+	The Core will generate an additional 25% of whatever resource it is programmed to generate.
+>>
+CONS_CORE_SPECIALIZATION: Core Specialization
+CONS_CORE_SPECIALIATION_DESC <<
+	The Core will generate an additional 50% of whatever resource it is programmed to generate. Stacks with Core Adaptation, upgrading it to generate 37.5% instead of 25%.
+>>
+CONS_CORE_DEFENSE_DESC: <<
+	Reconfigure the planet's Core to allocate excess resources towards the creation of small arms and security equipment.
+
+	[bbloc=#CONS_CORE_PROGRAM:Defense:1.5/]
+>>
+CONS_CORE_ENERGY_DESC: <<
+	Reconfigure the planet's Core to minimize power expenditure and allocate resources to power generation.
+
+	[bbloc=#CONS_CORE_PROGRAM:Energy:1.5/]
+>>
+CONS_CORE_INFLUENCE_DESC: <<
+	Reconfigure the planet's Core to allocate additional power to its communications equipment and construct additional transmitters.
+
+	[bbloc=#CONS_CORE_PROGRAM:Influence:1.5/]
+>>
+CONS_CORE_LABOR_DESC: <<
+	Reconfigure the planet's Core to manufacture large quantities of industrial equipment and components.
+
+	[bbloc=#CONS_CORE_PROGRAM:Labor:3/]
+>>
+CONS_CORE_RESEARCH_DESC: <<
+	Reconfigure the planet's Core to dedicate more processing resources to scientific endeavours.
+
+	[bbloc=#CONS_CORE_PROGRAM:Research:1.5/]
+>>
+CONS_CORE_MONEY_DESC: <<
+	Reconfigure the planet's Core to minimize resource consumption and allocate excess resources wherever they are needed.
+
+	[bbloc=#CONS_CORE_PROGRAM:Money:1.5/]
 >>

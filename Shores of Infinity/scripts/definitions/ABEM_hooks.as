@@ -331,7 +331,6 @@ class TargetFilterStatus : TargetFilter {
 		return TargetFilter::instantiate();
 	}
 
-
 	string getFailReason(Empire@ emp, uint index, const Target@ targ) const override {
 		return "Target must have the '" + statusName + "' status.";
 	}
@@ -358,7 +357,6 @@ class TargetFilterStatuses : TargetFilter {
 	string statusName = "DUMMY";
 	string status2Name = "DUMMY";
 
-
 	bool instantiate() override {
 		if(arguments[1].integer == -1) {
 			error("Invalid argument: "+arguments[1].str);
@@ -378,8 +376,6 @@ class TargetFilterStatuses : TargetFilter {
 		}
 		return TargetFilter::instantiate();
 	}
-
-
 
 	string getFailReason(Empire@ emp, uint index, const Target@ targ) const override {
 		if(arguments[3].boolean) {
@@ -501,7 +497,7 @@ class DisplayStatus : StatusHook {
 	#section all
 };
 
-class BoardingData {
+/*class BoardingData {
 	double boarders;
 	double defenders;
 	double originalboarders;
@@ -611,7 +607,7 @@ class Boarders : StatusHook {
 		file >> info.originaldefenders;
 	}
 	#section all
-};
+};*/
 
 class TransferSupplyFromSubsystem : AbilityHook {
 	Document doc("Gives supplies to its target while draining its own supplies, with a rate determined by a subsystem value. If the caster is not a ship, the default transfer rate is used instead, and the supply rate is irrelevant.");
@@ -1832,6 +1828,20 @@ tidy final class PreciseTriggerOnAttributeIncrease : EmpireEffect {
 		double curAmount = 0;
 		file >> curAmount;
 		data.store(curAmount);
+	}
+#section all
+};
+
+class SubsystemModAttributeOnEnable : SubsystemEffect {
+	Document doc("Modify an empire attribute when the subsystem has been activated. WARNING: Will occur every time the subsystem comes online! Use extreme caution!");
+	Argument attribute(AT_EmpAttribute, doc="Attribute to modify.");
+	Argument mode(AT_AttributeMode, doc="How to modify the attribute.");
+	Argument value(AT_Decimal, doc="How much to modify the attribute.");
+
+#section server
+	void start(SubsystemEvent& event) const override {
+		if(event.obj.owner !is null && event.obj.owner.valid)
+			event.obj.owner.modAttribute(uint(attribute.integer), mode.integer, value.decimal);
 	}
 #section all
 };

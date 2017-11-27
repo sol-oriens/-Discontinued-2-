@@ -187,3 +187,29 @@ BLD_ANCIENT_CANNON_DESC: <<|
 
 	If the planet is under siege and has no defenses remaining in orbit, the weapon is deactivated.
 >>
+BLD_VANGUARDPORTAL: Portal Stabilizer
+BLD_VANGUARDPORTAL_DESC: <<
+	An immensely powerful hyperfield manipulator. When activated and targeted at a specific point in space along with two other Stabilizers, this structure will create a massive wormhole to the Overlord home galaxy, enabling the Overlords' invasion force to enter this galaxy.
+
+	[img=ShieldImpactLarge*#de12de;20]Constructing three Portal Stabilizers will cause you to win a Vanguard Victory.[/img]
+	[img=Plus;20]The presence of a Portal Stabilizer inspires the owner's race to fight harder to defend the system, manifesting as a 40% boost to fleet effectiveness to all owned fleets in the system.[/img]
+	[img=MenuIcons::3;20]Intense rivalry between Vanguard races - and the desire of non-Vanguard races to keep the Overlords away - cause the Stabilizer to self-destruct or be destroyed, respectively, when the planet's owner changes for any reason.[/img]
+	[img=MenuIcons::3;20]Can only be constructed once per planet, and can only be constructed on a Ringworld or Artificial Planetoid.[/img]
+>>
+BLD_ANCIENT_STRIP_TRANSMUTER: Ore Transmuter
+BLD_ANCIENT_STRIP_TRANSMUTER_DESC: <<
+	A complex apparatus which mines large amounts of ore from the planet's surface, then transmutes some of it into base materials.
+
+	[img=Plus;20]Generates both Ore and Base Materials. Generates 7.5 Base Materials and 45 Ore per minute.[/img]
+	[img=Plus;20]Two Ore Transmuters will generate more of each resource type than a Strip Miner and a Transmuter combined. This effect is slightly dampened by the [bbloc=#R_CORE_OPTIMIZATIONS/] tech.[/img]
+	[img=Minus;20]Requires a small maintenance cost, and combines the construction costs of Strip Miners and Transmuters.[/img]
+>>
+BLD_DEFENSE_GRID_DESC: <<
+	A massive field of missile silos located on the surface of the planet, capable of firing at nearby enemy fleets.
+
+	The grid is composed of $1 missile launchers totaling $2 DPS with $3 range.
+
+	[i]If there are enemy fleets in orbit and you do not have any remaining support ships to protect the satellite guidance system, the missile silos are disabled.[/i]
+>>
+BLD_PLANETOID_LV1_DESC: A specialized processing plant that can replace one of the artificial planetoid's tier 1 resource requirements.
+BLD_PLANETOID_LV2_DESC: A specialized processing plant that can replace one of the artificial planetoid's tier 2 resource requirements.

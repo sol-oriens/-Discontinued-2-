@@ -11,7 +11,7 @@ DamageFlags DF_NoShieldBleedthrough = DF_Flag7;
 int getDamageType(double type) {
 	int iType = int(type);
 	switch(iType) {
-		case 1: 
+		case 1:
 		case 4: // The duplicate cases are for applying a DoT effect. Only implemented for AreaDamage.
 			return DT_Projectile;
 		case 2:
@@ -52,7 +52,7 @@ int getDRResponse(double type) {
 
 bool AddStatusToSelf(const Effector& efftr, Object& obj, Object& target, float& efficiency, double supply, double statusType) {
 	uint firingStatus = getABEMStatus(statusType).id;
-	
+
 	if(obj.getStatusStackCountAny(firingStatus) < 5)
 		obj.addStatus(firingStatus, 2.0);
 
@@ -69,11 +69,16 @@ bool FireIfNotStatus(const Effector& efftr, Object& obj, Object& target, float& 
 void ABEMControlDestroyed(Event& evt) {
 	Ship@ ship = cast<Ship>(evt.obj);
 	int invaderID = getStatusID("IsInvader");
+	int boardingParty = getStatusID("BoardingParty");
 
 	//Make sure we still have a bridge or something with control up
 	if(!ship.blueprint.hasTagActive(ST_ControlCore)) {
 		if(!ship.hasLeaderAI || ship.owner is Creeps || ship.owner is Pirates || (invaderID != -1 && ship.hasStatusEffect(invaderID)) || ship.blueprint.hasTagActive(ST_SelfDestruct))
 			ship.destroy();
+		else if (ship.hasStatusEffect(boardingParty)) {
+			ship.grantDestructionRewards();
+			@ship.owner = defaultEmpire;
+		}
 		else {
 			double chance = ship.blueprint.currentHP / ship.blueprint.design.totalHP;
 			if(randomd() < chance) {
@@ -127,7 +132,7 @@ DamageEventStatus ChannelDamage(DamageEvent& evt, const vec2u& position,
 		default:
 			dr = (ProjResist + EnergyResist + ExplResist) / 3.0; break;
 	}
-		
+
 	dmg -= dr * evt.partiality;
 	double minDmg = evt.damage * MinPct;
 	if(dmg < minDmg) {
@@ -174,9 +179,9 @@ DamageEventStatus ChannelDamagePercentile(DamageEvent& evt, const vec2u& positio
 		default:
 			dr = (ProjResist + EnergyResist + ExplResist) / 3.0; break;
 	}
-	
+
 	dr *= dmg;
-	
+
 	dmg -= dr * evt.partiality;
 	double minDmg = evt.damage * MinPct;
 	if(dmg < minDmg) {
@@ -223,9 +228,9 @@ DamageEventStatus ReduceDamagePercentile(DamageEvent& evt, const vec2u& position
 		default:
 			dr = (ProjResist + EnergyResist + ExplResist) / 3.0; break;
 	}
-	
+
 	dr *= dmg;
-	
+
 	dmg -= dr * evt.partiality;
 	double minDmg = evt.damage * MinPct;
 	if(dmg < minDmg)
@@ -253,32 +258,32 @@ void ObjectAreaExplDamage(Object& obj, double Amount, double Radius, double Hits
 
 	uint hits = round(Hits);
 	double maxDSq = Radius * Radius;
-	
+
 	for(uint i = 0, cnt = objs.length; i < cnt; ++i) {
 		Object@ target = objs[i];
 		vec3d off = target.position - center;
 		double dist = off.length - target.radius;
 		if(dist > Radius)
 			continue;
-		
+
 		double deal = Amount;
 		if(dist > 0.0)
 			deal *= 1.0 - (dist / Radius);
-		
+
 		//Rock the boat
 		if(target.hasMover) {
 			double amplitude = deal * 0.2 / (target.radius * target.radius);
 			target.impulse(off.normalize(min(amplitude,8.0)));
 			target.rotate(quaterniond_fromAxisAngle(off.cross(off.cross(target.rotation * vec3d_front())).normalize(), (randomi(0,1) == 0 ? 1.0 : -1.0) * atan(amplitude * 0.2) * 2.0));
 		}
-		
+
 		DamageEvent dmg;
 		@dmg.obj = obj;
 		@dmg.target = target;
 		dmg.flags |= DT_Projectile;
 		dmg.impact = off.normalized(target.radius);
 		dmg.spillable = Spillable != 0;
-		
+
 		vec2d dir = vec2d(off.x, off.z).normalized();
 
 		for(uint n = 0; n < hits; ++n) {
@@ -300,28 +305,28 @@ void AreaDamage(Event& evt, double Amount, double Radius, double Hits, double Sp
 
 	uint hits = round(Hits);
 	double maxDSq = Radius * Radius;
-	
+
 	int flags = getDamageType(DamageType) | getDRResponse(DRResponse);
 	bool spillable = Spillable != 0;
-	
+
 	for(uint i = 0, cnt = objs.length; i < cnt; ++i) {
 		Object@ target = objs[i];
 		vec3d off = target.position - center;
 		double dist = off.length - target.radius;
 		if(dist > Radius)
 			continue;
-		
+
 		double deal = Amount;
 		if(dist > 0.0)
 			deal *= 1.0 - (dist / Radius);
-		
+
 		//Rock the boat
 		if(target.hasMover) {
 			double amplitude = deal * 0.2 / (target.radius * target.radius);
 			target.impulse(off.normalize(min(amplitude,8.0)));
 			target.rotate(quaterniond_fromAxisAngle(off.cross(off.cross(target.rotation * vec3d_front())).normalize(), (randomi(0,1) == 0 ? 1.0 : -1.0) * atan(amplitude * 0.2) * 2.0));
 		}
-		
+
 		DamageEvent dmg;
 		@dmg.obj = evt.obj;
 		@dmg.target = target;
@@ -329,7 +334,7 @@ void AreaDamage(Event& evt, double Amount, double Radius, double Hits, double Sp
 		dmg.flags |= flags;
 		dmg.impact = off.normalized(target.radius);
 		dmg.spillable = spillable;
-		
+
 		vec2d dir = vec2d(off.x, off.z).normalized();
 
 		for(uint n = 0; n < hits; ++n) {
@@ -340,7 +345,7 @@ void AreaDamage(Event& evt, double Amount, double Radius, double Hits, double Sp
 			if(DamageType > 3 && DamageType != 7)
 			// Divide by 2 to get half of the torpedo's damage,
 			// then divide by the 10-second duration so you don't wind up dealing 5 times the torpedo's damage in DoTs.
-				ApplyAreaDoT(evt, target, dir, dmg.damage/20.0, 10.0); 
+				ApplyAreaDoT(evt, target, dir, dmg.damage/20.0, 10.0);
 		}
 	}
 }
@@ -366,7 +371,7 @@ void IncreasingDamage(Event& evt, double Amount, double Status, double StatusMul
 	int IncrementCount = int(Increment);
 	Increment -= IncrementCount;
 	if(Increment > 0.00001 && randomd() < Increment)
-		IncrementCount += 1; 
+		IncrementCount += 1;
 	Empire@ dummyEmp = null;
 	Region@ dummyReg = null;
 	const StatusType@ type = getABEMStatus(StatusInt);
@@ -392,7 +397,7 @@ void IncreasingDamage(Event& evt, double Amount, double Status, double StatusMul
 	}
 	evt.target.damage(dmg, -1.0, evt.direction);
 }
-					
+
 void DamageFromRelativeSize(Event& evt, double Amount, double SizeMultiplier, double AmountPerSize, double MinRatio, double MaxRatio, double DamageType) {
 	DamageEvent dmg;
 	dmg.damage = Amount * double(evt.efficiency) * double(evt.partiality);
@@ -454,7 +459,7 @@ void SizeScaledAreaDamage(Event& evt, double Radius, double BaselineAmount, doub
 	playParticleSystem("GravitonCollapser", center, quaterniond(), Radius / 3.0, targ.visibleMask);
 	int dmgType = getDamageType(DamageType);
 	double maxDSq = Radius * Radius;
-	
+
 	for(uint i = 0, cnt = objs.length; i < cnt; ++i) {
 		Object@ target = objs[i];
 		vec3d off = target.position - center;
@@ -462,19 +467,19 @@ void SizeScaledAreaDamage(Event& evt, double Radius, double BaselineAmount, doub
 		double dist = off.length - target.radius;
 		if(dist > Radius)
 			continue;
-		
+
 		double deal = BaselineAmount;
 
 		if(dist > 0.0)
 			deal *= 1.0 - (dist / Radius);
-		
+
 		//Rock the boat
 		if(target.hasMover) {
 			double amplitude = deal * 0.2 / (target.radius * target.radius);
 			target.impulse(revOff.normalize(min(amplitude,8.0)));
 			target.rotate(quaterniond_fromAxisAngle(off.cross(off.cross(target.rotation * vec3d_front())).normalize(), (randomi(0,1) == 0 ? 1.0 : -1.0) * atan(amplitude * 0.2) * 2.0));
 		}
-		
+
 		DamageEvent dmg;
 		@dmg.obj = evt.obj;
 		@dmg.target = target;
@@ -482,7 +487,7 @@ void SizeScaledAreaDamage(Event& evt, double Radius, double BaselineAmount, doub
 		dmg.flags |= dmgType;
 		dmg.impact = off.normalized(target.radius);
 		dmg.spillable = false;
-		
+
 		vec2d dir = vec2d(off.x, off.z).normalized();
 
 		double theirScale = sqr(target.radius);
@@ -518,7 +523,7 @@ DamageEventStatus ABEMShieldDamage(DamageEvent& evt, vec2u& position, vec2d& end
 		double maxShield = ship.MaxShield;
 		if(maxShield <= 0.0)
 			maxShield = ship.Shield;
-	
+
 		double dmgScale = (evt.damage * ship.Shield) / (maxShield * maxShield);
 		if(dmgScale < 0.01) {
 			//TODO: Simulate this effect on the client
@@ -531,13 +536,13 @@ DamageEventStatus ABEMShieldDamage(DamageEvent& evt, vec2u& position, vec2d& end
 		else {
 			playParticleSystem("ShieldImpactHeavy", ship.position + evt.impact.normalized(ship.radius * 0.9), quaterniond_fromVecToVec(vec3d_front(), evt.impact), ship.radius, ship.visibleMask, networked=false);
 		}
-		
+
 		double block;
 		if(ship.MaxShield > 0 && !(evt.flags & DF_NoShieldBleedthrough != 0)) // DF_NoShieldBleedthrough makes sure all damage is applied to shields first.
 			block = min(ship.Shield * min(ship.Shield / maxShield, 1.0), evt.damage);
 		else
 			block = min(ship.Shield, evt.damage);
-		
+
 		ship.Shield -= block;
 		evt.damage -= block;
 
@@ -579,14 +584,14 @@ void ABEMWarheadAoE(Object& source, Object@ targ, vec3d& impact, double Damage, 
 	array<Object@>@ objs = findInBox(center - vec3d(Radius), center + vec3d(Radius), source.owner.hostileMask);
 
 	double maxDSq = Radius * Radius;
-	
+
 	for(uint i = 0, cnt = objs.length; i < cnt; ++i) {
 		Object@ target = objs[i];
 		vec3d off = target.position - center;
 		double dist = off.length - target.radius;
 		if(dist > Radius)
 			continue;
-		
+
 		double deal = Damage;
 		if(dist > 0.0)
 			deal *= 1.0 - (dist / Radius);
@@ -596,6 +601,8 @@ void ABEMWarheadAoE(Object& source, Object@ targ, vec3d& impact, double Damage, 
 			if(ship.MaxShield > 0) {
 				deal *= 1.0 - (ship.Shield / ship.MaxShield);
 			}
+			// Divide damage by hex count.
+			deal /= ship.blueprint.design.interiorHexes + ship.blueprint.design.exteriorHexes;
 			ship.damageAllHexes(deal, source=source);
 		}
 	}

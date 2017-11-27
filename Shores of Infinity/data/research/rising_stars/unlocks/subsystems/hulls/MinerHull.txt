@@ -1,0 +1,17 @@
+Technology: MinerHull
+	Name: #R_MINER_HULL
+	Description: #R_MINER_HULL_DESC
+	Class: Unlock
+	Category: Hulls
+
+	Point Cost: 600
+	Time Cost: 120
+
+	Icon: HullSubsystems::6
+	Color: #ff0623
+
+	UnlockSubsystem(MinerHull)
+	SkipOnUnlockedSubsystem(MinerHull)
+
+	SecondaryMoneyCost(700)
+	ModAttribute(ProgenitorTechProgress, Add, 1.5)

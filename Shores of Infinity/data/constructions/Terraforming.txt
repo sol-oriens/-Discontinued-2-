@@ -23,7 +23,7 @@ Construction: TerraformIN
 	RemoveStatusInstance(BuildingSubsurface)
 
 	RequireNotTrait(StarChildren)
-
+	
 Construction: Terraform
 	Name: #C_SUBSURFACE_HABITATS
 	Icon: DesignationIcons::10

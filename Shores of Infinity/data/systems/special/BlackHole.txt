@@ -15,7 +15,6 @@ System: BlackHole
 		//RS - Scaling
 		MakePlanet(Orbit Spacing = 800:1000)
 
-	//RS - Scaling
 	MakePlanet(AncientHubworld, Grid Size = (26, 15), Conditions = False)
 
 	ForceMakeCreepCamp(BlackHoleCamp)

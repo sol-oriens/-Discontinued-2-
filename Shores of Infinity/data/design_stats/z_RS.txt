@@ -14,7 +14,7 @@ GlobalStat: BoardingDefense
 			Color: #ff8000
 			Secondary: Control
 
-			Variable: BoardingStrength
+			Variable: BoardingDefense
 
 GlobalStat: DefenseGeneration
 	Name: #S_DEFENSEGENERATION
@@ -195,6 +195,36 @@ SubsystemStat: RegenPerSecond
 
 	Variable: RegenPerSecond
 
+SubsystemStat: ForcefieldCapacity
+	Name: #S_FORCEFIELD_STAT
+	Icon: AttributeIcons::6
+	Color: #8080ff
+
+	Variable: ForcefieldCapacity
+
+SubsystemStat: ForcefieldRegen
+	Name: #S_FORCEFIELDREGEN
+	Icon: AttributeIcons::6
+	Color: #8080ff
+
+	Variable: ForcefieldRegen
+
+SubsystemStat: DamageFactor
+	Name: #S_DAMAGEFACTOR
+	Icon: AttributeIcons::3
+	Color: #ff8080
+	Suffix: x
+
+	Variable: DamageFactor
+
+SubsystemStat: RepairFactor
+	Name: #S_REPAIRFACTOR
+	Icon: AttributeIcons::6
+	Color: #80ff80
+	Suffix: x
+
+	Variable: RepairFactor
+	
 SubsystemStat: LaserDrivePower
 	Name: #S_LASERDRIVEPOWER
 	Icon: Laser::0 * #91692c

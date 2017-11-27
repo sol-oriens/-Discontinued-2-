@@ -161,11 +161,11 @@ tidy class ShipScript {
 		file << supplyConsumeFactor;
 		file << bonusEffectiveness;
 	}
-	
+
 	void load(Ship& ship, SaveFile& file) {
 		timer = -float(uint8(ship.id)) / 255.f;
 		bpTimer = timer - 0.5f;
-		
+
 		loadObjectStates(ship, file);
 		file >> cast<Savable>(ship.Mover);
 
@@ -332,17 +332,17 @@ tidy class ShipScript {
 			if(node !is null)
 				node.animInvis = true;
 		}
-		
+
 		cacheStats(ship);
 		updateStats(ship);
-		
+
 		if(ship.region !is null) {
 			Node@ node = ship.getNode();
 			if(node !is null)
 				node.hintParentObject(ship.region, false);
 		}
 	}
-	
+
 	void init(Ship& ship) {
 		timer = -float(uint8(ship.id)) / 255.f;
 		bpTimer = timer - 0.5f;
@@ -546,7 +546,7 @@ tidy class ShipScript {
 
 		//Record DPS
 		ship.DPS = ship.blueprint.getEfficiencySum(SV_DPS);
-		
+
 		//Update shield stats
 		double maxShield = ship.blueprint.getEfficiencySum(SV_ShieldCapacity);
 		if(maxShield > 0)
@@ -592,7 +592,7 @@ tidy class ShipScript {
 			if(powerAvail < powerUsed)
 				shipEffectiveness *= sqr(powerAvail / powerUsed);
 		}
-		
+
 		float effectiveness = shipEffectiveness;
 		if(suppression > 0.f)
 			effectiveness /= 1.f + suppression;
@@ -605,7 +605,7 @@ tidy class ShipScript {
 				if(subsys.type.hasTag(ST_IgnoreRange))
 					continue;
 				bool forRaid = subsys.type.hasTag(ST_RangeForRaid);
-				
+
 				for(uint j = 0, jcnt = subsys.effectorCount; j < jcnt; ++j) {
 					double range = subsys.effectors[j].range;
 					if(!forRaid) {
@@ -620,13 +620,13 @@ tidy class ShipScript {
 						maxRaid = range;
 				}
 			}
-			
+
 			if(!ship.hasLeaderAI)
 				ship.supportEngageRange = min(minRange, minRaid);
 			ship.minEngagementRange = minRange;
 			ship.maxEngagementRange = maxRange;
 		}
-		
+
 
 		if(!ship.hasLeaderAI) {
 			Object@ leader = ship.Leader;
@@ -655,7 +655,7 @@ tidy class ShipScript {
 
 		bpStatusID = ship.blueprint.statusID;
 	}
-	
+
 	void scuttle(Ship& ship) {
 		ship.destroy();
 	}
@@ -663,14 +663,14 @@ tidy class ShipScript {
 	Object@ getLastHitBy() {
 		return lastHitBy;
 	}
-	
+
 	void grantDestructionRewards(Ship& ship) {
 		if(killCredit !is null && !game_ending) {
 			auto size = ship.blueprint.design.size;
 			auto@ region = ship.region;
 			if(region !is null && killCredit !is ship.owner && ship.hasLeaderAI)
 				region.grantExperience(killCredit, size * config::EXPERIENCE_GAIN_FACTOR, combatOnly=true);
-				
+
 			if(ship.hasLeaderAI && currentMaintenance != 0) {
 				Empire@ master = killCredit.SubjugatedBy;
 				if(master !is null && master.getEdictType() == DET_Conquer) {
@@ -690,7 +690,7 @@ tidy class ShipScript {
 					killCredit.modAttribute(EA_EnemyFlagshipsDestroyed, AC_Add, 1.0);
 			}
 		}
-					
+
 		if(killCredit !is null && killCredit !is ship.owner && killCredit.valid) {
 			killCredit.recordStatDelta(stat::ShipsDestroyed, 1);
 			if(killCredit.ResearchFromKill != 0 && ship.blueprint.design.total(HV_LaborCost) != 0)
@@ -699,7 +699,7 @@ tidy class ShipScript {
 				killCredit.Glory += ship.blueprint.design.total(HV_LaborCost) * ship.blueprint.design.total(SV_TechMult);
 			}
 		}
-	
+
 		if(ship.owner !is null && ship.owner.valid) {
 			if(ship.hasLeaderAI) {
 				ship.owner.points -= int(double(ship.blueprint.design.size) * SHIP_SIZE_POINTS);
@@ -713,7 +713,7 @@ tidy class ShipScript {
 			}
 		}
 	}
-	
+
 	void destroy(Ship& ship) {
 		if(ship.owner !is null && ship.owner.valid && currentMaintenance != 0)
 			ship.owner.modMaintenance(-currentMaintenance, moneyType(ship));
@@ -729,7 +729,7 @@ tidy class ShipScript {
 
 		//Assuming we've been hit recently, the likely cause of death is explosion
 		if(killCredit !is null && !game_ending) {
-			auto size = ship.blueprint.design.size;			
+			auto size = ship.blueprint.design.size;
 			if(size < 16)
 				playParticleSystem("ShipExplosionLight", ship.position, ship.rotation, ship.radius, ship.visibleMask);
 			else
@@ -738,16 +738,16 @@ tidy class ShipScript {
 				playParticleSystem("ShipExplosionExtra", ship.position, ship.rotation, ship.radius, ship.visibleMask);
 			if(size >= 200)
 				playParticleSystem("ShipExplosionLong", ship.position, ship.rotation, ship.radius, ship.visibleMask);
-			
+
 			auto@ region = ship.region;
 			if(region !is null) {
 				uint debris = uint(log(size) / log(2.0));
 				if(debris > 0)
 					region.addShipDebris(ship.position, debris);
 			}
-			
-		}		
-		
+
+		}
+
 		grantDestructionRewards(ship);
 
 		if(lastHitBy !is null && lastHitBy !is ship)
@@ -776,7 +776,7 @@ tidy class ShipScript {
 
 		leaveRegion(ship);
 	}
-	
+
 	bool onOwnerChange(Ship& ship, Empire@ prevOwner) {
 		if(prevOwner !is null && prevOwner.valid) {
 			if(currentMaintenance != 0)
@@ -790,7 +790,7 @@ tidy class ShipScript {
 			else
 				prevOwner.TotalSupportsActive -= 1;
 		}
-		
+
 		if(ship.owner !is null && ship.owner.valid) {
 			if(currentMaintenance != 0)
 				ship.owner.modMaintenance(currentMaintenance, moneyType(ship));
@@ -820,7 +820,7 @@ tidy class ShipScript {
 		ship.Energy -= amount;
 		return true;
 	}
-	
+
 	bool consumeMinSupply(Ship& ship, double amount) {
 		if(ship.Supply >= amount) {
 			ship.Supply = max(0.0, ship.Supply - amount);
@@ -874,15 +874,15 @@ tidy class ShipScript {
 	void repairShip(Ship& ship, double amount) {
 		ship.blueprint.repair(ship, amount);
 	}
-	
+
 	void mangle(double amount) {
 		wreckage += amount;
 	}
-	
+
 	void suppress(double amount) {
 		suppression += amount;
 	}
-	
+
 	void startFire() {
 		onFire = true;
 	}
@@ -949,7 +949,7 @@ tidy class ShipScript {
 					}
 				}
 			}
-			
+
 			@reg = ship.region;
 		}
 
@@ -972,12 +972,12 @@ tidy class ShipScript {
 			ship.blueprint.holdFire = true;
 		else
 			ship.blueprint.holdFire = false;
-		
+
 		if(engaged)
 			combatTimer = 5.f;
 		else
 			combatTimer -= time;
-		
+
 		{
 			bool nowCombat = combatTimer > 0.f;
 			if(ship.inCombat != nowCombat) {
@@ -1013,7 +1013,7 @@ tidy class ShipScript {
 				//Rotate so that target rotation * facing = diff
 				quaterniond rot = quaterniond_fromVecToVec(facing, diff);
 				ship.setCombatFacing(rot);
-				
+
 				if(ship.hasLeaderAI) {
 					//Order a random support to assist
 					uint cnt = ship.supportCount;
@@ -1035,7 +1035,7 @@ tidy class ShipScript {
 		else if(prevEngaged) {
 			ship.clearCombatFacing();
 		}
-		
+
 		prevEngaged = engaged;
 
 		bool isContested = engaged || (reg !is null && reg.ContestedMask & owner.mask != 0);
@@ -1113,7 +1113,7 @@ tidy class ShipScript {
 		}
 
 		updateAccel(ship);
-		
+
 		float effectiveness = shipEffectiveness;
 		float prevEffectiveness = ship.blueprint.shipEffectiveness;
 		//Deal with fleet effectiveness
@@ -1140,14 +1140,14 @@ tidy class ShipScript {
 			if(suppression < 0.f)
 				suppression = 0.f;
 		}
-		
+
 		if(onFire && time > 0) {
 			double fireDamage = ship.blueprint.design.size * FIRE_DPS * time * owner.FireDamageTakenFactor;
 			internalDamage(ship, fireDamage);
 			if(effectiveness > 0 && randomd() < pow(EXTINGUISH_CHANCE, 1.0 / (time * effectiveness)))
 				onFire = false;
 		}
-		
+
 		//Clear kill credits after short spans of time
 		if(killCredit !is null && !ship.inCombat) {
 			@killCredit = null;
@@ -1159,17 +1159,17 @@ tidy class ShipScript {
 			retrofit(ship, queuedRetrofit);
 			@queuedRetrofit = null;
 		}
-		
+
 		@cachedLeader = ship.Leader;
 	}
-	
+
 	double tick(Ship& ship, double time) {
 		auto@ bp = ship.blueprint;
 		if(bp.statusID != bpStatusID)
 			updateStats(ship);
-		
+
 		bool inCombat = ship.inCombat;
-			
+
 		//Keep a timer for some occasional checks
 		timer += float(time);
 		if(timer >= 1.f) {
@@ -1179,7 +1179,7 @@ tidy class ShipScript {
 
 		double delay = 0.2;
 		double d = 0.2;
-		
+
 		if(inCombat) {
 			bpTimer += time;
 			if(bpTimer > 0.2f) {
@@ -1213,7 +1213,7 @@ tidy class ShipScript {
 		d = ship.moverTick(time);
 		if(d < delay)
 			delay = d;
-		
+
 		if(ship.Shield < ship.MaxShield) {
 			ship.Shield = min(ship.Shield + shieldRegen * time, ship.MaxShield);
 			shieldDelta = true;
@@ -1239,17 +1239,11 @@ tidy class ShipScript {
 						Ship@ shipLeader = cast<Ship>(cachedLeader);
 						if(shipLeader !is null) {
 							if(shipLeader.Supply < repairCost)
-								repairAmt = 0.0;
-							else
-								shipLeader.consumeSupply(repairCost);
+								repairAmt *= shipLeader.Supply / repairCost;
 						}
 					}
-					else {
-						if(ship.Supply < repairCost)
-							repairAmt = 0.0;
-						else
-							consumeSupply(ship, repairCost);
-					}
+					else if(ship.Supply < repairCost)
+						repairAmt *= ship.Supply / repairCost;
 				}
 				else {
 					repairAmt = max(repairAmt, 0.01 * bp.design.totalHP * repairFact * time);
@@ -1260,7 +1254,17 @@ tidy class ShipScript {
 						repairAmt -= repWreckage;
 						wreckage -= repWreckage;
 					}
-					bp.repair(ship, repairAmt);
+					double amtRepaired = bp.repair(ship, repairAmt);
+					repairCost *= amtRepaired / repairAmt;
+					if(inCombat) {
+						if(cachedLeader !is null) {
+							Ship@ shipLeader = cast<Ship>(cachedLeader);
+							if(shipLeader !is null)
+								shipLeader.consumeSupply(repairCost);
+						}
+						else
+							ship.consumeSupply(repairCost);
+					}
 				}
 			}
 		}
@@ -1271,12 +1275,12 @@ tidy class ShipScript {
 		}
 		return delay;
 	}
-	
+
 	void internalDamage(Ship& ship, double amount) {
 		Blueprint@ bp = ship.blueprint;
 		const Design@ dsg = bp.design;
 		vec2i gridSize = dsg.hull.gridSize;
-		
+
 		vec2i base = vec2i(randomi(0, gridSize.x-1), randomi(0, gridSize.y-1));
 		for(int x = 0; x < gridSize.x; ++x) {
 			for(int y = 0; y < gridSize.y; ++y) {
@@ -1284,10 +1288,10 @@ tidy class ShipScript {
 				auto status = bp.getHexStatus(pos.x,pos.y);
 				if(status is null || status.hp == 0)
 					continue;
-				
+
 				DamageEvent evt;
 				evt.damage = amount;
-				
+
 				bp.damage(ship, evt, pos);
 				needRepair = true;
 				return;
@@ -1302,11 +1306,11 @@ tidy class ShipScript {
 				uint cnt = ship.supportCount;
 				if(cnt > 0) {
 					uint ind = randomi(0,cnt-1);
-					
+
 					Object@ sup = ship.supportShip[ind];
 					if(sup !is null)
 						sup.supportInterfere(lastHitBy, ship);
-					
+
 					if(cnt > 1) {
 						@sup = ship.supportShip[ind+1];
 						if(sup !is null)
@@ -1314,7 +1318,7 @@ tidy class ShipScript {
 					}
 				}
 			}
-			
+
 			@lastHitBy = source;
 			@killCredit = source.owner;
 		}
@@ -1329,11 +1333,11 @@ tidy class ShipScript {
 				uint cnt = ship.supportCount;
 				if(cnt > 0) {
 					uint ind = randomi(0,cnt-1);
-					
+
 					Object@ sup = ship.supportShip[ind];
 					if(sup !is null)
 						sup.supportInterfere(lastHitBy, ship);
-					
+
 					if(cnt > 1) {
 						@sup = ship.supportShip[ind+1];
 						if(sup !is null)
@@ -1341,7 +1345,7 @@ tidy class ShipScript {
 					}
 				}
 			}
-			
+
 			@lastHitBy = evt.obj;
 			@killCredit = evt.obj.owner;
 		}
@@ -1392,7 +1396,7 @@ tidy class ShipScript {
 		if(ship.Shield != prevShield)
 			shieldDelta = true;
 	}
-	
+
 	Empire@ getKillCredit() {
 		return killCredit;
 	}
@@ -1418,7 +1422,7 @@ tidy class ShipScript {
 		else {
 			msg.write0();
 		}
-		
+
 		if(ship.MaxSupply > 0) {
 			msg.write1();
 			msg << ship.MaxSupply;
@@ -1427,7 +1431,7 @@ tidy class ShipScript {
 		else {
 			msg.write0();
 		}
-		
+
 		if(ship.MaxShield > 0) {
 			msg.write1();
 			msg << ship.MaxShield;
@@ -1436,7 +1440,7 @@ tidy class ShipScript {
 		else {
 			msg.write0();
 		}
-		
+
 		if(ship.hasAbilities) {
 			msg.write1();
 			ship.writeAbilities(msg);
@@ -1444,7 +1448,7 @@ tidy class ShipScript {
 		else {
 			msg.write0();
 		}
-		
+
 		if(ship.hasStatuses) {
 			msg.write1();
 			ship.writeStatuses(msg);
@@ -1499,7 +1503,7 @@ tidy class ShipScript {
  		ship.Shield = min(ship.Shield, ship.MaxShield);
  		ship.compEngageRange();
 		barDelta = true;
-	
+
 	}
 
 	void syncDetailed(const Ship& ship, Message& msg) {
@@ -1556,7 +1560,7 @@ tidy class ShipScript {
 			used = true;
 		else
 			msg.write0();
-		
+
 		msg.writeBit(shieldDelta);
 		if(shieldDelta) {
 			used = true;
@@ -1610,11 +1614,11 @@ tidy class ShipScript {
 			msg.writeBit(ship.Energy > 0);
 			if(ship.Energy > 0)
 				msg << ship.Energy;
-				
+
 			msg.writeBit(ship.Supply > 0);
 			if(ship.Supply > 0)
 				msg << ship.Supply;
-			
+
 			msg.writeBit(ship.isFTLing);
 			msg.writeBit(ship.inCombat);
 			barDelta = false;

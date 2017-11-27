@@ -188,7 +188,7 @@ tidy class PlanetScript {
 			double totChance = config::ASTEROID_OCCURANCE + config::RESOURCE_ASTEROID_OCCURANCE;
 			double resChance = config::RESOURCE_ASTEROID_OCCURANCE;
 			if(totChance > 0) {
-				for(uint i = 0, cnt = randomi(0,20); i < cnt; ++i) {
+				for(uint i = 0, cnt = randomi(10,20); i < cnt; ++i) {
 					vec3d pos = planet.position;
 					pos += random3d(80 + planet.radius);
 

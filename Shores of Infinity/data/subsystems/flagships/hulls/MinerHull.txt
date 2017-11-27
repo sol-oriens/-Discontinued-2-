@@ -14,6 +14,9 @@ Subsystem: MinerHull
 	AddShipModifier: SupplyCapacityFactor(0.1)
 	AddShipModifier: MiningRateFactor(1.25)
 	AddShipModifier: CargoStorageFactor(1.25)
+	
+	Assert: TagCount.Boarders == 0
+		Message: #ERROR_CANNOT_BOARD
 
 	Module: Default
 		Sprite: HullSubsystems::6

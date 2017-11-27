@@ -16,5 +16,7 @@ Building: SpaceElevator
 	ModSupportBuildSpeed(+0.4)
 	IfSystemFlag(Starport, AddResourceFromLevel(Money, Factor = 1.0))
 
+	IfAttributeGTE(Adaptation4, 1, GiveNativePressure(3))
+	ShowAttributeValue(Added Native Pressure, Adaptation4, Multiplier = 3.0, Icon = Industrious, Hide Zero = True)
 	AddPlanetGfxFlag(SpaceElevator)
 	ConflictBuilding(SpaceElevator)

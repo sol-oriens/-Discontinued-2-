@@ -4199,8 +4199,6 @@ class AddStatusToOrbitingPlanet : GenericEffect {
 					@newObj = null;
 				}
 			}
-
-
 		}
 
 		if(newObj !is null && newObj.hasSurfaceComponent) {

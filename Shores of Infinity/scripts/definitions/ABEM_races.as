@@ -26,13 +26,13 @@ import victory;
 class IfAtWar : IfHook {
 	Document doc("Only applies the inner hook if the empire owning the object is currently at war with another player empire.");
 	Argument hookID(AT_Hook, "planet_effects::GenericEffect");
-	
+
 	bool instantiate() override {
 		if(!withHook(hookID.str))
 			return false;
 		return GenericEffect::instantiate();
 	}
-	
+
 #section server
 	bool condition(Object& obj) const override {
 		Empire@ owner = obj.owner;
@@ -53,13 +53,13 @@ class IfAtWar : IfHook {
 class IfNotAtWar : IfHook {
 	Document doc("Only applies the inner hook if the empire owning the object is not currently at war with another player empire.");
 	Argument hookID(AT_Hook, "planet_effects::GenericEffect");
-	
+
 	bool instantiate() override {
 		if(!withHook(hookID.str))
 			return false;
 		return GenericEffect::instantiate();
 	}
-	
+
 #section server
 	bool condition(Object& obj) const override {
 		Empire@ owner = obj.owner;
@@ -96,7 +96,7 @@ class ConvertRemnants : AbilityHook {
 		return "Must target Remnants.";
 	}
 
-#section server	
+#section server
 	bool isValidTarget(const Ability@ abl, uint index, const Target@ targ) const override {
 		if(index != uint(objTarg.integer))
 			return true;
@@ -159,7 +159,7 @@ class StealResources : AbilityHook {
 			return;
 		if(!targ.hasResources)
 			return;
-		
+
 		if(!(abl.obj !is null && abl.obj.hasResources) && abortIfCannotTransfer.boolean) {
 			return;
 		}
@@ -187,12 +187,12 @@ class StealResources : AbilityHook {
 }
 
 class MineCargoFromPlanet : AbilityHook {
-	Document doc("Creates cargo from a target planet, dealing damage based on the amount of cargo mined and optionally draining Power.");
+	Document doc("Creates cargo from a target planet, dealing damage based on the amount of cargo mined.");
 	Argument objTarg(TT_Object);
 	Argument cargoType(AT_Cargo, doc="Type of cargo to mine.");
 	Argument amount(AT_SysVar, doc="Maximum amount of cargo to mine per second.");
 	Argument damageMult(AT_Decimal, "10000.0", doc="Amount of damage dealt per unit of cargo.");
-	Argument powerUse(AT_SysVar, "0", doc="Amount of Power to drain per second.");
+//	Argument powerUse(AT_SysVar, "0", doc="Amount of Power to drain per second.");
 	Argument quiet(AT_Boolean, "False", doc="Whether to destroy the planet 'quietly' or not.");
 
 	bool canActivate(const Ability@ abl, const Targets@ targs, bool ignoreCost) const override {
@@ -214,14 +214,7 @@ class MineCargoFromPlanet : AbilityHook {
 			return;
 		if(abl.obj is null || !abl.obj.hasCargo)
 			return;
-			
-		Ship@ ship;
-		double percent = 1;
-		if(abl.obj.isShip)
-		{
-			@ship = cast<Ship>(abl.obj);
-			percent = clamp(ship.Energy / (time * powerUse.fromSys(abl.subsystem, efficiencyObj=abl.obj)), 0, 1);
-		}
+
 		Target@ storeTarg = objTarg.fromTarget(abl.targets);
 		if(storeTarg is null)
 			return;
@@ -230,10 +223,7 @@ class MineCargoFromPlanet : AbilityHook {
 		if(target is null)
 			return;
 
-		// Diminish the mined cargo by the percentage of the consumed power.
-		if(abl.obj.isShip)
-			ship.consumeEnergy(time * powerUse.fromSys(abl.subsystem, efficiencyObj=abl.obj));
-		double miningRate = min(amount.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time * percent, (abl.obj.cargoCapacity - abl.obj.cargoStored) / type.storageSize);
+		double miningRate = min(amount.fromSys(abl.subsystem, efficiencyObj=abl.obj) * time, (abl.obj.cargoCapacity - abl.obj.cargoStored) / type.storageSize);
 
 		abl.obj.addCargo(cargoType.integer, miningRate);
 		if(damageMult.decimal != 0) {
@@ -245,12 +235,12 @@ class MineCargoFromPlanet : AbilityHook {
 	}
 #section all
 }
-		
+
 
 class CannotOverrideProtection: PickupHook {
 	Document doc("This pickup cannot be picked up if it is still protected, regardless of overrides such as those found in the Progenitor race. DEPRECATED.");
 	Argument allow_same(AT_Boolean, "True", doc="Whether the pickup can still be picked up if it is owned by the empire trying to pick it up.");
-	
+
 #section server
 	bool canPickup(Pickup& pickup, Object& obj) const override {
 		return pickup.isPickupProtected || (allow_same.boolean && pickup.owner is obj.owner);
@@ -261,7 +251,7 @@ class CannotOverrideProtection: PickupHook {
 class GenerateResearchInCombat : StatusHook {
 	Document doc("Objects with this status generate research when in combat.");
 	Argument amount(AT_Decimal, doc="How much research is generated each second.");
-	
+
 #section server
 	void onDestroy(Object& obj, Status@ status, any@ data) override {
 		bool inCombat = false;
@@ -270,11 +260,11 @@ class GenerateResearchInCombat : StatusHook {
 			obj.owner.modResearchRate(-amount.decimal);
 		data.store(false);
 	}
-	
+
 	bool onTick(Object& obj, Status@ status, any@ data, double time) override {
 		bool inCombat = false;
 		data.retrieve(inCombat);
-		
+
 		if(inCombat && !obj.inCombat)
 			obj.owner.modResearchRate(-amount.decimal);
 		else if(!inCombat && obj.inCombat)
@@ -282,7 +272,7 @@ class GenerateResearchInCombat : StatusHook {
 		data.store(obj.inCombat);
 		return true;
 	}
-	
+
 	void save(Status@ status, any@ data, SaveFile& file) override {
 		bool inCombat = false;
 		data.retrieve(inCombat);
@@ -292,7 +282,7 @@ class GenerateResearchInCombat : StatusHook {
 
 	void load(Status@ status, any@ data, SaveFile& file) override {
 		bool inCombat = false;
-		
+
 		file >> inCombat;
 		data.store(inCombat);
 	}
@@ -395,13 +385,13 @@ class IfAlliedWithOriginEmpire : IfStatusHook {
 	Argument hookID(AT_Hook);
 	Argument allow_null(AT_Boolean, "True", doc="Whether the hook executes if the status has no origin empire.");
 	Argument allow_self(AT_Boolean, "True", doc="Whether the hook executes if the object owner is the origin empire.");
-	
+
 	bool instantiate() override {
 		if(!withHook(hookID.str))
 			return false;
 		return StatusHook::instantiate();
 	}
-	
+
 #section server
 	bool condition(Object& obj, Status@ status) const override {
 		Empire@ owner = obj.owner;
@@ -412,14 +402,14 @@ class IfAlliedWithOriginEmpire : IfStatusHook {
 			return allow_null.boolean;
 		if(origin is owner)
 			return allow_self.boolean;
-		return (origin.ForcedPeaceMask & owner.mask != 0) && (owner.ForcedPeaceMask & origin.mask != 0); 
+		return (origin.ForcedPeaceMask & owner.mask != 0) && (owner.ForcedPeaceMask & origin.mask != 0);
 	}
 #section all
 }
 
 class ProtectPlanet : GenericEffect {
 	Document doc("Planets affected by this status cannot be captured.");
-	
+
 #section server
 	void disable(Object& obj, any@ data) const override {
 		if(obj.hasSurfaceComponent)
@@ -468,7 +458,7 @@ class TargetFilterNotRace : TargetFilter {
 class TargetFilterRemnants : TargetFilter {
 	Document doc("Only allow targets belonging to the Remnants.");
 	Argument targID(TT_Object);
-	
+
 	string getFailReason(Empire@ emp, uint index, const Target@ targ) const override {
 		return "Must target Remnants.";
 	}
@@ -497,7 +487,7 @@ class IfRace : IfHook {
 			return false;
 		return GenericEffect::instantiate();
 	}
-	
+
 #section server
 	bool condition(Object& obj) const override {
 		Empire@ owner = obj.owner;
@@ -894,7 +884,7 @@ class NotifyOwner : EmpireTrigger {
 	Argument title("Title", AT_Custom, doc="Title of the notification.");
 	Argument desc("Description", AT_Custom, EMPTY_DEFAULT, doc="Description of the notification.");
 	Argument icon("Icon", AT_Sprite, EMPTY_DEFAULT, doc="Sprite specifier for the notification icon.");
-	
+
 
 #section server
 	void activate(Object@ obj, Empire@ emp) const override {

@@ -18,8 +18,8 @@ Subsystem: MuonBattery
 	Speed := max(90, Range / 16)
 	Spread := 0.01 / max(Range / 600, 1)
 	Tracking := 0.8
-	FireArc := 0.5 * pi
-	Pierce := 3.0
+	FireArc := 1.5
+	Pierce := 3
 	SupplyCost := Size * 1.5
 	PowerUse := 3.5 * Size
 

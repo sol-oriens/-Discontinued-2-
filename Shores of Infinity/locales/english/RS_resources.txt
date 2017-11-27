@@ -256,3 +256,5 @@ C_HYPERCORE: Hypercore
 C_HYPERCORE_DESC: <<
 	The energy produced by colliding hyperfield particles into one another, stored in a specialized container. Its quasi-non-existence in subspace means it is unusable as a conventional energy source, but it has other very interesting applications.
 >>
+R_STRIP_TRANSMUTER: Transmuted Ore
+R_STRIP_TRANSMUTER_DESC: Generates 7.5 Base Materials and 45 Ore per minute. Can be exported to other planets.

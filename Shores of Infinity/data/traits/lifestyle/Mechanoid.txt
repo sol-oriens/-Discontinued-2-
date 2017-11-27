@@ -24,12 +24,7 @@ Trait: Mechanoid
 	ModAttribute(PopulationDecayFactor, Multiply, 0)
 	ModAttribute(OverpopulationBenefitFactor, Multiply, 0)
 	ModAttribute(ForbidColonization, Add, 1)
-	RemoveTechnologyNodes(SysConstructionBay)
-	RemoveTechnologyNodes(SysOreProcessor)
+	ModAttribute(ImmuneToRadiation, Add, 1)
 	ReplaceTechnologyNodes(ConstructionBay, FactoryLabor)
 	ReplaceTechnologyNodes(OreProcessor, FactoryLabor)
-	ReplaceTechnologyNodes(HydroponicsSatellite, Thrust)
-
-	//////Node to replace for geniocracy.
-	ReplaceTechnologyNodes(LifeInfiniteSociology, LifeInfiniteSociologyMech)
-	ReplaceTechnologyNodes(XHydroponicsSatellite, Connector)
+	ReplaceTechnologyNodes(HydroponicsSatellite, MonoHydroponics)

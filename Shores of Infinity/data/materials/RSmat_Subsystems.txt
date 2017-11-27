@@ -8,6 +8,7 @@ Material: RSSubsystem
 // *********************************************************
 // ***************POWER AND SUPPLY TECHNOLOGY***************
 // *********************************************************
+
 Material: SAmatter
 	Inherit: RSSubsystem
 	Texture: data/images/subsystems/SAmmater.png
@@ -23,6 +24,7 @@ Material: SingularityCore
 Material: SolarCell
 	Inherit: RSSubsystem
 	Texture: data/images/subsystems/SolarCell.png
+
 Material: RSSupply
 	Inherit: RSSubsystem
 	Texture: data/images/subsystems/supply_normal.png
@@ -94,8 +96,9 @@ Material: ArmorArt7
 	Texture: data/images/subsystems/armor7.png
 
 // *********************************************************
-// **********************WEAPONS****************************
+// **********************WEAPONS**************************
 // *********************************************************
+
 SpriteSheet: AdaptiveLaser
 	Inherit: RSSubsystem
 	Texture: data/images/subsystems/laser6.png
@@ -131,6 +134,7 @@ Material: CoolantModifier
 // *********************************************************
 // ******************ABILITY SUBSYSTEMS*********************
 // *********************************************************
+
 Material: BoardingParty
 	Inherit: RSSubsystem
 	Texture: data/images/subsystems/boardingparty.png
@@ -139,8 +143,21 @@ Material: SecurityStation
 	Texture: data/images/subsystems/securityparty.png
 
 // *********************************************************
-// ******************OTHER SUBSYSTEMS***********************
+// ******************OTHER SUBSYSTEMS*********************
 // *********************************************************
+
 Material: ABEMShuttle
 	Inherit: RSSubsystem
 	Texture: data/images/subsystems/shuttle.png
+Material: ShieldShrine
+	Inherit: RSSubsystem
+	Texture: data/images/subsystems/shieldshrine.png
+Material: WarShrine
+	Inherit: RSSubsystem
+	Texture: data/images/subsystems/warshrine.png
+Material: GreatShrine
+	Inherit: RSSubsystem
+	Texture: data/images/subsystems/greatshrine.png
+Material: ProgenitorShrine
+	Inherit: RSSubsystem
+	Texture: data/images/subsystems/progenitorshrine.png

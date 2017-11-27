@@ -22,7 +22,7 @@ class ResearchGrid : Component_ResearchGrid, Savable {
 	double StatRecordDelay = 5.0;
 
 	ResearchGrid() {}
-	
+
 	void save(SaveFile& file) {
 		file << researchRate;
 		file << points;
@@ -36,7 +36,7 @@ class ResearchGrid : Component_ResearchGrid, Savable {
 			file << tagUnlocks[i];
 		}
 	}
-	
+
 	void load(SaveFile& file) {
 		if(file < SV_0085) {
 			loadOld(file);
@@ -82,7 +82,7 @@ class ResearchGrid : Component_ResearchGrid, Savable {
 		WriteLock lock(mtx);
 		researchRate += mod;
 	}
-	
+
 	bool gaveAchievement = false;
 
 	void researchTick(Empire& emp, double time) {
@@ -98,20 +98,20 @@ class ResearchGrid : Component_ResearchGrid, Savable {
 				grid.nodes[i].tick(emp, grid, time);
 			}
 		}
-		
+
 		StatRecordDelay -= time;
 		bool recordStats = StatRecordDelay <= 0;
 		if(recordStats) {
 			emp.recordStat(stat::ResearchIncome, float(researchRate * ResearchEfficiency * emp.ResearchGenerationFactor));
 			emp.recordStat(stat::ResearchTotal, totalGenerated);
 			StatRecordDelay += 5.0;
-			
+
 			if(!gaveAchievement && totalGenerated >= 25000.0) {
 				gaveAchievement = true;
 				giveAchievement(emp, "ACH_MAX_TECH");
 			}
 		}
-		
+
 	}
 
 	void generatePoints(Empire& emp, double pts, bool modified = true, bool penalized = true) {
@@ -144,10 +144,7 @@ class ResearchGrid : Component_ResearchGrid, Savable {
 
 	void initResearch(Empire& emp) {
 		WriteLock lock(mtx);
-		if(hasDLC("Heralds"))
-			@grid = getTechnologyGridSpec("Heralds").create();
-		else
-			@grid = getTechnologyGridSpec("Base").create();
+		@grid = getTechnologyGridSpec("RisingStars").create();
 		tagUnlocks.length = getUnlockTagCount();
 		for(uint i = 0, cnt = tagUnlocks.length; i < cnt; ++i)
 			tagUnlocks[i] = 0;

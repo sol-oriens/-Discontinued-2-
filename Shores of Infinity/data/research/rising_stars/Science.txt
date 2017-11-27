@@ -1,0 +1,9 @@
+Technology: Science
+	Name: #R_SCIENCE
+	Description: #R_SCIENCE_DESC
+	Icon: TechScience
+	Class: Special
+	Color: #aaaaaa
+
+	Default Unlock: True
+	Category: Grid Utils

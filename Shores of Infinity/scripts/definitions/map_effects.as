@@ -308,7 +308,7 @@ bool parseResourceSpec(array<const ResourceType@>@ resPossib, const string& v) {
 	}
 }
 
-//MakePlanet(<Resource> = Distributed, <Radius> = 6:14, <Orbit Spacing> = 125:275,
+//MakePlanet(<Resource> = Distributed, <Radius> = 60:140, <Orbit Spacing> = 2750:3250,
 //           <Grid Size> = (-1, -1))
 // Create a new planet with <Resource> and size <Radius>. Spaced in the orbit from
 // the last planet by <Orbit Spacing>.

@@ -3,16 +3,17 @@ Module: GuardianShipyard
 	Description: #ORB_GUARDIAN_DESC
 	Blurb: #ORB_GUARDIAN_BLURB
 	Icon: techShipYard
-	Strategic Icon: HullIcons::1
-	Icon Size: 0.06
+	Strategic Icon: OrbitalIcons::5
+	Icon Size: 0.1
 	Size: 50
 	Health: 50000
 	Armor: 50000
 	Shield Capacity: 50000
 	Shield Regeneration: 50
 	Model: Shipyard
-	Material: VolkurGenericPBR
+	Material: GenericPBR_Shipyard
 	Can Fling: False
+	Spin: 0
 	GrantAbility(FinishGuardianConstruction)
 	GrantAbility(BuildGuardian)
 	OnEnable(AddStatus(GuardianShipyardActive))

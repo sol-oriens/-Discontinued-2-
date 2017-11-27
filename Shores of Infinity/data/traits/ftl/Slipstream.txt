@@ -28,4 +28,6 @@ Trait: Slipstream
 	IfHaveTrait(Ancient, LoadDesigns(ancient/not_hyperdrive))
 	IfHaveTrait(Ancient, LoadDesigns(ancient/slipstream))
 
+	ModAttribute(SlipstreamConst, Add, 1)
+	ModAttribute(ProgenitorTechProgress, Add, 3.5)
 	IfNotHaveTrait(StarChildren, SpawnQuickStartShip(Slipstream Generator))

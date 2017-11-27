@@ -39,12 +39,7 @@ class GamePage : GameSettingsPage {
 		Toggle(locale::NG_ALLOW_TEAM_SURRENDER, "ALLOW_TEAM_SURRENDER", halfWidth=true, tooltip=locale::NGTT_ALLOW_TEAM_SURRENDER);
 		Toggle(locale::NG_START_EXPLORED_MAP, "START_EXPLORED_MAP", halfWidth=true, tooltip=locale::NGTT_START_EXPLORED_MAP);
 		Toggle(locale::NG_AUTO_CLAIM_NEBULAE, "AUTO_CLAIM_NEBULAE", halfWidth=true, tooltip=locale::NGTT_AUTO_CLAIM_NEBULAE);
-
-		auto@ tforming = Toggle(locale::NG_ENABLE_TERRAFORMING, "ENABLE_TERRAFORMING", halfWidth=true, tooltip=locale::NGTT_ENABLE_TERRAFORMING);
-		if(hasDLC("Heralds")) {
-			tforming.DefaultValue = false;
-			tforming.set(false);
-		}
+		Toggle(locale::NG_ENABLE_TERRAFORMING, "ENABLE_TERRAFORMING", halfWidth=true, tooltip=locale::NGTT_ENABLE_TERRAFORMING);
 		Toggle(locale::NG_LEGACY_EXPLORATION, "LEGACY_EXPLORATION_MODE", halfWidth=true, tooltip=locale::NGTT_LEGACY_EXPLORATION);
 
 		emptyline();

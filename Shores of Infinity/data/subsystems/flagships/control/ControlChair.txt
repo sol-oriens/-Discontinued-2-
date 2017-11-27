@@ -7,7 +7,7 @@ Subsystem: ControlChair
 
 	Tags: BaseCost, Category:Control
 	Tags: Crewed, Control, ControlCore, HasInternals
-	Tags: NoBulkhead
+	Tags: NoBulkhead, BoardingDefense
 	Hull: Flagship, Station
 
 	EvaluationOrder: -10
@@ -18,6 +18,7 @@ Subsystem: ControlChair
 	Prayer := Sum.RequirePrayer * 995
 
 	BoardingStrength := (0.5 * Crew) + (ShipSize / 20)
+	BoardingDefense := BoardingStrength // This is a dummy variable for the sake of design stats, because I'm lazy.
 
 
 	Hex.Resistance := 0.2

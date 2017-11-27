@@ -12,7 +12,7 @@ Subsystem: Warhead
 
 	Size := HexSize * Hexes
 	Range := Size * 4 + 4800
-	Damage := Size * 1
+	Damage := Size * 128
 	Reload := 5.0 * min(1.0 + Size/512, 2.0)
 	Speed := max(40, Range / 90)
 	Tracking := 1.5
@@ -30,7 +30,7 @@ Subsystem: Warhead
 
 	Hook: OnEnable(AddStatus(Warhead))
 	Hook: LimitStatusStacks(Warhead, WarheadStorage)
-	//Hook: RefillStatusConstruction(Warhead, WarheadStorage, Warhead)
+	//Hook:RefillStatusConstruction(Warhead, WarheadStorage, Warhead)
 
 	Modifier: AoERadiusFactor(Factor)
 		Radius := Radius * Factor

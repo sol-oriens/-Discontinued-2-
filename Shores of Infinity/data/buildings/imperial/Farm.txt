@@ -19,4 +19,7 @@ Building: Farm
 
 	RequireNotTrait(Mechanoid)
 
-	AI:AsCreatedResource(Soylent1)
+	ShowAttributeValue(Added Loyalty, Adaptation4, Multiplier = 2.0, Icon = AttributeIcons::1, Hide Zero = True)
+	IfAttributeGTE(Adaptation4, 1, ModLoyalty(2))
+
+	AI: AsCreatedResource(Soylent1)

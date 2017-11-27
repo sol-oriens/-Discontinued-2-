@@ -1,7 +1,7 @@
 Trait: Technicists
 	Name: #TRAIT_TECHNICISTS
 	Description: #TRAIT_TECHNICISTS_DESC
-	Order: 11
+	Order: 12
 
 	DLC: Heralds
 
@@ -28,7 +28,7 @@ Trait: Technicists
 	ForbidSubsystem(SupportCeramicArmor)
 	ForbidSubsystem(SupportReactiveArmor)
 	ForbidSubsystem(SupportAblativeArmor)
-	
+
 	ForbidSubsystem(ReactiveArmor)
 	ForbidSubsystem(AblativeArmor)
 	ForbidSubsystem(PlateArmor)
@@ -37,26 +37,22 @@ Trait: Technicists
 	//Grid Replacements
 
 	//Armor for HP
-	
+
 	ReplaceTechnologyNodes(ArmorHealth2, Health2)
 	ReplaceTechnologyNodes(ArmorHealth, Health)
 	ReplaceTechnologyNodes(ShieldGen, Science)
 
 
 	////ARMOR BANS
-	
-	RemoveTechnologyNodes(CompositeArmor)
+
+	ReplaceTechnologyNodes(CompositeArmor, ImprovedLabs)
 	ReplaceTechnologyNodes(QuantumArmor, ImprovedLabs)
 	ReplaceTechnologyNodes(CrystalArmor, ImprovedLabs)
 	ReplaceTechnologyNodes(NeutronArmor, ImprovedLabs)
 	ReplaceTechnologyNodes(LiquidArmor, ImprovedLabs)
-	
+
 	///SECRET ARMOR BAN
-	RemoveTechnologyNodes(FerroFluidArmor)
 
-	/////////////////////////////////////
-	///////// GENIOCRACY GRID IS SOLVED IN GENIOCRACY TRAIT//////////
-	/////////////////////////////////////
-	
-	
+	RemoveTechnologyNodes(FerrofluidArmor)
 
+	UnlockSubsystem(Forcefield)

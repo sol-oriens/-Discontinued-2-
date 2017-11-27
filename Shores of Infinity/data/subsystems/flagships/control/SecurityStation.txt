@@ -6,7 +6,7 @@ Subsystem: SecurityStation
 	Elevation: 5
 
 	Tags: BaseCost, NonContiguous,Category:Equipment, NoCore, DefaultUnlock
-	Tags: ExteriorCore
+	Tags: ExteriorCore, SecuritySystem, BoardingDefense
 	Tags: HasInternals
 	Hull: Flagship, Station
 
@@ -14,9 +14,10 @@ Subsystem: SecurityStation
 
 	Size := HexSize * Hexes
 	BoardingStrength := floor(80 * Size)
+	BoardingDefense := BoardingStrength // This is a dummy variable for the sake of design stats, because I'm lazy.
 
 	Hex.Resistance := 0.2
-	Hex.HP := 36 * HexSize
+	Hex.HP := 72 * HexSize
 	Hex.Mass := HexSize
 	Module: Default
 		Sprite: SecurityStation

@@ -1,6 +1,6 @@
 Building: DefenseGrid
 	Name: #BLD_DEFENSE_GRID
-	Description: #BLD_DEFENSE_GRID_DESC
+	Description: #BLD_DEFENSE_GRID_DESC:10:250:450
 	Sprite: DefenseGrid
 
 	Category: Military
@@ -18,5 +18,7 @@ Building: DefenseGrid
 
 	RequireNotTrait(Ancient)
 
+	IfAttributeGTE(Adaptation4, 1, AddLocalDefense(2, Build Satellites = True))
+	ShowAttributeValue(Satellite Defense Generation, Adaptation4, Multiplier = 2.0, Icon = ResourceIcon::5, Suffix = #PER_MINUTE, Hide Zero = True)
 	IfNotSiege(RepeatExtended(AddTurret(Missile, Range=1800, Damage=25, Reload=1, Speed=150, Tracking=6), Base = 10, Multiply Attribute = StaticDamageFactor))
 	RecordBonusDPS(250)

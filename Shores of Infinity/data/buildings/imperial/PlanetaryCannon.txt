@@ -16,5 +16,7 @@ Building: PlanetaryCannon
 
 	AddStatus(HasDefenses)
 
+	ModLocalLoyalty(3)
+	ShowAttributeValue(Added System Loyalty, Adaptation4, Multiplier = 3.0, Icon = AttributeIcons::1, Hide Zero = True)
 	IfNotSiege( AddTurret(Artillery, Range=3000, Damage=200, Radius=50, Reload=5.0, Speed=200, Spread=0.0, FireArc=3.14, Tracking=0.2, FireTolerance=0, Hits=15) ) #version<106
 	IfNotSiege( RepeatExtended(AddTurret(Artillery, Range=3000, Damage=200, Radius=50, Reload=5.0, Speed=200, Spread=0.0, FireArc=3.14, Tracking=0.2, FireTolerance=0, Hits=15), Base = 1, Multiply Attribute = StaticDamageFactor) ) #version>=106

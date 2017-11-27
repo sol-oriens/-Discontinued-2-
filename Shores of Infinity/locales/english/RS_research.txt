@@ -1,3 +1,21 @@
+R_CAT_MILITARY_DESC: <<
+	[color=#aaa][i]The art of permanently removing an opponent. Or, well, semi-permanently. Or just not getting removed by the opponent.[/i][/color]
+>>
+R_CAT_ENERGY_DESC: <<
+	[color=#aaa][i]How to produce power out of thin air. No, seriously![/i][/color]
+>>
+R_CAT_PLANET_DESC: <<
+	[color=#aaa][i]Building... building... please come back in a few decades, my liege.[/i][/color]
+>>
+R_CAT_POLITICS_DESC: <<
+	[color=#aaa][i]I will not let this Republic that has stood for a thousand years be split in two! (Also known as the art of saying very little with as many words as possible.)[/i][/color]
+>>
+R_CAT_INDUSTRY_DESC: <<
+	[color=#aaa][i]Discovering a method for building galaxy-sized starships, one star at a time.[/i][/color]
+>>
+R_CAT_PROPULSION_DESC: <<
+	[color=#aaa][i]Remember, children, fasten your seatbelts before you go to Ludicrous--- AAAAARGH![/i][/color]
+>>
 R_IMP_PLANET_SUPPORT_DESC: <<
 	[i][color=#aaa]More focused and effective command of orbital defense vessels.[/color][/i]
 
@@ -18,6 +36,36 @@ R_IMP_SENSORS_DESC: <<
 
 	Increases all sensor ranges by $1.
 >>
+R_SYS_MATTERDISRUPTOR: Matter Disruption
+R_VOIDRAY: Adaptive Frequency Modulation
+RESEARCH_REQ_BUILDLIQUIDARMOR: Construct at least $2 units of Liquid Armor across all your ships. ( $1 / $2 )
+R_NYLLI_FOOD: Nutrient Recyclers
+R_NYLLI_FOOD_DESC: <<
+	[i][color=#aaa]New and improved methods of recycling and reusing organic matter allow us to produce food and water for entire populations in space.[/color][/i]
+
+	Unlocks the Hydroponics Station and Water Reclamation Facility orbitals.
+
+	[i][bbloc=#ORB_FARM_DESC/][/i]
+
+	[i][bbloc=#ORB_HYDROGENATOR_DESC/][/i]
+>>
+R_CAT_MILITARY: Military Research
+R_CAT_ENERGY: Energy Science
+R_CAT_PLANET: Planetary Development
+R_CAT_POLITICS: Political Science
+R_CAT_INDUSTRY: Industry
+R_CAT_PROPULSION: Dynamics
+R_FORCEFIELD: Forcefield Projection
+R_FORCEFIELD_DESC: <<
+	[color=#aaa][i]We all know very well how a shield typically functions. A semi-permeable cohesive plasma bubble is formed outside the ship, allowing objects to exit at will while deflecting anything that tries to enter it. However, what if we could apply the same principles to create a more complex shape, such as a panel or a brick? Or a sword?
+
+	It turns out that's a pretty neat thing to do. It also turns out it's a pretty expensive thing to do, but hey, science is expensive too and we're still doing it. Speaking of which, we're going to need some more grant money... could you please sign here?[/i][/color]
+
+	Unlocks the Forcefield subsystem.
+
+	[i][bbloc=#S_FORCEFIELD_DESC/][/i]
+>>
+
 
 R_SYS_SHIELDED_AMGEN_BLURB: In-Combat Resupply
 R_SYS_SHIELDED_AMGEN_DESC: <<
@@ -25,9 +73,24 @@ R_SYS_SHIELDED_AMGEN_DESC: <<
 
 	[bbloc=#S_SHIELDED_AMGEN_DESC/]
 >>
+R_DEV_FTL_DESC: <<
+	[i][color=#aaa]New technologies to store and transport FTL energy.[/color][/i]
+
+	When unlocked, immediately increases your stored FTL and FTL storage capacity by $1.
+>>
+
+R_CONNECTOR_DLC: <<
+	This node once contained an item dependent on a piece of DLC content such as the Wake of the Heralds expansion.
+
+	Functionally, it is identical to a 'LINK' node - this description is only here to assure you that this is most likely not a bug.
+>>
+
+R_KEY_EMERGENCY_SHIELDS_DESC: Doubles the duration of the shield regeneration buff provided by the "Emergency Supplies" subsystem.
+R_KEY_EMERGENCY_SHIELDS: Improved Plasma Harnessing
+
 
 R_SYS_ZPG_DESC: <<
-	[color=#aaa][i]Massive breakthroughs in physics allow us to generate and contain an artificial black hole, drawing power from it. The device is fairly bulky, but the power generation is well worth it.[/i][/color]
+	[color=#aaa][i]Massive breakthroughs in quantum physics allow us to generate and contain an artificial black hole, drawing power from it. The device is fairly bulky, but the power generation is well worth it.[/i][/color]
 
 	Unlocks the Singularity Core.
 
@@ -63,16 +126,16 @@ R_SYS_PLASMA_THROWER_DESC: <<
 R_SYS_HYPERDRIVE_DESC: <<
 	[i][color=#aaa]A device capable of opening a window into - or out of - hyperspace.[/color][/i]
 
-	Unlocks the Hyperdrive subsystem for use on flagships.
+	Unlocks the Prototype Hyperdrive subsystem for use on flagships.
 
-	[i][bbloc=#S_HYPERDRIVE_DESC/][/i]
+	[i][bbloc=#S_EXPERIMENTAL_HYPERDRIVE_DESC/][/i]
 >>
 R_SYS_JUMPDRIVE_DESC: <<
 	[i][color=#aaa]A device capable of punching through subspace to instantaneously teleport a starship.[/color][/i]
 
-	Unlocks the Jumpdrive subsystem for use on flagships.
+	Unlocks the Prototype Jumpdrive subsystem for use on flagships.
 
-	[i][bbloc=#S_JUMPDRIVE_DESC/][/i]
+	[i][bbloc=#S_EXPERIMENTAL_JUMPDRIVE_DESC/][/i]
 >>
 R_SYS_PROGENITOR_SHIELD_DESC: <<
 	[i][color=#aaa]Investigation of Progenitor shield matrices yields tremendous insights into shielding technology.[/color][/i]
@@ -139,8 +202,7 @@ R_RECALL_DESC: <<
 
 	Unlocks the Recall Device for use on flagships, and the Recall Facility for construction on planets.
 
-	[i]Recall:
-
+	[i][img=ActionBarIcons::7]Recall:[/img]
 	[bbloc=#ABL_RECALL_DESC/][/i]
 >>
 R_NYLLIRECALL_DESC: <<
@@ -148,8 +210,7 @@ R_NYLLIRECALL_DESC: <<
 
 	Unlocks the Recall Device for use on flagships, and the Recall Facility orbital.
 
-	[i]Recall:
-
+	[i][img=ActionBarIcons::7]Recall:[/img]
 	[bbloc=#ABL_RECALL_DESC/][/i]
 >>
 R_IMPROVEDLABS: Containment Protocols
@@ -189,9 +250,9 @@ R_ORB_GATE_DESC: <<
 R_SYS_SLIPSTREAM_DESC: <<
 	[i][color=#aaa]A device capable of penetrating subspace on a level far greater than - and considerably different from - conventional hyperdrives. 'Slipstream tears', while similar to wormholes, decay much more rapidly than known stable wormholes; with a bigger generator, the created rift will last longer.[/color][/i]
 
-	Unlocks the Slipstream Generator subsystem.
+	Unlocks the Prototype Slipstream Generator subsystem.
 
-	[i][bbloc=#S_SLIPSTREAM_GENERATOR_DESC/][/i]
+	[i][bbloc=#S_EXPERIMENTAL_SLIPSTREAM_DESC/][/i]
 >>
 R_BOARDING_PARTY_DESC: <<
 	[color=#aaa][i]Recent studies of old science fiction have taught us the value of capturing enemy ships intact. To that end, we have started designing boarding pods for our flagships to launch.[/i][/color]
@@ -213,9 +274,9 @@ R_NYLLI_FOOD_DESC: <<
 >>
 R_ORB_FLING: Fling Studies
 R_ORB_GATE: Gate Construction
-R_SYS_HYPERDRIVE: Hyperdrive
-R_SYS_SLIPSTREAM: Slipstream
-R_SYS_JUMPDRIVE: Jumpdrive
+R_SYS_HYPERDRIVE: Hyperdrive Theory
+R_SYS_SLIPSTREAM: Slipstream Induction
+R_SYS_JUMPDRIVE: Jumpdrive Experiments
 
 
 R_LINK: LINK
@@ -292,11 +353,18 @@ R_BLD_SENATE_DESC: <<
 
 	Unlocks the Centralized Coordination Complex building for construction on planets.
 >>
+R_ORB_SENATE_DESC: <<
+	[color=#aaa][i]The development of methods to remove unnecessary bureaucracy and corruption in a government through a centralized oversight system.[/i][/color]
+
+	Unlocks the Centralized Coordination Complex orbital.
+>>
 R_MINER_HULL: Dedicated Mining Architecture
 R_MINER_HULL_DESC: <<
-	[color=#aaa][i]Unlocks the Miner Hull subsystem for flagships.[/i][/color]
+	[color=#aaa][i]Streamlining various support craft, such as miners, allows them to be more effective.[/i][/color]
 
-	[bbloc=#S_MINER_HULL_DESC/]
+	Unlocks the Miner Hull subsystem for use on flagships.
+
+	[i][bbloc=#S_MINER_HULL_DESC/][/i]
 >>
 R_SYS_JUGGERNAUT_HULL: Volatile Payload Delivery
 R_SYS_JUGGERNAUT_HULL_DESC: <<
@@ -309,4 +377,368 @@ R_SYS_JUGGERNAUT_HULL_DESC: <<
 R_METROPOLIS_UPGRADE: Metropolitan Optimization
 R_METROPOLIS_UPGRADE_DESC: <<
 	Increases the amount of pressure capacity added by Metropoles by 2.
+>>
+
+R_ORB_HYDROPONICS_SATELLITE: Nutrient Reclamation Satellite
+R_ORB_HYDROPONICS_SATELLITE_DESC: <<
+	[color=#aaa][i]Unlocks the Nutrient Reclamation Satellite orbital.[/i][/color]
+
+	[bbloc=#ORB_HYDROPONICS_SATELLITE_DESC/]
+>>
+R_ORB_ZEROGRAV_ASSEMBLY: Antimatter Core Assembler
+R_ORB_ZEROGRAV_ASSEMBLY_DESC: <<
+	[color=#aaa][i]Unlocks the Antimatter Core Assembler orbital.[/i][/color]
+
+	[bbloc=#ORB_ZEROGRAV_ASSEMBLY_DESC/]
+>>
+R_ORB_ORBITAL_CONTROL: Orbital Control Satellite
+R_ORB_ORBITAL_CONTROL_DESC: <<
+	[color=#aaa][i]Unlocks the Orbital Control Satellite orbital.[/i][/color]
+
+	[bbloc=#ORB_ORBITAL_CONTROL_DESC/]
+>>
+R_CORE_OPTIMIZATIONS: Improved Extraction
+R_CORE_OPTIMIZATIONS_DESC: <<
+	[color=#aaa][i]New resource extraction and processing methods allows us to get more usable material from a planet in any given period.[/i][/color]
+
+	Increases the amount of resources generated by Transmuters and Strip Miners by 50%. Also increases the amount of resources generated by Ore Transmuters by 33%.
+>>
+R_TERRAFORMING: Terraforming
+R_TERRAFORMING_DESC: <<
+	[color=#aaa][i]After a number of failed experiments, and destroying several native ecosystems in the process, we've finally figured out how to alter a planetary environment to suit our requirements. The indigenous wildlife looked weird, anyways.[/i][/color]
+
+	Allows planets to be terraformed to a basic Tier 1 resource.
+>>
+R_CORE_PROGRAMMING: Optimized Core Programming
+R_CORE_PROGRAMMING_DESC: <<
+	[color=#aaa][i]We have discovered a number of inefficiencies in our basic Core design. The deficiency can be corrected using a variety of methods - all of them will require additional replicator time and support from a Foundry, but once they are completed, they should improve our resource generation.[/i][/color]
+
+	Allows Cores to be programmed to generate resources equivalent to 50% of a basic Tier 1 resource. This requires the planet containing the Core to have a Labor source.
+>>
+R_CORE_ADV: Ore Transmutation
+R_CORE_ADV_DESC: <<
+	[color=#aaa][i]An innovative new Transmuter design has been developed, allowing the ore harvested by a Strip Miner to be converted into base materials.[/i][/color]
+
+	Unlocks the Ore Transmuter control hub.
+
+	[bbloc=#BLD_ANCIENT_STRIP_TRANSMUTER_DESC/]
+>>
+R_SYS_BATTLE_SHRINE: Wrath of Enilatros
+R_SYS_BATTLE_SHRINE_DESC: <<
+	[color=#aaa][i]Our priests have achieved communion with the War God, Enilatros. He has vowed to improve the combat performance of anyone who prays to him.[/i][/color]
+
+	Unlocks the Shrine of War for use on flagships.
+
+	[bbloc=#S_BATTLE_SHRINE_DESC/]
+>>
+R_SYS_GRAND_SHRINE: Knowledge of the Greats
+R_SYS_GRAND_SHRINE_DESC: <<
+	[color=#aaa][i]Under Alephatra's guidance, our priests have contacted her husband Ialatros, the God of Leadership. Together, they have granted us blueprints for several devices that will augment Alephatra's defensive blessings and inspire our crusaders, respectively.[/i][/color]
+
+	Unlocks the Power Transmitter and Stellar Shield Generator orbitals, and the Shrine of Leadership for use on flagships.
+
+	[bbloc=#S_GRAND_SHRINE_DESC/]
+>>
+R_SYS_PROGENITOR_SHRINE: Blessing of the Gods
+R_SYS_PROGENITOR_SHRINE_DESC: <<
+	[color=#aaa][i]Using the technology of the Ancients, our priests have communed with the Old Gods on a more profound level than ever before. They have blessed our great victories and given us designs for an impressive new shrine capable of channeling their combined power.[/i][/color]
+
+	Unlocks the Shrine of the Gods for use on flagships.
+
+	[bbloc=#S_PROGENITOR_SHRINE_DESC/]
+>>
+
+************************************
+*** SPECIALIZATION TECHS GO HERE ***
+************************************
+
+R_SPEC_DISCLAIMER: <<
+	[b]This is a specialization tech. Researching this will convert any research nodes containing the [color=#f00]$1[/color] tech into link nodes, locking away their benefits for the rest of the game. Choose wisely.[/b]
+>>
+R_CONNECTOR_SPECIALIZATION: <<
+	This node once contained a specialization item, but was deactivated when a different specialization node was researched.
+
+	Functionally, it is identical to a 'LINK' node - this description is only here to assure you that this is most likely not a bug.
+>>
+
+*** FLAGSHIP VS SUPPORT ***
+
+R_SPEC_FLAGSHIP1_DESC: <<
+	[color=#aaa][i]Encouraging the empire's industrial machine to develop parts for flagships makes their construction cheaper, at the cost of making high-quality support ships more expensive.[/i][/color]
+
+	Reduces the construction cost of flagships by 10%, but increases the cost of building support ships by 5%.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Carrier Development/]
+>>
+R_SPEC_SUPPORT1_DESC: <<
+	[color=#aaa][i]Encouraging the empire's industrial machine to develop parts for support ships makes their construction cheaper, at the cost of making high-quality flagships more expensive.[/i][/color]
+
+	Reduces the construction cost of support ships by 10%, but increases the cost of building flagships by 5%.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Battleship Development/]
+>>
+R_SPEC_FLAGSHIP2_DESC: <<
+	[color=#aaa][i]Removing some of the fragile components required to coordinate large fleets makes flagship maintenance cheaper and easier, though the flagship's C&C capabilities are reduced as a result.[/i][/color]
+
+	Reduces the maintenance cost of flagships by 10%, but decreases their Support Capacity by 20%.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Small Arms Development/]
+>>
+R_SPEC_SUPPORT2_DESC: <<
+	[color=#aaa][i]Refocusing the empire's weapon production towards the smaller armaments required by support ships increases their quality, but the quality of flagship weapons suffers because of this.[/i][/color]
+
+	Increases the damage of support weapons by 10%, but reduces the damage of flagship weapons by 10% as well.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Streamlined Battleships/]
+>>
+R_SPEC_FLAGSHIP3_DESC: <<
+	[color=#aaa][i]Specialized manufacturing processes allow for the faster construction of flagships. This comes at a cost to the speed at which support ships are built, though.[/i][/color]
+
+	Reduces the Labor cost of flagships by 10%, but increases the Labor cost of building support ships by 15%.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Targeting Sensor Shunt/]
+>>
+R_SPEC_SUPPORT3_DESC: <<
+	[color=#aaa][i]Feeding sensor telemetry from a flagship to its support fleet increases the range at which the fleet can accurately fire at a target. However, the required sensor configuration is inadequate for the flagship's own weapons, and the sensors on support ships are only good enough to take advantage of the flagship's help.[/i][/color]
+
+	Increases the range of support weapons by 10%, but reduces the range of flagship weapons by 10% as well.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Battleship Manufacturing/]
+>>
+R_SPEC_FLAGSHIP4_DESC: <<
+	[color=#aaa][i]A better understanding of the structural weaknesses of flagships and their shields allows us to reinforce those weak spots, increasing the endurance of the ship as a whole.[/i][/color]
+
+	Increases the health and shield capacity of flagships by 10%.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Support Ship Manufacturing/]
+>>
+R_SPEC_SUPPORT4_DESC: <<
+	[color=#aaa][i]New insights into the requirements of support ships allow for less or cheaper materials to be used to achieve the same effects, essentially increasing the rate at which they can be mass-produced.[/i][/color]
+
+	Reduces the Labor cost of support ships by 30%, and the construction cost by 10%.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Reinforced Architecture/]
+>>
+R_SPEC_FLAGSHIP1: Battleship Development
+R_SPEC_FLAGSHIP2: Streamlined Battleships
+R_SPEC_FLAGSHIP3: Battleship Manufacturing
+R_SPEC_FLAGSHIP4: Reinforced Architecture
+R_SPEC_SUPPORT1: Carrier Development
+R_SPEC_SUPPORT2: Small Arms Development
+R_SPEC_SUPPORT3: Targeting Sensor Shunt
+R_SPEC_SUPPORT4: Support Ship Manufacturing
+
+*** TERRAFORMING VS ADAPTATION ***
+
+R_SPEC_TERRAFORM1: Streamlined Terraforming
+R_SPEC_ADAPTATION1: Optimized Habitats
+R_SPEC_TERRAFORM1_DESC: <<
+	[color=#aaa][i]As we continue to terraform more planets, we inevitably identify more inefficiencies in our initial terraforming process. Resolving these inefficiencies will reduce the colossal amounts of time and money spent by our terraformers.[/i][/color]
+
+	Reduces the Labor cost of terraforming by $2, and makes it cost $1 less money.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Optimized Habitats/]
+>>
+R_SPEC_ADAPTATION1_DESC: <<
+	[color=#aaa][i]A group of accountants and managers recently snuck onto one of our habitat construction sites. At first, we tried to get them out of there, but it turns out they had some pretty useful suggestions to streamline the construction process.[/i][/color]
+
+	Doubles the base construction speed of imperial buildings. Additionally, reduces the base construction and maintenance costs of imperial buildings by $1 and $2, respectively. (These modifiers stack multiplicatively with Construction upgrades.)
+
+	[bbloc=#R_SPEC_DISCLAIMER:Streamlined Terraforming/]
+>>
+
+R_SPEC_TERRAFORM2: Environmental Engineering
+R_SPEC_ADAPTATION2: Adaptive Industrialization
+R_SPEC_TERRAFORM2_DESC: <<
+	[color=#aaa][i]New terraforming techniques allow us to make more precise alterations to a planet's biosphere. Or we could just build fjords in the equatorial regions. Fjords are nice.[/i][/color]
+
+	Allows planets to be terraformed to an advanced Tier 1 resource.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Adaptive Industrialization/]
+>>
+R_SPEC_ADAPTATION2_DESC: <<
+	[color=#aaa][i]By adapting our industrial processes to the specifics of each planet, we can improve our economic output by a substantial margin by building more fidget spinners or what have you.[/i][/color]
+
+	Increases all civilian resource production by $1.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Environmental Engineering/]
+>>
+
+R_SPEC_TERRAFORM3: Efficient Biospheres
+R_SPEC_ADAPTATION3: Adaptive Habitats
+R_SPEC_TERRAFORM3_DESC: <<
+	[color=#aaa][i]We have made another breakthrough in streamlining the terraforming progress. Our terraformers will now be significantly more efficient.[/i][/color]
+
+	Reduces the Labor cost of terraforming by $2, and makes it cost $1 less money.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Adaptive Habitats/]
+>>
+R_SPEC_ADAPTATION3_DESC: <<
+	[color=#aaa][i]Improvements in our life support technology have allowed us to cram more people onto our planets. They'll still be just as crowded, but maybe they won't complain about the toxic gases anymore.[/i][/color]
+
+	Increases the maximum population of all planets by $1 per level.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Efficient Biospheres/]
+>>
+
+R_SPEC_TERRAFORM4: Ecosystem Restructuring
+R_SPEC_ADAPTATION4: Multipurpose Infrastructure
+R_SPEC_TERRAFORM4_DESC: <<
+	[color=#aaa][i]We now know how to alter planetary ecosystems with incredible precision. We won't let any creatures breed out of control and eat everything anymore.[/i][/color]
+
+	Allows planets to be terraformed to a basic Tier 2 resource or a very advanced Tier 1 resource.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Multipurpose Infrastructure/]
+>>
+R_SPEC_ADAPTATION4_DESC: <<
+	[color=#aaa][i]By modifying large portions of our infrastructure to be used for secondary projects, we can considerably streamline our civilization.[/i][/color]
+
+	Most imperial buildings now generate a secondary effect in addition to their usual function. The effect will be added to the building's description.
+
+	This effect does not apply to Stalks, Altars or Atroan control hubs.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Ecosystem Restructuring/]
+>>
+
+*** TERRAFORMING VS ADAPTATION - ATROAN ***
+
+R_SPEC_ATROAN_TERRAFORM1: Streamlined Programming
+R_SPEC_ATROAN_ADAPTATION1: Optimized Infrastructure
+R_SPEC_ATROAN_TERRAFORM1_DESC: <<
+	[color=#aaa][i]Additional simulations have discovered a way to optimize our cores more quickly and efficiently.[/i][/color]
+
+	Reduces the Labor cost of core programming, adaptation or specialization by $2, and makes it cost $1 less money. Does not interact in any way with the penalty for reprogramming a programmed core.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Optimized Infrastructure/]
+>>
+R_SPEC_ATROAN_ADAPTATION1_DESC: <<
+	[color=#aaa][i]Dedicating additional computational power to simulating the logistics of constructing planetary infrastructure has revealed a number of glaring inefficiencies. These have now been corrected.[/i][/color]
+
+	Doubles the base construction speed of all buildings. Additionally, reduces the base construction and maintenance costs of buildings by $1 and $2, respectively. (These modifiers stack multiplicatively with Construction upgrades.)
+
+	[bbloc=#R_SPEC_DISCLAIMER:Streamlined Programming/]
+>>
+
+R_SPEC_ATROAN_TERRAFORM2: Adaptive Programming
+R_SPEC_ATROAN_ADAPTATION2: Efficient Processing
+R_SPEC_ATROAN_TERRAFORM2_DESC: <<
+	[color=#aaa][i]Allowing a core to simulate and iterate upon its own programming yields a program that is tailored to the specific environment of its planet.[/i][/color]
+
+	Allows programmed Cores to be Adapted, generating even more of whatever resource they are generating.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Efficient Processing/]
+>>
+R_SPEC_ATROAN_ADAPTATION2_DESC: <<
+	[color=#aaa][i]Better processing techniques allow us to better utilize the resources on a planet.[/i][/color]
+
+	Cores and Refineries produce an additional $1 and $2 of any pressure on a planet, respectively.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Adaptive Programming/]
+>>
+
+R_SPEC_ATROAN_TERRAFORM3: Efficient Programming
+R_SPEC_ATROAN_ADAPTATION3: Matter Reclamation
+R_SPEC_ATROAN_TERRAFORM3_DESC: <<
+	[color=#aaa][i]Further simulations have discovered a way to modify our cores at a remarkable rate.[/i][/color]
+
+	Reduces the Labor cost of core programming, adaptation or specialization by $2, and makes it cost $1 less money. Does not interact in any way with the penalty for reprogramming a programmed core.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Matter Reclamation/]
+>>
+R_SPEC_ATROAN_ADAPTATION3_DESC: <<
+	[color=#aaa][i]Base materials are often not completely useless when they have been processed. Using an innovative new technique, we can get more value per block of matter.[/i][/color]
+
+	Increases the effectiveness of all buildings which consume Base Materials - except Refineries and Infusers - by $1. Does not modify any negative effects or the effects of Multipurpose Infrastructure.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Efficient Programming/]
+>>
+
+R_SPEC_ATROAN_TERRAFORM4: Specialized Programming
+R_SPEC_ATROAN_ADAPTATION4: Multipurpose Infrastructure
+R_SPEC_ATROAN_TERRAFORM4_DESC: <<
+	[color=#aaa][i]Dedicating additional processing power to improving a core's programming can provide us with an extremely specialized program designed for the core's environment.[/i][/color]
+
+	Allows programmed Cores to be Specialized, generating even more of whatever resource they are generating.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Multipurpose Infrastructure/]
+>>
+R_SPEC_ATROAN_ADAPTATION4_DESC: <<
+	[color=#aaa][i]By modifying large portions of our infrastructure to be used for secondary projects, we can considerably streamline our civilization.[/i][/color]
+
+	Most buildings now generate a secondary effect in addition to their usual function. The effect will be added to the building's description.
+
+	This effect does not apply to Stalks, Altars or Atroan control hubs.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Specialized Programming/]
+>>
+*** TERRAFORMING VS ADAPTATION - NYLLI ***
+
+R_SPEC_NYLLI_TERRAFORM1: Streamlined Terraforming
+R_SPEC_NYLLI_ADAPTATION1: Optimized Habitats
+R_SPEC_NYLLI_TERRAFORM1_DESC: <<
+	[color=#aaa][i]As we continue to terraform more planets, we inevitably identify more inefficiencies in our initial terraforming process. Resolving these inefficiencies will reduce the colossal amounts of time and money spent by our terraformers.[/i][/color]
+
+	Reduces the Labor cost of terraforming by $2, and makes it cost $1 less money.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Optimized Habitats/]
+>>
+R_SPEC_NYLLI_ADAPTATION1_DESC: <<
+	[color=#aaa][i]A group of accountants and managers recently snuck onto one of our habitat construction sites. At first, we tried to get them out of there, but it turns out they had some pretty useful suggestions to streamline the construction process.[/i][/color]
+
+	Halves the Labor cost of all orbitals. Additionally, reduces the base construction and maintenance costs of orbitals by $1 and $2, respectively.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Streamlined Terraforming/]
+>>
+
+R_SPEC_NYLLI_TERRAFORM2: Environmental Engineering
+R_SPEC_NYLLI_ADAPTATION2: Adaptive Industrialization
+R_SPEC_NYLLI_TERRAFORM2_DESC: <<
+	[color=#aaa][i]New terraforming techniques allow us to make more precise alterations to a planet's biosphere. Or we could just build fjords in the equatorial regions. Fjords are nice.[/i][/color]
+
+	Allows planets to be terraformed to an advanced Tier 1 resource.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Adaptive Industrialization/]
+>>
+R_SPEC_NYLLI_ADAPTATION2_DESC: <<
+	[color=#aaa][i]By adapting our industrial processes to the specific raw materials found on each planet, we can improve our economic output by a substantial margin by building more fidget spinners or what have you.[/i][/color]
+
+	Increases all pressure-based resource production by $1.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Environmental Engineering/]
+>>
+
+R_SPEC_NYLLI_TERRAFORM3: Efficient Biospheres
+R_SPEC_NYLLI_ADAPTATION3: Orbital Coordination
+R_SPEC_NYLLI_TERRAFORM3_DESC: <<
+	[color=#aaa][i]We have made another breakthrough in streamlining the terraforming progress. Our terraformers will now be significantly more efficient.[/i][/color]
+
+	Reduces the Labor cost of terraforming by $2, and makes it cost $1 less money.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Orbital Coordination/]
+>>
+R_SPEC_NYLLI_ADAPTATION3_DESC: <<
+	[color=#aaa][i]Improvements in our orbital control systems have allowed us to cram more habitats into orbit above our planets. They'll still be just as crowded, but maybe they won't knock each other out of orbit anymore.[/i][/color]
+
+	Increases the maximum population of all planets by $1 per level.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Efficient Biospheres/]
+>>
+
+R_SPEC_NYLLI_TERRAFORM4: Ecosystem Restructuring
+R_SPEC_NYLLI_ADAPTATION4: Multipurpose Infrastructure
+R_SPEC_NYLLI_TERRAFORM4_DESC: <<
+	[color=#aaa][i]We now know how to alter planetary ecosystems with incredible precision. We won't let any creatures breed out of control and eat everything anymore.[/i][/color]
+
+	Allows planets to be terraformed to a basic Tier 2 resource or a very advanced Tier 1 resource.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Multipurpose Infrastructure/]
+>>
+R_SPEC_NYLLI_ADAPTATION4_DESC: <<
+	[color=#aaa][i]By modifying large portions of our infrastructure to be used for secondary projects, we can considerably streamline our civilization.[/i][/color]
+
+	Most orbitals will now be automatically upgraded to Advanced versions, which generate a secondary effect in addition to their usual functionality.
+
+	This effect does not apply to Guardian Facilities, FTL orbitals, satellites, Habitats, or captured racial orbitals such as Mainframes, Orbital Replicators and Embassies.
+
+	[bbloc=#R_SPEC_DISCLAIMER:Ecosystem Restructuring/]
 >>

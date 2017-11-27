@@ -15,3 +15,7 @@ Resource: Deuterium
 
 	Pressure: 2 Research
 	Pressure: 2 Defense
+	
+	Terraform Labor: 750
+	Terraform Cost: 45
+	ABEM_terraforming::TerraformRequireUnlockTag(Terraform2)

@@ -17,7 +17,7 @@ Subsystem: MuonCannon
 	Speed := max(90, Range / 16)
 	Spread := 0.01 / max(Range / 600, 1)
 	Tracking := 0.8
-	FireArc := 0.5 * pi
+	FireArc := 1.5
 	Pierce := 3.0
 	SupplyCost := Size * 1.5
 
