@@ -6,7 +6,7 @@ Technology: Sensors
 	Icon: techPhaseHarmonics * #80ffea
 	Color: #80ffea
 
-	Category: Basic Upgrades
+	Category: Minor Upgrades
 	Class: Boost
 
 	Point Cost: 500
@@ -23,7 +23,7 @@ Technology: Sensors2
 	Icon: techPhaseContainment * #80ffea
 	Color: #80ffea
 
-	Category: Basic Upgrades
+	Category: Medium Upgrades
 	Class: Upgrade
 
 	Point Cost: 700
