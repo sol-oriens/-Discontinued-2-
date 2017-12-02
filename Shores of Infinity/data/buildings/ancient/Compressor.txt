@@ -18,5 +18,4 @@ Building: Compressor
 	RequireStatus(AncientReplicator)
 	RequireStatusToProgress(AncientReplicator)
 
-	ShowAttributeValue(Research Generation, Adaptation4, Icon = ResourceIcon::4, Suffix = #PER_SECOND, Hide Zero = True)
 	ActiveWhenCargoConsumed(BaseMaterial, 1, 6, AddStatus(AncientCompressor)), Inactive Status = AncientRequireBaseMat)

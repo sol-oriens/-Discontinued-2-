@@ -4,20 +4,22 @@ Module: StagingHub
 	Description: #ORB_STAGING_HUB_DESC
 	Icon: GuiOrbitalIcons::15
 	Strategic Icon: OrbitalIcons::15
+	Model: CommerceStation
+	Material: GenericPBR_CommerceStation
+
+	Size: 12
 
 	Standalone: True
 	Core: True
-	Size: 12
+
+	Health: 5000
+	Armor: 1000
 
 	Build Cost: 400
 	Maintenance: 70
 	Labor Cost: 20
 
-	Health: 5000
-	Armor: 1000
-
-	Model: CommerceStation
-	Material: GenericPBR_CommerceStation
+	RequireNotTrait(Ancient)
 
 	AddFleetCommand(64)
 
@@ -40,5 +42,3 @@ Module: StagingHub
 	MatchOrbitingOwner(Destroy None = False)
 
 	AddCargoStorage(5000)
-
-	RequireNotTrait(Ancient)

@@ -4,20 +4,20 @@ Module: Temple
 	Description: #ORB_TEMPLE_DESC
 	Icon: GuiOrbitalIcons::21
 	Distant Icon: OrbitalIcons::21
+	Model: Temple
+	Material: GenericPBR_Temple
+
+	Size: 7
 
 	Core: True
 	Standalone: True
 
-	Build Cost: 300
-	Maintenance: 30
-	Labor Cost: 15
-	Size: 7
-
 	Health: 6000
 	Armor: 4000
 
-	Model: Temple
-	Material: GenericPBR_Temple
+	Build Cost: 300
+	Maintenance: 30
+	Labor Cost: 15
 
 	RequireTrait(Evangelical)
 

@@ -18,8 +18,6 @@ Building: Warehouse
 
 	AddLaborStorage(100)
 
-	IfAttributeGTE(Adaptation4, 1, ModSupportBuildSpeed(0.05))
-	ShowAttributeValue(Support Construction Boost, Adaptation4, Multiplier = 5.0, Icon = ResourceIcon::6, Suffix = %, Hide Zero = True)
+	RepeatEmpireAttribute(InfiniteMetallurgyTaken, AddLaborStorage(10))
 
 	AI: RegisterForUse(LaborStorage)
-	RepeatEmpireAttribute(InfiniteMetallurgyTaken, AddLaborStorage(10))

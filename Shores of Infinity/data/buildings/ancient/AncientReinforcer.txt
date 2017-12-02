@@ -18,5 +18,4 @@ Building: AncientReinforcer
 	RequireStatus(AncientReplicator)
 	RequireStatusToProgress(AncientReplicator)
 
-	ShowAttributeValue(All Subsystem Health, Adaptation4, Multiplier = 5.0, Icon = AttributeIcons::6, Suffix = %, Hide Zero = True)
 	ActiveWhenCargoConsumed(BaseMaterial, 1, 6, AddStatus(AncientReinforcer), Inactive Status = AncientRequireBaseMat)

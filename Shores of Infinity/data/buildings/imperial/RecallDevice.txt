@@ -4,21 +4,18 @@ Building: RecallBuilding
 	Sprite: PlanetThruster*#aaffff
 
 	Category: Military
+	Build Affinity: Crystallic
+	Maintenance Affinity: Crystallic
 
 	Size: 5x5
 
 	Base Cost: 500
 	Tile Cost: 20
-
-	Build Affinity: Crystallic
-	Maintenance Affinity: Crystallic
-
 	Base Maintenance: 70
 	Tile Maintenance: 5
 
 	Build Time: 300
 
-	IfAttributeGTE(Adaptation4, 1, ModEmpireAttribute(FreeEnergyStorage, Add, 50))
-	ShowAttributeValue(Free Energy Storage, Adaptation4, Multiplier = 50.0, Icon = ResourceIcon::2, Hide Zero = True)
 	RequireUnlockTag(Recall)
+	
 	GrantAbility(Recall)

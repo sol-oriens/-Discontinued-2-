@@ -2,24 +2,24 @@ Module: Ringworld
 	Name: #RINGWORLD
 	Description: #RINGWORLD_DESC
 	Icon: PlanetType::14
+	Strategic Icon: PlanetType::14
+	Model: Shipyard
+	Material: SolarEngine
+
+	Size: 50
 
 	Core: True
 	Standalone: True
 
+	Health: 500000
+	Armor: 500000
+
 	Build Cost: 3000
 	Labor Cost: 2000
+
 	ConsumeCargo(Ore, 25000)
 
 	RequireUnlockTag(RingworldUnlock)
-
-	Health: 500000
-	Armor: 500000
-	Size: 50
-
-	Model: Shipyard
-	Material: SolarEngine
-
-	Strategic Icon: PlanetType::14
 
 	LimitOncePerSystem(RingworldFlag, Any Empire = True)
 
@@ -27,5 +27,4 @@ Module: Ringworld
 
 	//RS - Scaling
 	OnEnable(SpawnPlanet(Ringworld, Owned = True, Add Status = Ringworld, Radius = 5500, Physics = False))
-
 	OnEnable(Destroy())

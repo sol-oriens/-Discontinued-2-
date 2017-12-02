@@ -7,19 +7,17 @@ Building: Farm
 	Build Affinity: Forest
 
 	Size: 2x2
+
 	Base Cost: 120
 	Tile Cost: 20
 	Base Maintenance: 100
 	Tile Maintenance: 20
 
 	Build Time: 240
-	AddPlanetResource(Soylent1)
 
 	RequireNotTrait(Ancient)
-
 	RequireNotTrait(Mechanoid)
 
-	ShowAttributeValue(Added Loyalty, Adaptation4, Multiplier = 2.0, Icon = AttributeIcons::1, Hide Zero = True)
-	IfAttributeGTE(Adaptation4, 1, ModLoyalty(2))
+	AddPlanetResource(Soylent1)
 
 	AI: AsCreatedResource(Soylent1)

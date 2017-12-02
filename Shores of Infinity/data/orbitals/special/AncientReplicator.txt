@@ -4,30 +4,28 @@ Module: AncientReplicator
 	Description: #ORB_ANCIENT_REPLICATOR_DESC
 	Icon: GuiOrbitalIcons::20
 	Distant Icon: OrbitalIcons::20
+	Model: Mainframe
+	Material: GenericPBR_Mainframe
+
+	Size: 9
 
 	Core: True
 	Standalone: True
 
-	Size: 9
-
-	Build Cost: 1000
-	Labor Cost: 111
-	ConsumeCargo(Ore, 3500)
-
 	Health: 50000
 	Armor: 50000
 
-	AddResistance(40.0)
+	Build Cost: 1000
+	Labor Cost: 111
 
-	Model: Mainframe
-	Material: GenericPBR_Mainframe
-
-	RequireTrait(Ancient)
+	ConsumeCargo(Ore, 3500)
 
 	CountAsPlanet()
 
-	AddAccelerationBonus(5.0)
+	RequireTrait(Ancient)
 
+	AddResistance(40.0)
+	AddAccelerationBonus(5.0)
 	AddStatusToOrbitingPlanet(AncientReplicator, Only Owned = True, Allow Space = True, Set Origin Empire = True)
 
 	IfTagUnlocked(AdvancedCores, GrantAbility(AncientBuildOreTransmuter))

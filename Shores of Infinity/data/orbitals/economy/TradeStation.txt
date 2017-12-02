@@ -4,24 +4,25 @@ Module: TradeStation
 	Description: #ORB_TRADE_STATION_DESC
 	Icon: GuiOrbitalIcons::15
 	Strategic Icon: OrbitalIcons::15
+	Model: CommerceStation
+	Material: GenericPBR_CommerceStation
+
+	Size: 16
 
 	Core: True
 	Standalone: True
 
+	Health: 5000
+	Armor: 1000
+
 	Build Cost: 500
 	Maintenance: 200
 	Labor Cost: 15
+
 	ConsumeInfluence(5)
 
-	Size: 16
-
-	Health: 5000
-	Armor: 1000
-
-	Model: CommerceStation
-	Material: GenericPBR_CommerceStation
-
 	LimitOncePerSystem(CommerceFlag)
+
 	SetSystemFlag(CommerceStation)
 
 	GrantAbility(BuyInfluence) #version>=93
@@ -29,46 +30,6 @@ Module: TradeStation
 	GrantAbility(BuyResearch) #version>=93
 	GrantAbility(BuyLabor) #version>=93
 
-	GiveTrade()
-	GlobalTradeNode()
-
-	FriendlyPlanetMoney(To Self = 100, To Other = 100, Count Self = False, Max Money = 300, Per Level = True)
-
-	IfTagUnlocked(NylliAdaptation4, OnEnable(SpawnOrbital(AdaptedShipyard)))
-	IfTagUnlocked(NylliAdaptation4, OnEnable(Destroy(True)))
-	ABEM_races::RequireNotUnlockTag(NylliAdaptation4)
-
-Module: AdaptedTradeStation
-	Name: #ORB_TRADE_STATION_ADAPTED
-	Blurb: #ORB_TRADE_STATION_BLURB
-	Description: #ORB_TRADE_STATION_ADAPTED_DESC
-	Icon: GuiOrbitalIcons::15
-	Strategic Icon: OrbitalIcons::15
-
-	Core: True
-	Standalone: True
-
-	Build Cost: 500
-	Maintenance: 200
-	Labor Cost: 15
-	Size: 16
-
-	Health: 5000
-	Armor: 1000
-
-	Model: CommerceStation
-	Material: GenericPBR_CommerceStation
-
-	LimitOncePerSystem(CommerceFlag)
-	SetSystemFlag(CommerceStation)
-
-	GrantAbility(BuyInfluence) #version>=93
-	GrantAbility(BuyEnergy) #version>=93
-	GrantAbility(BuyResearch) #version>=93
-	GrantAbility(BuyLabor) #version>=93
-
-	SpawnFreighters(Rate = 2.0, Min Level = 1)
-	RequireUnlockTag(NylliAdaptation4)
 	GiveTrade()
 	GlobalTradeNode()
 

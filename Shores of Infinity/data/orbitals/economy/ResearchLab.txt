@@ -3,25 +3,23 @@ Module: ResearchLab
 	Blurb: #ORB_RESEARCH_LAB_BLURB
 	Description: #ORB_RESEARCH_LAB_DESC
 	Icon: GuiOrbitalIcons::12
+	Strategic Icon: OrbitalIcons::12
+	Model: Research_Station
+	Material: GenericPBR_Research_Station
+
+	Size: 10
 
 	Standalone: False
 	Core: True
-  Size: 10
+
+	Health: 5000
+	Armor: 1000
 
 	Build Cost: 400
   Maintenance: 100
 	Labor Cost: 25
 
-	Health: 5000
-	Armor: 1000
-
   AddCargoStorage(1500)
-
-	Model: Research_Station
-	Material: GenericPBR_Research_Station
-
-	Strategic Icon: OrbitalIcons::12
-
 	AddResearchIncome(1)
 
 	AllowConstruction()
@@ -35,11 +33,12 @@ Module: Crystallizer
 	Core: False
 
 	Build Cost: 100
+
 	ConsumeCargo(Ore, 100))
 
-	AddStatus(ResearchLabCrystallizer)
-
 	RequireOnOrbital(ResearchLab)
+
+	AddStatus(ResearchLabCrystallizer)
 
 Module: Hypercharger
 	Name: #ORB_RESEARCH_LAB_HYPERCHARGER
@@ -50,10 +49,11 @@ Module: Hypercharger
 	Core: False
 
 	Build Cost: 750
+
 	ConsumeCargo(Ore, 1000))
 	ConsumeCargo(Hypercore, 2))
 
+	RequireOnOrbital(ResearchLab)
+
 	ShowRange(25000, #00ff00)
 	AddStatus(ResearchLabHypercharger)
-
-	RequireOnOrbital(ResearchLab)

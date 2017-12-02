@@ -5,21 +5,32 @@ Module: GuardianShipyard
 	Icon: techShipYard
 	Strategic Icon: OrbitalIcons::5
 	Icon Size: 0.1
-	Size: 50
-	Health: 50000
-	Armor: 50000
-	Shield Capacity: 50000
-	Shield Regeneration: 50
 	Model: Shipyard
 	Material: GenericPBR_Shipyard
-	Can Fling: False
+
+	Size: 50
+
 	Spin: 0
-	GrantAbility(FinishGuardianConstruction)
-	GrantAbility(BuildGuardian)
+
+	Health: 50000
+	Armor: 50000
+
+	Shield Capacity: 50000
+	Shield Regeneration: 50
+
+	Can Fling: False
+
+	CannotBuildManually()
+
+	GloballyVisible()
+
 	OnEnable(AddStatus(GuardianShipyardActive))
 	WorthPoints(5000)
-	ForbidLaborExport()
+
 	AddStatus(Stationary)
 	AddStatus(Untractorable)
-	CannotBuildManually()
-	GloballyVisible()
+
+	GrantAbility(FinishGuardianConstruction)
+	GrantAbility(BuildGuardian)
+
+	ForbidLaborExport()

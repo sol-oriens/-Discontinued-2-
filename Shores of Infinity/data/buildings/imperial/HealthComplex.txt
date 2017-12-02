@@ -6,10 +6,14 @@ Building: HealthComplex
 	Category: Infrastructure
 
 	Size: 2x2
+
 	Base Cost: 85
 	Tile Cost: 10
 	Base Maintenance: 20
 	Tile Maintenance: 5
+
+	RequireNotTrait(Ancient)
+	RequireNotTrait(Mechanoid)
 
 	TriggerStartConstruction( AddStatus(HealthComplexCost) )
 	TriggerCancelConstruction( RemoveStatusInstance(HealthComplexCost) )
@@ -17,6 +21,3 @@ Building: HealthComplex
 
   AddMaxPopulation(1)
 	ModPopulationGrowth(0.1)
-
-  RequireNotTrait(Ancient)
-	RequireNotTrait(Mechanoid)

@@ -4,22 +4,19 @@ Building: PlanetaryEngine
 	Sprite: PlanetThruster
 
 	Category: Military
+	Build Affinity: Oceanic
+	Maintenance Affinity: Oceanic
 
 	Size: 5x5
 
 	Base Cost: 500
 	Tile Cost: 20
-
-	Build Affinity: Oceanic
-	Maintenance Affinity: Oceanic
-
 	Base Maintenance: 70
 	Tile Maintenance: 5
 
 	Build Time: 300
 
-	IfAttributeGTE(Adaptation4, 1, AddFTLIncome(0.5))
-	ShowAttributeValue(FTL Generation, Adaptation4, Multiplier = 0.5, Icon = ResourceIcon::3, Suffix = #PER_SECOND, Hide Zero = True)
-	RequireUnlockTag(PlanetaryEngineUnlock)
 	RequireNotStatus(Ringworld)
+	RequireUnlockTag(PlanetaryEngineUnlock)
+
 	AddAccelerationBonus(0.5)

@@ -18,7 +18,5 @@ Building: AncientNetwork
 	RequireStatus(AncientReplicator)
 	RequireStatusToProgress(AncientReplicator)
 
-	IfAttributeGTE(Adaptation4, 1, AddResource(Influence, 1))
-	ShowAttributeValue(Influence Stake, Adaptation4, Icon = ResourceIcon::1, Hide Zero = True)
 	AddLocalDefense(2, Build Satellites = True)
 	ModLoyalty(+3)

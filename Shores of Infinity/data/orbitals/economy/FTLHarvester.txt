@@ -4,17 +4,17 @@ Module: FTLHarvester
 	Description: #ORB_FTL_HARVESTER_DESC
 	Icon: GuiOrbitalIcons::19
 	Strategic Icon: OrbitalIcons::19
+	Model: FTLStorage
+	Material: GenericPBR_FTLStorage
 
-	Build Cost: 450
-	Maintenance: 75
-	Labor Cost: 25
 	Size: 13
 
 	Health: 5000
 	Armor: 1000
 
-	Model: FTLStorage
-	Material: GenericPBR_FTLStorage
+	Build Cost: 450
+	Maintenance: 75
+	Labor Cost: 25
 
 	RequireNotTrait(Flux)
 

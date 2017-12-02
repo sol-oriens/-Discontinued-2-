@@ -4,24 +4,25 @@ Module: Starport
 	Description: #ORB_STARPORT_DESC
 	Icon: GuiOrbitalIcons::15
 	Strategic Icon: OrbitalIcons::15
+	Model: CommerceStation
+	Material: GenericPBR_CommerceStation
+
+	Size: 12
 
 	Core: True
 	Standalone: False
-	Size: 12
+
+	Health: 5000
+	Armor: 1000
 
 	Build Cost: 200
 	Maintenance: 100
 	Labor Cost: 15
 
-	Health: 5000
-	Armor: 1000
+	LimitOncePerSystem(StarportFlag)
 
 	AddCargoStorage(2500)
 
-	Model: CommerceStation
-	Material: GenericPBR_CommerceStation
-
-	LimitOncePerSystem(StarportFlag)
 	SetSystemFlag(Starport)
 
 	AddFleetCommand(64)
@@ -43,8 +44,9 @@ Module: StarportDockingBays
 
 	Build Cost: 300
 	Maintenance: 100
+
 	ConsumeInfluence(5)
 
-	GlobalTradeNode()
-
 	RequireOnOrbital(Starport)
+
+	GlobalTradeNode()

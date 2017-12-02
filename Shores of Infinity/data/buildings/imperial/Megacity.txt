@@ -6,6 +6,7 @@ Building: Megacity
 	Category: Infrastructure
 
 	Size: 4x3
+	
 	Base Cost: 500
 	Tile Cost: 25
 	Build Time: 140
@@ -14,7 +15,6 @@ Building: Megacity
 	Tile Maintenance: 15
 
 	RequireNotTrait(Ancient)
-
 	RequireUnlockTag(MegacityUnlock)
 	ConstructibleIfAttribute(ForbidCityConstruction, 0)
 
@@ -27,7 +27,4 @@ Building: Megacity
 	AddPressureCap(9)
 	ReplacesCities(16)
 
-	IfAttributeGTE(Adaptation4, 1, ReplacesCities(2))
-	IfAttributeGTE(Adaptation4, 1, AddMaxPopulation(2))
-	ShowAttributeValue(Added Population, Adaptation4, Multiplier = 2.0, Icon = ResourceIcon::8, Hide Zero = True)
 	ModBuildSpeedAttribute(CityConstructRate)

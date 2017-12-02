@@ -7,16 +7,18 @@ Building: Hydrogenator
 	Build Affinity: Oceanic
 
 	Size: 2x2
+
 	Base Cost: 120
 	Tile Cost: 20
 	Base Maintenance: 100
 	Tile Maintenance: 20
 
 	Build Time: 240
-	AddPlanetResource(BuildingWater)
 
 	RequireNotTrait(Mechanoid)
 	RequireNotTrait(Ancient)
+
+	AddPlanetResource(BuildingWater)
 
 	ShowAttributeValue(Added Loyalty, Adaptation4, Multiplier = 2.0, Icon = AttributeIcons::1, Hide Zero = True)
 	IfAttributeGTE(Adaptation4, 1, ModLoyalty(2))
